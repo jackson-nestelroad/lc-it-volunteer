@@ -3,6 +3,9 @@ const path = require('path');
 
 const app = new express();
 
+// let Heroku define the port
+var port = process.env.PORT || 8080;
+
 // include all files
 app.use(express.static(__dirname + '/public'));
 // include all node modules
@@ -24,4 +27,4 @@ app.get('/display', function(req, res){
     res.sendFile(__dirname + '/public/src/display/index.html');
 })
 // port
-app.listen(3000, () => console.log('Listening on port 3000!'));
+app.listen(port, () => console.log('Listening on port '+ port + '!'));
