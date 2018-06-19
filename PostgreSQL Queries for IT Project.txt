@@ -1,0 +1,437 @@
+DATABASE STRUCTURE
+
+*volunteers
+-vol_id
+-first_name
+-last_name
+-email
+-phone
+
+*teams
+-team_id
+-name
+
+*logs
+-date
+-vol_id
+-team_id
+-hours
+
+
+
+Get Month's Data
+
+SELECT SUM(hours)
+FROM year_2018
+WHERE month = 6
+
+
+Creating Tables
+
+CREATE TABLE volunteers(
+vol_id serial PRIMARY KEY,
+first_name VARCHAR(255) NOT NULL,
+last_name VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL,
+phone VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE teams(
+team_id serial PRIMARY KEY,
+name
+);
+
+CREATE TABLE logs(
+date DATE NOT NULL,
+vol_id integer NOT NULL,
+team_id integer NOT NULL,
+hours integer NOT NULL
+);
+
+
+Get Information by First Name Search or Last Name Search !!!
+
+// dvdrental
+
+SELECT c.customer_id, c.first_name, c.last_name, c.email, f.money, f.total
+FROM 
+  (SELECT customer.customer_id, first_name, last_name, email
+  FROM customer
+  WHERE first_name LIKE 'Ja%') c
+LEFT OUTER JOIN
+  (SELECT a.customer_id, a.money_spent money, b.favorite_staff_name total
+  FROM
+    (SELECT customer.customer_id, SUM(amount) money_spent
+    FROM payment
+    LEFT OUTER JOIN customer
+    ON customer.customer_id = payment.customer_id
+    GROUP BY customer.customer_id
+    HAVING customer.customer_id IN
+      (SELECT customer.customer_id
+      FROM customer
+      WHERE first_name LIKE 'Ja%')
+    ORDER BY customer.customer_id) a
+  JOIN 
+    (SELECT e.customer_id, first_name favorite_staff_name
+    FROM staff
+    LEFT OUTER JOIN 
+      (SELECT customer_id, mode() within group (order by staff_id) temp_id
+      FROM payment
+      WHERE customer_id IN
+        (SELECT customer.customer_id
+        FROM customer
+        WHERE first_name LIKE 'Ja%')
+      GROUP BY customer_id
+      ORDER BY customer_id) e
+    ON e.temp_id = staff.staff_id) b
+  ON a.customer_id = b.customer_id) f
+ON f.customer_id = c.customer_id
+ORDER BY c.customer_id;
+
+// my version
+
+SELECT c.vol_id, c.first_name, c.last_name, c.email, f.hours, f.favorite
+FROM 
+  (SELECT volunteers.vol_id, first_name, last_name, email
+  FROM volunteers
+  WHERE first_name LIKE 'B%') c
+LEFT OUTER JOIN
+  (SELECT a.vol_id, a.total_hours hours, b.favorite_team_name favorite
+  FROM
+    (SELECT volunteers.vol_id, SUM(amount) total_hours
+    FROM logs
+    LEFT OUTER JOIN volunteers
+    ON volunteers.vol_id = logs.vol_id
+    GROUP BY volunteers.vol_id
+    HAVING volunteers.vol_id IN
+      (SELECT volunteers.vol_id
+      FROM volunteers
+      WHERE first_name LIKE 'B%')
+    ORDER BY volunteers.vol_id) a
+  JOIN 
+    (SELECT e.vol_id, name favorite_team_name
+    FROM teams
+    LEFT OUTER JOIN 
+      (SELECT vol_id, mode() within group (order by team_id) most_id
+      FROM logs
+      WHERE vol_id IN
+        (SELECT volunteers.vol_id
+        FROM volunteers
+        WHERE first_name LIKE 'B%')
+      GROUP BY vol_id
+      ORDER BY vol_id) e
+    ON e.most_id = teams.team_id) b
+  ON a.vol_id = b.vol_id) f
+ON f.vol_id = c.vol_id;
+
+
+Get Information by Team Search !!!
+
+// dvdrental
+
+SELECT g.customer_id, g.first_name, g.last_name, g.email, f.money, f.total
+FROM 
+	(SELECT customer.customer_id, first_name, last_name, email
+	FROM customer
+	JOIN
+		(SELECT customer_id
+		FROM payment
+		GROUP BY customer_id
+		HAVING mode() within group (order by staff_id) = 1
+		ORDER BY customer_id) c
+	ON c.customer_id = customer.customer_id) g
+JOIN
+  (SELECT a.customer_id, a.money_spent money, b.favorite_staff_name total
+  FROM
+    (SELECT customer.customer_id, SUM(amount) money_spent
+    FROM payment
+    JOIN customer
+    ON customer.customer_id = payment.customer_id
+    GROUP BY customer.customer_id
+    HAVING customer.customer_id IN
+		(SELECT customer_id
+		FROM payment
+		GROUP BY customer_id
+		HAVING mode() within group (order by staff_id) = 1
+		ORDER BY customer_id)	
+    ORDER BY customer.customer_id) a
+  JOIN 
+    (SELECT e.customer_id, first_name favorite_staff_name
+    FROM staff
+    JOIN 
+      (SELECT customer_id, mode() within group (order by staff_id) temp_id
+      FROM payment
+      WHERE customer_id IN
+		(SELECT customer_id
+		FROM payment
+		GROUP BY customer_id
+		HAVING mode() within group (order by staff_id) = 1
+		ORDER BY customer_id)
+      GROUP BY customer_id
+      ORDER BY customer_id) e
+    ON e.temp_id = staff.staff_id) b
+  ON a.customer_id = b.customer_id) f
+ON f.customer_id = g.customer_id;
+
+// my version
+
+SELECT g.vol_id, g.first_name, g.last_name, g.email, f.hours, f.favorite
+FROM 
+	(SELECT volunteers.vol_id, first_name, last_name, email
+	FROM volunteers
+	JOIN
+		(SELECT vol_id
+		FROM logs
+		GROUP BY vol_id
+		HAVING mode() within group (order by team_id) = 1
+		ORDER BY vol_id) c
+	ON c.vol_id = volunteers.vol_id) g
+JOIN
+  (SELECT a.vol_id, a.total_hours hours, b.favorite_team_name favorite
+  FROM
+    (SELECT volunteers.vol_id, SUM(amount) total_hours
+    FROM logs
+    JOIN volunteers
+    ON volunteers.vol_id = logs.vol_id
+    GROUP BY volunteers.vol_id
+    HAVING volunteers.vol_id IN
+      (SELECT vol_id
+      FROM logs
+      GROUP BY vol_id
+      HAVING mode() within group (order by team_id) = 1
+      ORDER BY vol_id)	
+    ORDER BY volunteers.vol_id) a
+  JOIN 
+    (SELECT e.vol_id, name favorite_team_name
+    FROM teams
+    JOIN 
+      (SELECT vol_id, mode() within group (order by team_id) most_id
+      FROM logs
+      WHERE vol_id IN
+		(SELECT vol_id
+		FROM logs
+		GROUP BY vol_id
+		HAVING mode() within group (order by team_id) = 1
+		ORDER BY vol_id)
+      GROUP BY vol_id
+      ORDER BY vol_id) e
+    ON e.most_id = teams.team_id) b
+  ON a.vol_id = b.vol_id) f
+ON f.vol_id = g.vol_id;
+
+
+Search by Date !!!
+
+SELECT *
+FROM volunteers
+JOIN logs
+ON logs.vol_id = volunteers.vol_id;
+
+
+Leaderboard
+
+// dvdrental
+
+SELECT customer.customer_id, first_name, last_name, SUM(amount)
+FROM customer
+JOIN 
+	(SELECT *
+	FROM payment
+	WHERE extract(month from payment_date) = 2
+	AND extract(year from payment_date) = 2007) a
+ON a.customer_id = customer.customer_id
+GROUP BY customer.customer_id
+ORDER BY SUM(amount) DESC
+LIMIT 10;
+
+// my version
+
+SELECT volunteers.vol_id, first_name, last_name, SUM(hours)
+FROM volunteers
+JOIN 
+	(SELECT *
+	FROM logs
+	WHERE extract(month from date) = 2
+	AND extract(year from date) = 2007) a
+ON a.vol_id = volunteers.vol_id
+GROUP BY volunteers.vol_id
+ORDER BY SUM(hours) DESC
+LIMIT 10;
+
+
+Info for a specific month for graph
+
+// dvdrental
+
+SELECT SUM(amount)
+FROM payment
+WHERE extract(month from payment_date) = 2
+AND extract(year from payment_date) = 2007
+
+// my version
+
+SELECT SUM(hours)
+FROM logs
+WHERE extract(month from date) = 2
+AND extract(year from date) = 2007
+
+
+
+
+
+
+Inserting Data
+
+INSERT INTO volunteers(first_name, last_name, email)
+VALUES
+('Jackson', 'Nestelroad', 'jackson.nestelroad@leadershipxp.com');
+
+INSERT INTO logs(date, vol_id, team_id, hours)
+VALUES('6/14/2018', 23, 1, 5);
+
+INSERT INTO teams(name)
+VALUES('Hardware and Infrastructure');
+
+Updating an email
+
+UPDATE volunteers
+SET email = 'jackson.nestelroad@life.church'
+WHERE first_name = 'Jackson'
+AND last_name = 'Nestelroad';
+RETURNING email, first_name, last_name;
+
+Updating a last name
+
+UPDATE volunteers
+SET last_name = 'NewLastName'
+WHERE first_name = 'FirstName'
+AND email = 'email@email.com';
+RETURNING first_name, last_name, email;
+
+
+
+Getting Last 13 Months (Javascript)
+
+var d = new Date();
+var m = d.getMonth();
+var y = d.getFullYear();
+var query = [];
+for(var i = 0; i < 13; i++){
+  if(m == 0){
+    m = 11;
+    y = y - 1;
+  }
+  query.push(`${m}/1/${y}`);
+}
+
+
+
+Check database if entered name in Form exists
+  if not, direct them to the new volunteer registration!
+
+SELECT concat(first_name, ' ', last_name) full_name
+FROM volunteers
+WHERE full_name = 'Jackson Nestelroad';
+
+if error --> give modal
+else --> log data
+
+
+New volunteer
+INSERT INTO volunteers(first_name, last_name, email, phone)
+VALUES('Jackson', 'Nestelroad', 'jackson.nestelroad@leadershipxp.com', '(405) 657-9587');
+
+
+Inactivity List
+
+// dvdrental
+
+SELECT c.customer_id, c.first_name, c.last_name, c.email, f.money, f.total
+FROM 
+	(SELECT customer.customer_id, first_name, last_name, email
+	FROM customer
+	WHERE customer_id NOT IN
+		(SELECT customer_id
+		FROM payment
+		WHERE extract(month from payment_date) = 5
+		AND extract(year from payment_date) = 2007
+		GROUP BY customer_id)) c
+LEFT OUTER JOIN
+  (SELECT a.customer_id, a.money_spent money, b.favorite_staff_name total
+  FROM
+    (SELECT customer.customer_id, SUM(amount) money_spent
+    FROM payment
+    LEFT OUTER JOIN customer
+    ON customer.customer_id = payment.customer_id
+    GROUP BY customer.customer_id
+    HAVING customer.customer_id NOT IN
+		(SELECT customer_id
+		FROM payment
+		WHERE extract(month from payment_date) = 5
+		AND extract(year from payment_date) = 2007
+		GROUP BY customer_id)
+    ORDER BY customer.customer_id) a
+  JOIN 
+    (SELECT e.customer_id, first_name favorite_staff_name
+    FROM staff
+    LEFT OUTER JOIN 
+      (SELECT customer_id, mode() within group (order by staff_id) temp_id
+      FROM payment
+      WHERE customer_id NOT IN
+		(SELECT customer_id
+		FROM payment
+		WHERE extract(month from payment_date) = 5
+		AND extract(year from payment_date) = 2007
+		GROUP BY customer_id)
+      GROUP BY customer_id
+      ORDER BY customer_id) e
+    ON e.temp_id = staff.staff_id) b
+  ON a.customer_id = b.customer_id) f
+ON f.customer_id = c.customer_id
+ORDER BY c.customer_id;
+
+// my version -- go two months back
+
+SELECT c.vol_id, c.first_name, c.last_name, c.email, f.hours, f.favorite
+FROM 
+	(SELECT volunteers.vol_id, first_name, last_name, email
+	FROM volunteers
+	WHERE vol_id NOT IN
+		(SELECT vol_id
+		FROM logs
+		WHERE extract(month from date) = 5
+		AND extract(year from date) = 2007
+		GROUP BY vol_id)) c
+LEFT OUTER JOIN
+  (SELECT a.vol_id, a.total_hours hours, b.favorite_team_name favorite
+  FROM
+    (SELECT volunteers.vol_id, SUM(hours) total_hours
+    FROM logs
+    LEFT OUTER JOIN volunteers
+    ON volunteers.vol_id = logs.vol_id
+    GROUP BY volunteers.vol_id
+    HAVING volunteers.vol_id NOT IN
+		(SELECT vol_id
+		FROM logs
+		WHERE extract(month from date) = 5
+		AND extract(year from date) = 2007
+		GROUP BY vol_id)
+    ORDER BY volunteers.vol_id) a
+  JOIN 
+    (SELECT e.vol_id, name favorite_team_name
+    FROM teams
+    LEFT OUTER JOIN 
+      (SELECT vol_id, mode() within group (order by teams_id) most_id
+      FROM logs
+      WHERE vol_id NOT IN
+		(SELECT vol_id
+		FROM logs
+		WHERE extract(month from date) = 5
+		AND extract(year from date) = 2007
+		GROUP BY vol_id)
+      GROUP BY vol_id
+      ORDER BY vol_id) e
+    ON e.most_id = teams.team_id) b
+  ON a.vol_id = b.vol_id) f
+ON f.vol_id = c.vol_id;
+
