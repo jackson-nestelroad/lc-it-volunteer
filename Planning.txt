@@ -1,0 +1,110 @@
+Life.Church IT Volunteer Application
+
+Who will use it?
+    IT Staff
+        Log volunteer hours for them after their work.
+        Log volunteer hours for them at a later date.
+        View volunteer data.
+            Hours per month.
+            Top volunteers.
+            Hours per team per month.
+            Increase/decrease in hours her month.
+            Average hours per day.
+            Average hours per week.
+            Average hours per volunteer.
+
+    Volunteer  
+        Log voluteer hours before or after their work.
+        View their own volunteer data.
+Features
+    Form
+        Volunteer Name
+            Log different volunteers.
+        Team Name
+            Log different teams' volunteers.
+        Date
+            See volunteer data per month.
+        Hours Worked
+            Log data regarding hours worked.
+    Accessability and Uniformity
+        Calendar for Date Entry
+            Easy to see dates when calling back on volunteer hours.
+        Search by First Name
+            Avoid duplicating volunteers and helps staff enter names.
+            Accounts for mistakes.
+        Drop Down for Team Name
+            Easier than typing for volunteers.
+        Easy to Navigate
+            Good first impression.
+            Willingness to use for volunteer and staff.
+    Form Validation
+        No submission without filling out everything to avoid database corruption.
+    Presentation of Data
+        See progress.
+        Set goals.
+            App could set goals for us?
+    Visual Appeal
+        Want to use and contribute to it.
+        Professionalism
+            People will want to volunteer again.
+            Good first impression with easy to use and presentable app.
+Location
+    Website, Not App   
+        Easy link to click.
+        Faster loading.
+        Easier access for staff and volunteers.
+            Could access at home!
+
+Testable --> Usable --> Lovable
+
+
+https://www.w3schools.com/howto/howto_js_tabs.asp -- two tabs -- form and statistics 
+https://medium.freecodecamp.org/how-to-host-lightweight-apps-for-free-a29773e5f39e -- help with hosting
+
+
+Initial Roadmap
+    6/8/18 -- Finish basic HTML, CSS, and Javascript. -- DONE
+    6/14/18 -- Replace Electron support with Express support. -- DONE
+    6/21/18 -- Become familiar with PostgreSQL and create database structure. -- DONE
+    7/5/18 -- Create PostgreSQL on Google Cloud and successfully connect with it (write and read).
+    7/12/18 -- Be good way through Statistics page.
+    7/19/18 -- Finish Statistics page.
+    7/26/18 -- App deployment process.
+    8/2/18 -- Old database transfer and backup.
+    8/9/18 -- Project finished.
+
+Updated Roadmap
+    6/8/18 -- Finish basic HTML, CSS, and Javascript. -- DONE
+    6/11/18 -- Replace Electron support with Express support. -- DONE
+    6/13/18 -- Create Volunteer Registration Form and interlink the two forms. -- DONE
+    6/14/18 -- Become familiar with PostgreSQL, reate database structure, and write all SQL queries. -- DONE
+    6/21/18 -- Database created on Google Cloud and successfully linked.
+        Create a fake database with lots of volunteers and months to test EVERYTHING!
+    7/5/18 -- Finish database view page. (Search, Leaderboard, Inactivity List)
+    7/12/18 -- Finish Statistics page.
+    7/19/18 -- Finish table removal/addition process. (When new month starts)
+    7/26/18 -- App deployment process.
+    8/2/18 -- Old database transfer and backup.
+    8/9/18 -- Project finished.
+            Test every single aspect for a long time.
+
+    All along the way is bug testing to assure each step works before it is completed.
+
+Display Page 
+    Progress Graph 
+        Up or down in volunteers per month and hours per month
+        Both or just one?
+        chart.js http://www.chartjs.org/samples/latest/advanced/progress-bar.html
+    Goal Gauge
+        Set goal in database or auto increase last month by X
+        Shows hours per month
+        progressbar.js https://progressbarjs.readthedocs.io/en/latest/
+    Recent Events 
+        Recent logs to database
+    Leaderboard
+        Top volunteers for the month
+
+Database
+    https://cloud.google.com/nodejs/docs/reference/datastore/1.3.x/module-@google-cloud_datastore
+
+

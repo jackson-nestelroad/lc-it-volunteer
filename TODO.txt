@@ -1,0 +1,21 @@
+
+NEW PLAN: Heroku PostgreSQL
+
+
+6/19/18 -- Set up Git, GitHub, and Heroku deployment.
+6/20/18 -- Set up Heroku PostgreSQL.
+6/21/18 -- Communicate with database.
+
+
+
+
+link submission to database
+--what things do we want to see?
+delete volunteer option -- for mistakes
+--search for volunteer and give option to delete data
+linking database to graphs and statistics
+
+
+Deployment Notes
+    https://medium.freecodecamp.org/how-to-host-lightweight-apps-for-free-a29773e5f39e !!!!
+    http://blog.teamtreehouse.com/deploy-static-site-heroku
