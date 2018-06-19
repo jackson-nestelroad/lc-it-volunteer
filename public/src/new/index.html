@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta charset="UTF-8">
+        <title>Life.Church IT Volunteer Form</title>
+        <link rel="stylesheet" href="assets/css/new.css">
+    </head>
+    <body>
+        <div id="confirmation" class="modal">
+            <div id="container" class="success">
+                <img src="../assets/images/logo-full.svg" class="logo">
+                <p class="logo-row2">Your volunteer information was saved.</p>
+                <hr/>
+                <span id="closeBtn" class="linkBtn">Close</span>
+            </div>
+        </div>
+        <div id="warning" class="modal">
+            <div id="container" class="warn">
+                <div id="triangle-outer"></div>
+                <div id="triangle-inner"><span id="warning-text">!</span></div>
+                <p class="warning-msg warning-offset">Volunteer already registered.</p>
+                <hr class="warning-offset" />
+                <span id="closeBtn2" class="linkBtn warning-offset">Close</button>
+            </div>
+        </div>
+        <div id="container" class="logo">
+            <button id="backBtn" class="topBtn">Back to Form</button>
+            <p><img src="../assets/images/logo-full.svg" class="logo"></p>
+            <p class="logo-row2">IT New Volunteer Registration</p>
+        </div>
+        <div id="container" class="form">
+            <div id="error"><p>Please fill out the following information!</p></div>
+            <div class="grid-container-form">
+                <div class="input first">
+                    <p>First Name</p>
+                    <input id="first-input" class="input-box" placeholder="First Name">
+                </div>
+                <div class="input last">
+                    <p>Last Name</p>
+                    <input id="last-input" class="input-box" placeholder="Last Name">
+                </div>
+                <div class="input email">
+                    <p>Email Address</p>
+                    <input id="email-input" class="input-box" placeholder="Email Address">
+                </div>
+                <div class="input phone">
+                    <p>Phone Number</p>
+                    <input id="phone-input" class="input-box" placeholder="Phone Number">
+                </div>
+                <div class="submit">
+                    <button id="submitBtn">Register</button>
+                </div>
+            </div>
+        </div>
+        <script src="src/new/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta charset="UTF-8">
+        <title>Life.Church IT Volunteer Form</title>
+        <script src="jquery/dist/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script>
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="air-datepicker/dist/css/datepicker.min.css">
+        <script src="air-datepicker/dist/js/datepicker.min.js"></script>
+        <script src="air-datepicker/dist/js/i18n/datepicker.en.js"></script>
+    </head>
+    <body>
+        <div id="confirmation" class="modal">
+            <div id="container" class="success">
+                <img src="../assets/images/logo-full.svg" class="logo">
+                <p class="logo-row2">Your volunteer information was saved.</p>
+                <hr/>
+                <span id="closeBtn" class="linkBtn">Close</span>
+            </div>
+        </div>
+        <div id="warning" class="modal">
+            <div id="container" class="warn">
+                <div id="triangle-outer"></div>
+                <div id="triangle-inner"><span id="warning-text">!</span></div>
+                <p class="warning-msg warning-offset">Volunteer not found in database.</p>
+                <hr class="warning-offset" />
+                <span id="registerBtn" class="linkBtn warning-offset">Register New Volunteer</button>
+            </div>
+        </div>
+        <div id="container" class="logo">
+            <button id="registerBtn2" class="topBtn" style="margin-bottom: 12px">Register New Volunteer</button>
+            <button id="dataBtn" class="topBtn" style="margin-bottom: 12px">Database</button>
+            <button id="displayBtn" class="topBtn">Display</button>
+            <p><img src="../assets/images/logo-full.svg" class="logo"></p>
+            <p class="logo-row2">IT Volunteer Form</p>
+        </div>
+        <div id="container" class="form">
+            <div id="error"></div>
+            <div class="grid-container-form">
+                <div class="input name">
+                    <p>Full Name</p>
+                    <input id="name-input" class="input-box" placeholder="Full Name">
+                </div>
+                <div class="input date">
+                    <p>Date</p>
+                    <input type="text" id="date-input" class="input-box datepicker-here" data-datepicker data-position="top left" data-language='en' placeholder="Date" readonly />
+                </div>
+                <div class="input team">
+                    <p>Team</p>
+                    <select name="Team Name" id="team-input" class="input-box">
+                        <option value=1>Hardware and Infrastructure Support</option>
+                        <option value=2>Software and User Support</option>
+                        <option value=3>Data Operations</option>
+                        <option value=4>Project Management</option>
+                    </select>
+                </div>
+                <div class="input hours">
+                    <p>Hours</p>
+                    <input id="hours-input" class="input-box" placeholder="Hours">
+                </div>
+                <div class="submit">
+                    <button id="submitBtn">Check In</button>
+                </div>
+            </div>
+        </div>
+        <script src="src/form/index.js"></script>
+    </body>
+</html>

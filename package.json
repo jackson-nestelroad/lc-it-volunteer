@@ -1,0 +1,16 @@
+{
+  "name": "volunteer-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "air-datepicker": "^2.2.3",
+    "express": "^4.16.3",
+    "jquery": "^3.3.1"
+  }
+}
