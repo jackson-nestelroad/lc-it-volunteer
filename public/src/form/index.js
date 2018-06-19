@@ -37,14 +37,14 @@ document.onkeydown = function(evt){
         submit.click();
     }
     // test keys (Z and X) for modal display
-    if(keyCode == 90){
-        enter = false;
-        document.getElementById('warning').style['display'] = 'block';
-    }
-    if(keyCode == 88){
-        enter = false;
-        document.getElementById('confirmation').style['display'] = 'block';
-    }
+    // if(keyCode == 90){
+    //     enter = false;
+    //     document.getElementById('warning').style['display'] = 'block';
+    // }
+    // if(keyCode == 88){
+    //     enter = false;
+    //     document.getElementById('confirmation').style['display'] = 'block';
+    // }
 }
 // display error at top of form
 function displayError(){
