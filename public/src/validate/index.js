@@ -63,7 +63,6 @@ submit.addEventListener('click', function(event){
         enter = false;
         // send a POST request
         $.ajax({
-            url: '/validate',
             method: 'POST',
             context: document.body,
             data: {
@@ -80,6 +79,9 @@ submit.addEventListener('click', function(event){
                 // we got to the database... what did it do?
                 if(code == 'dne'){
                     // email not found
+                    document.getElementById('warning').style['display'] = 'block';
+                }
+                else if(code == 'bad'){
                     document.getElementById('warning').style['display'] = 'block';
                 }
                 else{

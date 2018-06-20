@@ -8,7 +8,7 @@ const app = new express();
 var port = process.env.PORT || 3000;
 
 // need these for receiving POST requests
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // include all files
@@ -28,6 +28,10 @@ app.route('/')
             // searchByFullName came back false -- volunteer not registered
             if(!id){
                 res.send('dne');
+            }
+            // we need to validate an email to see which volunteer this is
+            else if(id == 'duplicate'){
+                res.send('validate');
             }
             else{
                 // id is vol_id for logs
@@ -53,7 +57,7 @@ app.route('/new')
     // registration form is successfully submitted
     .post(function(req, res){
         // req.body contains all of the information we submitted
-        database.searchByFullName(req.body.first + ' ' + req.body.last)
+        database.checkIfRegistered(req.body.first, req.body.last, req.body.email)
         .then(id => {
             // searchByFullName came back with an ID -- volunteer already registered
             if(id){
@@ -82,11 +86,59 @@ app.route('/validate')
     })
     // email is submitted
     .post(function(req, res){
-        console.log(req.body);
-        console.log(req.params);
-        console.log(req.query);
+        // we need to check the information again to make sure it didn't get changed in the URL
+        function checkInfo(date, team, hours){
+            if(date == ''){
+                return false;
+            }
+            else{
+                // min is first day of the same month last year
+                var min = new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`);
+                // max is next month
+                var max = new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`);
+                date = new Date(date);
+                if(date <= min || date > max){
+                    return false;
+                }
+                else{
+                    // need to update this if more teams are ever added
+                    if([1,2,3,4].includes(parseInt(team)) && parseInt(hours)){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }
+        }
+        // req.body.email is the email
+        // req.query has everything else
+        if(!checkInfo(req.query.date, req.query.team, req.query.hours)){
+            res.send('bad');
+        }
+        // info still looks good
+        else{
+            database.checkIfRegistered(req.query.first + ' ' + req.query.last, req.body.email)
+            .then(id => {
+                if(!id){
+                    res.send('dne');
+                }
+                else{
+                    // id is vol_id, so let's log the info
+                    database.log(req.query.date, id, req.query.team, req.query.hours)
+                    .then(code => {
+                        res.send('success');
+                    })
+                    .catch(err => {
+                        res.send('error');
+                    })
+                }
+            })
+            .catch(err => {
+                res.send('error');
+            })
+        }
         res.send('dne');
-        // database.searchByEmail()
     })
 // /data is database page with leaderboard, search, and inactive list
 app.get('/data', function(req, res){

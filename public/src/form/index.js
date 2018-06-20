@@ -124,10 +124,13 @@ submit.addEventListener('click', function(event){
                 displayError();
             }
             else{
-                // we got to the database... what did it do?
+                // volunteer not registered
                 if(code == 'dne'){
-                    // volunteer not registered
                     document.getElementById('warning').style['display'] = 'block';
+                }
+                // more than one volunteer with the same name -> validate the email
+                else if(code == 'validate'){
+                    window.location.replace(`/validate?name=${name}&team=${team}&date=${date}&hours=${hours}`);
                 }
                 else{
                     // volunteer registered and logged

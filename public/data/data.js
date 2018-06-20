@@ -22,6 +22,10 @@ exports.searchByFullName = function(name){
                 if(res.rows.length == 0){
                     resolve(false);
                 }
+                // volunteers of the same name found
+                if(res.rows.length > 1){
+                    resolve('duplicate');
+                }
                 // volunteer found, so return the vol_id
                 else{
                     resolve(res.rows[0].vol_id);
@@ -41,6 +45,43 @@ exports.searchByFullName = function(name){
         })
     })
 }
+
+// checks for a volunteer with this name AND email and returns ID
+exports.checkIfRegsitered = function(name, email){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT vol_id
+                FROM volunteers
+                WHERE lower(concat(first_name, ' ', last_name)) = lower('${name}')
+                AND email = '${email}';
+            `)
+            .then(res => {
+                // no volunteer found
+                if(res.rows.length == 0){
+                    resolve(false);
+                }
+                // volunteer found
+                else{
+                    resolve(res.rows[0].vol_id);
+                }
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            client.release();
+            reject('error');
+        })
+    })
+}
+
 
 // adds a new volunteer
 exports.add = function(first, last, email, phone){
