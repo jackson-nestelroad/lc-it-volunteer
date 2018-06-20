@@ -10,31 +10,31 @@ var exports = module.exports = {};
 exports.searchByFullName = function(name){
     return new Promise((resolve, reject) => {
         client.connect()
-            .then(() => {
-                client.query(`
-                    SELECT vol_id, concat(first_name, ' ', last_name) full_name
-                    FROM volunteers
-                    WHERE lower(concat(first_name, ' ', last_name)) = lower(${name});
-                `)
-                .then(res => {
-                    if(res.rows.length == 0){
-                        resolve(false);
-                    }
-                    else{
-                        console.log(res.rows[0]);
-                    }
-                    client.end();
-                })
-                .catch(err => {
-                    console.error(err);
-                    client.end();
-                    reject('error');
-                })
+        .then(() => {
+            client.query(`
+                SELECT vol_id, concat(first_name, ' ', last_name) full_name
+                FROM volunteers
+                WHERE lower(concat(first_name, ' ', last_name)) = lower(${name});
+            `)
+            .then(res => {
+                if(res.rows.length == 0){
+                    resolve(false);
+                }
+                else{
+                    console.log(res.rows[0]);
+                }
+                client.end();
             })
             .catch(err => {
-                client.end();
+                console.log(err);
+                // client.end();
                 reject('error');
             })
+        })
+        .catch(err => {
+            client.end();
+            reject('error');
+        })
     })
 }
 
