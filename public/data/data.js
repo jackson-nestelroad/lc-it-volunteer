@@ -27,12 +27,13 @@ exports.searchByFullName = function(name){
             })
             .catch(err => {
                 console.log(err);
-                // client.end();
+                client.end();
                 reject('error');
             })
         })
         .catch(err => {
-            client.end();
+            console.log(err);
+            // client.end();
             reject('error');
         })
     })
