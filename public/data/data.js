@@ -21,6 +21,7 @@ exports.searchByFirstName = function(search){
     client.connect();
     client.on('error', (err) => {
         console.err(err);
+        client.end();
     })
     client.query(`
         SELECT *
