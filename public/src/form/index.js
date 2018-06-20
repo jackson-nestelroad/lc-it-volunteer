@@ -123,7 +123,7 @@ submit.addEventListener('click', function(event){
         })
         .fail(function(){
             // some sort of error occurred...
-            error = ['An error occurred sending your data!'];
+            error = ['An error occurred while sending your data! Please try again.'];
             displayError();
         })
         hours = hours + ' hour' + ((hours > 1) ? 's.' : '.');

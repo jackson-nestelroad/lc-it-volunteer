@@ -26,13 +26,9 @@ exports.searchByFirstName = function(search){
     client.query(`
         SELECT *
         FROM volunteers;
-    `, (err, res) => {
-        if (err) throw err;
-        for (let row of res.rows) {
-          console.log(JSON.stringify(row));
-        }
-        client.end();
-    });
+    `)
+    .then(res => console.log(res))
+    .catch(err => console.error(error.stack))
 }
 
 // searches by most active team
