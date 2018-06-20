@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const database = require(__dirname + '/public/data/data.js');
 
 const app = new express();
 

@@ -6,8 +6,18 @@ const client = new Client({
 
 var exports = module.exports = {};
 
+// searches by full name and returns ID
+exports.searchByFullName = function(){
+
+}
+
+// logs hours to an ID
+exports.log = function(id, hours){
+
+}
+
 // searches by first name
-searchByFirstName = function(){
+exports.searchByFirstName = function(search){
     client.connect();
 
     client.query(`
@@ -20,4 +30,34 @@ searchByFirstName = function(){
         }
         client.end();
     });
+}
+
+// searches by most active team
+exports.searchByTeam = function(team){
+
+}
+
+// searches by date
+exports.searchByDate = function(date){
+
+}
+
+// fetches the monthly leaderboard
+exports.leaderboard = function(){
+
+}
+
+// fetches hours for a certain month
+exports.month = function(){
+
+}
+
+// adds a new volunteer
+exports.add = function(){
+
+}
+
+// gets all inactive volunteers
+exports.getInactive = function(){
+
 }
