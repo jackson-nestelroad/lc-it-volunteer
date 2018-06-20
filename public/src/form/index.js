@@ -119,15 +119,23 @@ submit.addEventListener('click', function(event){
         })
         .done(function(code){
             if(code == 'error'){
+                // error occurred in SQL
                 error = ['An error occurred while sending your data! Please try again.'];
                 displayError();
             }
             else{
-                document.getElementById('confirmation').style['display'] = 'block';
+                // we got to the database... what did it do?
+                if(code == 'dne'){
+                    // volunteer not registered
+                    document.getElementById('warning').style['display'] = 'block';
+                }
+                else{
+                    document.getElementById('confirmation').style['display'] = 'block';
+                }
             }
         })
         .fail(function(){
-            // some sort of error occurred...
+            // error occurred in HTTP POST request
             error = ['An error occurred while sending your data! Please try again.'];
             displayError();
         })

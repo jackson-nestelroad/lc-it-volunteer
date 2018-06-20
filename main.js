@@ -15,16 +15,25 @@ app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 // include all node modules
 app.use(express.static(__dirname + '/node_modules'));
-// base page is the base volunteer form
+// base page is the base log hours form
 app.route('/')
     .get(function(req, res){
         res.sendFile(__dirname + '/public/src/form/index.html');
     })
+    // log form is successfully submitted
     .post(function(req, res){
-        console.log(req.body);// this is the data to send to the database
-        database.searchByFirstName('H')
-        .then(code => {
-            res.send('success');
+        // req.body contains all of the information we submitted
+        database.searchByFullName(req.body.name)
+        .then(id => {
+            // searchByFullName came back false -- volunteer not registered
+            if(!id){
+                res.send('dne');
+            }
+            else{
+                // id is vol_id for logs
+                // database.log(id)
+                res.send('success');
+            }
         })
         .catch(err => {
             res.send('error');

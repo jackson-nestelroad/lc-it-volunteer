@@ -7,28 +7,23 @@ const client = new Client({
 var exports = module.exports = {};
 
 // searches by full name and returns ID
-exports.searchByFullName = function(){
-
-}
-
-// logs hours to an ID
-exports.log = function(id, hours){
-
-}
-
-// searches by first name
-exports.searchByFirstName = function(search){
+exports.searchByFullName = function(name){
     return new Promise((resolve, reject) => {
         client.connect()
             .then(() => {
                 client.query(`
-                    SELECT *
-                    FROM volunteers;
+                    SELECT vol_id, concat(first_name, ' ', last_name) full_name
+                    FROM volunteers
+                    WHERE lower(concat(first_name, ' ', last_name)) = lower(${name});
                 `)
                 .then(res => {
-                    console.log(res);
+                    if(res.rows.length == 0){
+                        resolve(false);
+                    }
+                    else{
+                        console.log(res.rows[0]);
+                    }
                     client.end();
-                    resolve('success');
                 })
                 .catch(err => {
                     console.error(error);
@@ -41,6 +36,16 @@ exports.searchByFirstName = function(search){
                 reject('error');
             })
     })
+}
+
+// logs hours to an ID
+exports.log = function(id, hours){
+
+}
+
+// searches by first name
+exports.searchByFirstName = function(search){
+
 }
 
 // searches by most active team
