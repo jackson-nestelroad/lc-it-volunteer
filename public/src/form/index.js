@@ -118,9 +118,13 @@ submit.addEventListener('click', function(event){
             }
         })
         .done(function(code){
-            console.log(code);
-            // display confirmation modal
-            document.getElementById('confirmation').style['display'] = 'block';
+            if(code == 'error'){
+                error = ['An error occurred while sending your data! Please try again.'];
+                displayError();
+            }
+            else{
+                document.getElementById('confirmation').style['display'] = 'block';
+            }
         })
         .fail(function(){
             // some sort of error occurred...
