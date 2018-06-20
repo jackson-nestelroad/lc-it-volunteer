@@ -41,6 +41,7 @@ app.route('/')
             }
         })
         .catch(err => {
+            console.log(err);
             res.send('error');
         });
     })
@@ -70,6 +71,7 @@ app.route('/new')
             }
         })
         .catch(err => {
+            console.log(err);
             res.send('error');
         });
     })

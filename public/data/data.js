@@ -55,6 +55,7 @@ exports.add = function(first, last, email, phone){
                 resolve('success');
             })
             .catch(err => {
+                console.log(err);
                 reject('error');
             })
         })
@@ -73,12 +74,13 @@ exports.log = function(date, id, team, hours){
         .then(client => {
             client.query(`
                 INSERT INTO logs(date, vol_id, team_id, hours)
-                VALUES('${date}', id, team, hours);
+                VALUES('${date}', ${id}, ${team}, ${hours});
             `)
             .then(res => {
                 resolve('success');
             })
             .catch(err => {
+                console.log(err);
                 reject('error');
             })
         })
