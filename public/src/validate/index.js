@@ -19,6 +19,7 @@ close.addEventListener('click', function(event){
 // warning modal is closed -> DON'T reload
 close2.addEventListener('click', function(event){
     document.getElementById('warning').style['display'] = 'none';
+    enter = true;
 })
 // use enter key to submit form
 document.onkeydown = function(evt){

@@ -6,12 +6,18 @@ var error = ['Please fill out the following information!'];
 const submit = document.getElementById('submitBtn');
 const display = document.getElementById('displayBtn');
 const close = document.getElementById('closeBtn');
+const close2 = document.getElementById('closeBtn2');
 const register = document.getElementById('registerBtn');
 const register2 = document.getElementById('registerBtn2');
 const data = document.getElementById('dataBtn');
 // database button at top sends to database page
 data.addEventListener('click', function(event){
     window.location.replace('/data');
+})
+// close button in warning moda
+close2.addEventListener('click', function(event){
+    document.getElementById('warning').style['display'] = 'none';
+    enter = true;
 })
 // register button in warning modal
 register2.addEventListener('click', function(event){
@@ -37,14 +43,14 @@ document.onkeydown = function(evt){
         submit.click();
     }
     // test keys (Z and X) for modal display
-    // if(keyCode == 90){
-    //     enter = false;
-    //     document.getElementById('warning').style['display'] = 'block';
-    // }
-    // if(keyCode == 88){
-    //     enter = false;
-    //     document.getElementById('confirmation').style['display'] = 'block';
-    // }
+    if(keyCode == 90){
+        enter = false;
+        document.getElementById('warning').style['display'] = 'block';
+    }
+    if(keyCode == 88){
+        enter = false;
+        document.getElementById('confirmation').style['display'] = 'block';
+    }
 }
 // display error at top of form
 function displayError(){
