@@ -18,18 +18,22 @@ exports.log = function(id, hours){
 
 // searches by first name
 exports.searchByFirstName = function(search){
-    client.connect();
-    client.query(`
-        SELECT *
-        FROM volunteers;
-    `)
-    .then(res => {
-        console.log(res);
+    return new Promise((resove, reject) => {
+        client.connect();
+        client.query(`
+            SELECT *
+            FROM volunteers;
+        `)
+        .then(res => {
+            console.log(res);
+            resolve('success');
+        })
+        .catch(err => {
+            console.error(error.stack);
+            reject('error');
+        })
+        client.end();
     })
-    .catch(err => {
-        console.error(error.stack);
-    })
-    client.end();
 }
 
 // searches by most active team
