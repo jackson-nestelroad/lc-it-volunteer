@@ -77,7 +77,7 @@ submit.addEventListener('click', function(event){
     }
 // info not given correctly, tell them why
     if(first == '' || last == '' || !emailTrue || !phoneTrue){
-        document.getElementById('error').style.display = 'inline';
+        displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
             var element = values[Object.keys(values)[i]];
             if(element == '' || !element){
@@ -93,7 +93,7 @@ submit.addEventListener('click', function(event){
         // put phone number in a constant format (123) 456-7890
         var phoneNumber = phone.match(/\d/g);
         phoneNumber = phoneNumber.join('');
-        phoneNumber = `(${phoneNumber.substring(0,3)}) ${phoneNumber.substring(3,6)}-${phoneNumber.substring(6)}`;
+        phoneNumber = `${phoneNumber.substring(0,3)} ${phoneNumber.substring(3,6)} ${phoneNumber.substring(6)}`;
         // disable form submission multiple times
         enter = false;
         // send a POST request

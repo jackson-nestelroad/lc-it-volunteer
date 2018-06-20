@@ -9,6 +9,7 @@ var exports = module.exports = {};
 
 // searches by full name and returns ID
 exports.searchByFullName = function(name){
+    console.log('Here?');
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
