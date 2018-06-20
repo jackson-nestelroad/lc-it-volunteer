@@ -1,5 +1,7 @@
 // variable for allowing enter to be used to submit form
 var enter = true;
+// error array
+var error = ['Please fill out the following information!'];
 // button variables
 const submit = document.getElementById('submitBtn');
 const close = document.getElementById('closeBtn');
@@ -34,6 +36,12 @@ document.onkeydown = function(evt){
     //     enter = false;
     //     document.getElementById('confirmation').style['display'] = 'block';
     // }
+}
+// display error at top of form
+function displayError(){
+    document.getElementById('error').innerHTML = error.join('<br><br>');
+    document.getElementById('error').style.display = 'inline';
+    error = ['Please fill out the following information!'];
 }
 
 function validate(type, string){
@@ -82,11 +90,46 @@ submit.addEventListener('click', function(event){
     }
 // info given correctly, so submit the form
     else{
-        // create new volunteer in database, and we're good to go!
+        // put phone number in a constant format (123) 456-7890
         var phoneNumber = phone.match(/\d/g);
         phoneNumber = phoneNumber.join('');
         phoneNumber = `(${phoneNumber.substring(0,3)}) ${phoneNumber.substring(3,6)}-${phoneNumber.substring(6)}`;
+        // disable form submission multiple times
         enter = false;
-        document.getElementById('confirmation').style['display'] = 'block';
+        // send a POST request
+        $.ajax({
+            url: '/new',
+            method: 'POST',
+            context: document.body,
+            data: {
+                'first': first,
+                'last': last,
+                'email': email,
+                'phone': phone
+            }
+        })
+        .done(function(code){
+            if(code == 'error'){
+                // error occurred in SQL
+                error = ['An error occurred while connecting to the database! Please try again.'];
+                displayError();
+            }
+            else{
+                // we got to the database... what did it do?
+                if(code == 'exists'){
+                    // volunteer alreay registered
+                    document.getElementById('warning').style['display'] = 'block';
+                }
+                else{
+                    // volunteer registered
+                    document.getElementById('confirmation').style['display'] = 'block';
+                }
+            }
+        })
+        .fail(function(){
+            // error occurred in HTTP POST request
+            error = ['An error occurred while sending your HTTP request! Please try again.'];
+            displayError();
+        })
     }
 })

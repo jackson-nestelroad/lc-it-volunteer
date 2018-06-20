@@ -40,9 +40,34 @@ app.route('/')
         });
     })
 // /new is new volunteer registration form
-app.get('/new', function(req, res){
-    res.sendFile(__dirname + '/public/src/new/index.html');
-})
+app.route('/new')
+    .get(function(req, res){
+        res.sendFile(__dirname + '/public/src/new/index.html');
+    })
+    // registration form is successfully submitted
+    .post(function(req, res){
+        // req.body contains all of the information we submitted
+        database.searchByFullName(req.body.first + ' ' + req.body.last)
+        .then(id => {
+            // searchByFullName came back with an ID -- volunteer already registered
+            if(id){
+                res.send('exists');
+            }
+            else{
+                // create the volunteer
+                database.add(req.body.first, req.body.last, req.body.email, req.body.phone)
+                .then(code => {
+                    res.send('success');
+                })
+                .catch(err => {
+                    res.send('error');
+                })
+            }
+        })
+        .catch(err => {
+            res.send('error');
+        });
+    })
 // /data is database page with leaderboard, search, and inactive list
 app.get('/data', function(req, res){
     res.sendFile(__dirname + '/public/src/data/index.html');

@@ -11,16 +11,18 @@ var exports = module.exports = {};
 exports.searchByFullName = function(name){
     return new Promise((resolve, reject) => {
         pool.connect()
-        .then((client) => {
+        .then(client => {
             client.query(`
                 SELECT vol_id, concat(first_name, ' ', last_name) full_name
                 FROM volunteers
                 WHERE lower(concat(first_name, ' ', last_name)) = lower('${name}');
             `)
             .then(res => {
+                // no volunteer found
                 if(res.rows.length == 0){
                     resolve(false);
                 }
+                // volunteer found, so return the vol_id
                 else{
                     console.log(res.rows[0]);
                 }
@@ -37,6 +39,25 @@ exports.searchByFullName = function(name){
             client.release();
             reject('error');
         })
+    })
+}
+
+// adds a new volunteer
+exports.add = function(first, last, email, phone){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                INSERT INTO volunteers(first_name, last_name, email, phone)
+                VALUES('${first}', '${last}', '${email}', '${phone}');
+            `)
+            .then(res => {
+                resolve('success');
+            })
+            .catch(err => {
+                reject('error');
+            })
+        }) 
     })
 }
 
@@ -67,11 +88,6 @@ exports.leaderboard = function(){
 
 // fetches hours for a certain month
 exports.month = function(){
-
-}
-
-// adds a new volunteer
-exports.add = function(){
 
 }
 

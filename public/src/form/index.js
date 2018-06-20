@@ -130,6 +130,7 @@ submit.addEventListener('click', function(event){
                     document.getElementById('warning').style['display'] = 'block';
                 }
                 else{
+                    // volunteer registered and logged
                     document.getElementById('confirmation').style['display'] = 'block';
                 }
             }
