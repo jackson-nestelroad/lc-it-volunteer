@@ -118,7 +118,7 @@ app.route('/validate')
         }
         // info still looks good
         else{
-            database.checkIfRegistered(req.query.first + ' ' + req.query.last, req.body.email)
+            database.checkIfRegistered(req.query.name, req.body.email)
             .then(id => {
                 if(!id){
                     res.send('dne');
