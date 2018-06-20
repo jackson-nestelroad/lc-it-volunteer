@@ -1,9 +1,5 @@
 
-NEW PLAN: Heroku PostgreSQL
-
-Figure out POST request communications.
-
-
+Begin Database page
 
 
 link submission to database
