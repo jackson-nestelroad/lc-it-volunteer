@@ -19,20 +19,27 @@ exports.log = function(id, hours){
 // searches by first name
 exports.searchByFirstName = function(search){
     return new Promise((resolve, reject) => {
-        client.connect();
-        client.query(`
-            SELECT *
-            FROM volunteers;
-        `)
-        .then(res => {
-            console.log(res);
-            resolve('success');
-        })
-        .catch(err => {
-            console.error(error.stack);
-            reject('error');
-        })
-        client.end();
+        client.connect()
+            .then(() => {
+                client.query(`
+                    SELECT *
+                    FROM volunteers;
+                `)
+                .then(res => {
+                    console.log(res);
+                    client.end();
+                    resolve('success');
+                })
+                .catch(err => {
+                    console.error(error);
+                    client.end();
+                    reject('error');
+                })
+            })
+            .catch(err => {
+                client.end();
+                reject('error');
+            })
     })
 }
 
