@@ -102,12 +102,31 @@ submit.addEventListener('click', function(event){
     }
 // info given correctly, so submit the form
     else{
-        // can use now.getDay() to get the day of week to reset the engagement statistics per week for team
-        hours = hours + ' hour' + ((hours > 1) ? 's.' : '.');
-        console.log(`${name} volunteered for ${team} on ${date} for ${hours}`);
-        // log things to database here
-        // display confirmation modal and disable enter key
+        // disable form submission multiple times
         enter = false;
-        document.getElementById('confirmation').style['display'] = 'block';
+        // can use now.getDay() to get the day of week to reset the engagement statistics per week for team
+        // send a POST request
+        $.ajax({
+            url: '/',
+            method: 'POST',
+            context: document.body,
+            data: {
+                'name': name,
+                'team': team,
+                'date': date,
+                'hours': hours
+            }
+        })
+        .done(function(){
+            // display confirmation modal
+            document.getElementById('confirmation').style['display'] = 'block';
+        })
+        .fail(function(){
+            // some sort of error occurred...
+            error = ['An error occurred sending your data!'];
+            displayError();
+        })
+        hours = hours + ' hour' + ((hours > 1) ? 's.' : '.');
+        console.log(`${name} volunteered for team ${team} on ${date} for ${hours}`);
     }
 })

@@ -1,10 +1,7 @@
 
 NEW PLAN: Heroku PostgreSQL
 
-
-6/19/18 -- Set up Git, GitHub, and Heroku deployment.
-6/20/18 -- Set up Heroku PostgreSQL.
-6/21/18 -- Communicate with database.
+Figure out POST request communications.
 
 
 

@@ -77,16 +77,15 @@ Updated Roadmap
     6/8/18 -- Finish basic HTML, CSS, and Javascript. -- DONE
     6/11/18 -- Replace Electron support with Express support. -- DONE
     6/13/18 -- Create Volunteer Registration Form and interlink the two forms. -- DONE
-    6/14/18 -- Become familiar with PostgreSQL, reate database structure, and write all SQL queries. -- DONE
-    6/21/18 -- Database created on Google Cloud and successfully linked.
+    6/14/18 -- Become familiar with PostgreSQL, create database structure, and write all SQL queries. -- DONE
+    6/21/18 -- App deployed with Heroku, database created in Heroku and communicated with.
         Create a fake database with lots of volunteers and months to test EVERYTHING!
     7/5/18 -- Finish database view page. (Search, Leaderboard, Inactivity List)
     7/12/18 -- Finish Statistics page.
     7/19/18 -- Finish table removal/addition process. (When new month starts)
-    7/26/18 -- App deployment process.
-    8/2/18 -- Old database transfer and backup.
-    8/9/18 -- Project finished.
-            Test every single aspect for a long time.
+    7/26/18 -- Old database transfer and backup.
+    8/2/18 -- Project finished.
+        Test every single aspect for a long time.
 
     All along the way is bug testing to assure each step works before it is completed.
 

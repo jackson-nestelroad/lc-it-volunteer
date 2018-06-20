@@ -38,7 +38,7 @@ phone VARCHAR(255) NOT NULL
 
 CREATE TABLE teams(
 team_id serial PRIMARY KEY,
-name
+name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE logs(
