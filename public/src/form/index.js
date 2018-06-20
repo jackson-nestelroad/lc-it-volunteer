@@ -120,7 +120,7 @@ submit.addEventListener('click', function(event){
         .done(function(code){
             if(code == 'error'){
                 // error occurred in SQL
-                error = ['An error occurred while sending your data! Please try again.'];
+                error = ['An error occurred while connecting to the database! Please try again.'];
                 displayError();
             }
             else{
@@ -136,7 +136,7 @@ submit.addEventListener('click', function(event){
         })
         .fail(function(){
             // error occurred in HTTP POST request
-            error = ['An error occurred while sending your data! Please try again.'];
+            error = ['An error occurred while sending your HTTP request! Please try again.'];
             displayError();
         })
         hours = hours + ' hour' + ((hours > 1) ? 's.' : '.');
