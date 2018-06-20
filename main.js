@@ -138,7 +138,6 @@ app.route('/validate')
                 res.send('error');
             })
         }
-        res.send('dne');
     })
 // /data is database page with leaderboard, search, and inactive list
 app.get('/data', function(req, res){
