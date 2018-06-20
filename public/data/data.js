@@ -25,9 +25,12 @@ exports.searchByFirstName = function(search){
     `)
     .then(res => {
         console.log(res);
-        console.log(client);
+        return 'success';
     })
-    .catch(err => console.error(error.stack))
+    .catch(err => {
+        console.error(error.stack);
+        return 'failure';
+    })
 }
 
 // searches by most active team

@@ -117,7 +117,8 @@ submit.addEventListener('click', function(event){
                 'hours': hours
             }
         })
-        .done(function(){
+        .done(function(code){
+            console.log(code);
             // display confirmation modal
             document.getElementById('confirmation').style['display'] = 'block';
         })
