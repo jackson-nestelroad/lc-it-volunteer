@@ -1,7 +1,8 @@
 const { Client } = require('pg');
-const client = new Client({
+const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: true // required for Heroku connections
+    ssl: true, // required for Heroku connections
+    max: 20
 });
 
 var exports = module.exports = {};
@@ -9,8 +10,8 @@ var exports = module.exports = {};
 // searches by full name and returns ID
 exports.searchByFullName = function(name){
     return new Promise((resolve, reject) => {
-        client.connect()
-        .then(() => {
+        pool.connect()
+        .then((client) => {
             client.query(`
                 SELECT vol_id, concat(first_name, ' ', last_name) full_name
                 FROM volunteers
@@ -23,17 +24,17 @@ exports.searchByFullName = function(name){
                 else{
                     console.log(res.rows[0]);
                 }
-                client.end();
+                client.release();
             })
             .catch(err => {
                 console.log(err);
-                client.end();
+                client.release();
                 reject('error');
             })
         })
         .catch(err => {
             console.log(err);
-            client.end();
+            client.release();
             reject('error');
         })
     })
