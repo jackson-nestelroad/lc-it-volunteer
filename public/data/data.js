@@ -18,6 +18,9 @@ exports.log = function(id, hours){
 
 // searches by first name
 exports.searchByFirstName = function(search){
+    if(client._connected){
+        client.end();
+    }
     client.connect();
     client.query(`
         SELECT *
@@ -31,6 +34,7 @@ exports.searchByFirstName = function(search){
         console.error(error.stack);
         return 'failure';
     })
+    client.end();
 }
 
 // searches by most active team
