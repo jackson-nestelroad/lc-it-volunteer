@@ -75,6 +75,17 @@ app.route('/new')
             res.send('error');
         });
     })
+// /validate is a page to enter the volunteer's email if there is more than one volunteers with the same name
+app.route('/validate')
+    .get(function(req, res){
+        res.sendFile(__dirname + '/public/src/validate/index.html');
+    })
+    // email is submitted
+    .post(function(req, res){
+        console.log(req.query);
+        res.send('dne');
+        // database.searchByEmail()
+    })
 // /data is database page with leaderboard, search, and inactive list
 app.get('/data', function(req, res){
     res.sendFile(__dirname + '/public/src/data/index.html');
