@@ -18,7 +18,7 @@ exports.log = function(id, hours){
 
 // searches by first name
 exports.searchByFirstName = function(search){
-    return new Promise((resove, reject) => {
+    return new Promise((resolve, reject) => {
         client.connect();
         client.query(`
             SELECT *
