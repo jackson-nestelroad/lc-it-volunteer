@@ -14,7 +14,7 @@ exports.searchByFullName = function(name){
             client.query(`
                 SELECT vol_id, concat(first_name, ' ', last_name) full_name
                 FROM volunteers
-                WHERE lower(concat(first_name, ' ', last_name)) = lower(${name});
+                WHERE lower(concat(first_name, ' ', last_name)) = lower('${name}');
             `)
             .then(res => {
                 if(res.rows.length == 0){
@@ -33,7 +33,7 @@ exports.searchByFullName = function(name){
         })
         .catch(err => {
             console.log(err);
-            // client.end();
+            client.end();
             reject('error');
         })
     })
