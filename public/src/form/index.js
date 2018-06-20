@@ -143,7 +143,5 @@ submit.addEventListener('click', function(event){
             error = ['An error occurred while sending your HTTP request! Please try again.'];
             displayError();
         })
-        hours = hours + ' hour' + ((hours > 1) ? 's.' : '.');
-        console.log(`${name} volunteered for team ${team} on ${date} for ${hours}`);
     }
 })
