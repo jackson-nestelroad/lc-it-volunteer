@@ -18,9 +18,6 @@ exports.log = function(id, hours){
 
 // searches by first name
 exports.searchByFirstName = function(search){
-    if(client._connected){
-        client.end();
-    }
     client.connect();
     client.query(`
         SELECT *
