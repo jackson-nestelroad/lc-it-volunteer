@@ -26,7 +26,7 @@ exports.searchByFullName = function(name){
                     client.end();
                 })
                 .catch(err => {
-                    console.error(error);
+                    console.error(err);
                     client.end();
                     reject('error');
                 })
