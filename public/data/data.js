@@ -47,7 +47,7 @@ exports.searchByFullName = function(name){
 }
 
 // checks for a volunteer with this name AND email and returns ID
-exports.checkIfRegsitered = function(name, email){
+exports.checkIfRegistered = function(name, email){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
