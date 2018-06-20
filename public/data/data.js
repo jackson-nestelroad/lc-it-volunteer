@@ -18,11 +18,8 @@ exports.log = function(id, hours){
 
 // searches by first name
 exports.searchByFirstName = function(search){
+    console.log(client);
     client.connect();
-    client.on('error', (err) => {
-        console.err(err);
-        client.end();
-    })
     client.query(`
         SELECT *
         FROM volunteers;
