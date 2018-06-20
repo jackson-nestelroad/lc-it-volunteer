@@ -30,10 +30,10 @@ document.onkeydown = function(evt){
     //     enter = false;
     //     document.getElementById('warning').style['display'] = 'block';
     // }
-    if(keyCode == 88){
-        enter = false;
-        document.getElementById('confirmation').style['display'] = 'block';
-    }
+    // if(keyCode == 88){
+    //     enter = false;
+    //     document.getElementById('confirmation').style['display'] = 'block';
+    // }
 }
 
 function validate(type, string){
