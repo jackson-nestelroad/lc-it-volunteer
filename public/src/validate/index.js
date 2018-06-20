@@ -12,9 +12,9 @@ const back = document.getElementById('backBtn');
 back.addEventListener('click', function(event){
     window.location.replace('/');
 })
-// confirmation modal is closed -> reset the page
+// confirmation modal is closed -> go back to log hours form
 close.addEventListener('click', function(event){
-    window.location.reload(false);
+    window.location.replace('/');
 })
 // warning modal is closed -> DON'T reload
 close2.addEventListener('click', function(event){
