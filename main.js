@@ -31,8 +31,13 @@ app.route('/')
             }
             else{
                 // id is vol_id for logs
-                // database.log(id)
-                res.send('success');
+                database.log(req.body.date, id, req.body.team, req.body.hours)
+                .then(code => {
+                    res.send('success');
+                })
+                .catch(err => {
+                    res.send('error');
+                })
             }
         })
         .catch(err => {

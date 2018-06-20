@@ -9,7 +9,6 @@ var exports = module.exports = {};
 
 // searches by full name and returns ID
 exports.searchByFullName = function(name){
-    console.log('Here?');
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -25,7 +24,7 @@ exports.searchByFullName = function(name){
                 }
                 // volunteer found, so return the vol_id
                 else{
-                    console.log(res.rows[0]);
+                    resolve(res.rows[0].vol_id);
                 }
                 client.release();
             })
@@ -58,13 +57,37 @@ exports.add = function(first, last, email, phone){
             .catch(err => {
                 reject('error');
             })
+        })
+        .catch(err => {
+            console.log(err);
+            client.release();
+            reject('error');
         }) 
     })
 }
 
 // logs hours to an ID
-exports.log = function(id, hours){
-
+exports.log = function(date, id, team, hours){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                INSERT INTO logs(date, vol_id, team_id, hours)
+                VALUES('${date}', id, team, hours);
+            `)
+            .then(res => {
+                resolve('success');
+            })
+            .catch(err => {
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            client.release();
+            reject('error');
+        })
+    })
 }
 
 // searches by first name
