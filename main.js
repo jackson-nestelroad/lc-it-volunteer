@@ -83,7 +83,8 @@ app.route('/validate')
     // email is submitted
     .post(function(req, res){
         console.log(req.body);
-        console.log(req.param('name'));
+        console.log(req.params);
+        console.log(req.query);
         res.send('dne');
         // database.searchByEmail()
     })
