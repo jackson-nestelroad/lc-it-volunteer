@@ -72,7 +72,7 @@ submit.addEventListener('click', function(event){
         .done(function(code){
             if(code == 'error'){
                 // error occurred in SQL
-                error = ['An error occurred while connecting to the database! Please try again.'];
+                error = ['An error occurred with the database! Please try again.'];
                 displayError();
             }
             else{

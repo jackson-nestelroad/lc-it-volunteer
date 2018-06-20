@@ -57,9 +57,9 @@ app.route('/new')
     // registration form is successfully submitted
     .post(function(req, res){
         // req.body contains all of the information we submitted
-        database.checkIfRegistered(req.body.name, req.body.email)
+        database.checkIfRegistered(req.body.first + ' ' + req.body.last, req.body.email)
         .then(id => {
-            // searchByFullName came back with an ID -- volunteer already registered
+            // checkIfRegistered came back with an ID -- volunteer already registered
             if(id){
                 res.send('exists');
             }
