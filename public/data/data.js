@@ -25,11 +25,9 @@ exports.searchByFirstName = function(search){
     `)
     .then(res => {
         console.log(res);
-        return 'success';
     })
     .catch(err => {
         console.error(error.stack);
-        return 'failure';
     })
     client.end();
 }

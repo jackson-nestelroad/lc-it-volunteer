@@ -22,9 +22,8 @@ app.route('/')
     })
     .post(function(req, res){
         console.log(req.body);// this is the data to send to the database
-        database.searchByFirstName('H', (code) => {
-            res.send(code);  
-        });
+        database.searchByFirstName('H');
+        res.send('Volutneer logged');
     })
 // /new is new volunteer registration form
 app.get('/new', function(req, res){
