@@ -17,7 +17,7 @@ body *:focus{
     float: right;
     font-size: 12pt;
     height: 32px;
-    width: 240px;
+    width: 300px;
     background-color: rgba(0, 0, 0, 0);
     border: solid 1px #00a8d8;
     color: #00A8D8;
@@ -81,24 +81,19 @@ body *:focus{
     font-size: 16pt;
 }
 
-.input-box{
-    width: 275px;
-    padding: 12px;
-    border: solid 1px #dad8d6;
-    border-radius: 6px;
-    background-color: white;
-}
-
-select{
-    /* -webkit-appearance: none; 
-    -moz-appearance: none;
-    appearance: none; */
-    width: 275px !important;
+.input-box, select{
+    width: 70% !important;
     height: auto !important;
     padding: 12px !important;
     border: solid 1px #dad8d6 !important;
     border-radius: 6px !important;
     background-color: white !important;
+}
+
+select{
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
 }
 
 
