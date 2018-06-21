@@ -64,6 +64,14 @@ function validate(type, string){
             // this only assures we have 10 digits -- assuming we have no international volunteers
             return string.match(/\d/g).length == 10;
         }
+        if(type == 'name'){
+            if(string == string.toLowerCase()){
+                return string.substring(0,1).toUpperCase() + string.substring(1);
+            }
+            else{
+                return string;
+            }
+        }
     }
 }
 
@@ -73,6 +81,8 @@ submit.addEventListener('click', function(event){
     var last = document.getElementById('last-input').value;
     var email = document.getElementById('email-input').value;
     var phone = document.getElementById('phone-input').value;
+    first = validate('name', first);
+    last = validate('name', last);
     var emailTrue = validate('email', email);
     var phoneTrue = validate('phone', phone);
     var values = {

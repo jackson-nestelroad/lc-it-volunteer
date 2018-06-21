@@ -74,14 +74,40 @@ Initial Roadmap
     8/9/18 -- Project finished.
 
 Updated Roadmap
-    6/8/18 -- Finish basic HTML, CSS, and Javascript. -- DONE
-    6/11/18 -- Replace Electron support with Express support. -- DONE
-    6/13/18 -- Create Volunteer Registration Form and interlink the two forms. -- DONE
-    6/14/18 -- Become familiar with PostgreSQL, create database structure, and write all SQL queries. -- DONE
-    6/21/18 -- App deployed with Heroku, database created in Heroku, log form and registration form finished. -- DONE
+    6/8/18
+        Finish basic HTML.
+        Finish basic CSS.
+        Finish basic Javascript.
+    6/11/18
+        Replace Electron support with Express support.
+    6/13/18
+        Create Volunteer Registration Form.
+        Interlink the two forms.
+    6/14/18
+        Take PostgreSQL class.
+        Create database structure.
+        Write all SQL queries.
+    6/20/18
+        App deployed with Heroku.
+        Database created in Heroku.
+        Log form and Registration Form connected to database.
+    6/21/18
+        Email validation for duplicate names.
+        Log form and Registration Form finished.
+    7/5/18
+
+    7/12/18
+
+    7/19/18
+
+    7/26/18
+
+    8/2/18
+    
+
     7/5/18 -- Finish database view page. (Search, Leaderboard, Inactivity List)
     7/12/18 -- Finish Statistics page.
-    7/19/18 -- Finish table removal/addition process. (When new month starts)
+    7/19/18 -- 
     7/26/18 -- Old database transfer and backup.
     8/2/18 -- Project finished.
         Test every single aspect for a long time.
