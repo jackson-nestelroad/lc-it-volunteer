@@ -155,6 +155,7 @@ submit.addEventListener('click', function(event){
                 // more than one volunteer with the same name -> validate the email
                 else if(code == 'validate'){
                     emailOn = true;
+                    enter = true;
                     document.getElementById('validate').style['display'] = 'block';
                 }
                 else{
