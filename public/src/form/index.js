@@ -27,7 +27,6 @@ close4.addEventListener('click', function(event){
 // close button in email validation modal
 close3.addEventListener('click', function(event){
     document.getElementById('validate').style['display'] = 'none';
-    enter = true;
     emailOn = false;
 })
 // close button in warning modal
@@ -181,6 +180,7 @@ emailSubmit.addEventListener('click', function(event){
     if(!emailTest){
         document.getElementById(`email-input`).style['background-color'] = 'rgba(255,0,0,0.1)';   
         document.getElementById('validate-text').style['color'] = '#ff4949';
+        enter = true;
     }
     // email is legit -- need to check database if it exists there
     else{
@@ -204,6 +204,7 @@ emailSubmit.addEventListener('click', function(event){
                 // volunteer not found
                 if(code == 'dne'){
                     document.getElementById('validate-text').innerHTML = 'Email not found.';
+                    enter = true;
                 }
                 else{
                     // volunteer registered and logged

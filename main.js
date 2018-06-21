@@ -32,7 +32,7 @@ app.route('/')
                 }
                 else{
                     // id is vol_id, so let's log the info
-                    database.log(req.query.date, id, req.query.team, req.query.hours)
+                    database.log(req.body.date, id, req.body.team, req.body.hours)
                     .then(code => {
                         res.send('success');
                     })
