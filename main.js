@@ -24,7 +24,7 @@ app.route('/')
     .post(function(req, res){
         // req.body contains all of the information we submitted
         // we were given an email through validation
-        if(req.body.email !== ''){
+        if(!req.body.email){
             database.checkIfRegistered(req.query.name, req.body.email)
             .then(id => {
                 if(!id){
