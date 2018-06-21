@@ -189,9 +189,9 @@ emailSubmit.addEventListener('click', function(event){
             context: document.body,
             data: {
                 'name': document.getElementById('name-input').value,
-                'team': document.getElementById('name-input').value,
-                'date': document.getElementById('name-input').value,
-                'hours': parseInt(document.getElementById('name-input').value),
+                'team': document.getElementById('team-input').value,
+                'date': document.getElementById('date-input').value,
+                'hours': parseInt(document.getElementById('hours-input').value),
                 'email': email
             }
         })
