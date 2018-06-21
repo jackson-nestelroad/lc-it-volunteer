@@ -82,7 +82,8 @@ body *:focus{
 }
 
 .input-box{
-    width: 275px;
+    width: 70%;
+    height: auto;
     padding: 12px;
     border: solid 1px #dad8d6;
     border-radius: 6px;
