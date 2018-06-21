@@ -105,7 +105,7 @@ submit.addEventListener('click', function(event){
                 'first': first,
                 'last': last,
                 'email': email,
-                'phone': phone
+                'phone': phoneNumber
             }
         })
         .done(function(code){
