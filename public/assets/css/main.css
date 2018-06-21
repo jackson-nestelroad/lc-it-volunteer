@@ -193,7 +193,7 @@ hr{
     z-index: 2 !important;
 }
 
-.modal.confirmation{
+#confirmation.modal{
     z-index: 3 !important;
 }
 
