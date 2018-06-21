@@ -89,6 +89,14 @@ body *:focus{
     background-color: white;
 }
 
+select{
+    width: 275px;
+    padding: 12px;
+    border: solid 1px #dad8d6;
+    border-radius: 6px;
+    background-color: white;
+}
+
 
 .input.name{
     grid-column: 1 / 2;
