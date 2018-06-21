@@ -107,7 +107,7 @@ Updated Roadmap
 
     7/5/18 -- Finish database view page. (Search, Leaderboard, Inactivity List)
     7/12/18 -- Finish Statistics page.
-    7/19/18 -- 
+    7/19/18 -- Catch up week.
     7/26/18 -- Old database transfer and backup.
     8/2/18 -- Project finished.
         Test every single aspect for a long time.
