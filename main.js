@@ -104,66 +104,6 @@ app.route('/new')
             res.send('error');
         });
     })
-// /validate is a page to enter the volunteer's email if there is more than one volunteers with the same name
-app.route('/validate')
-    .get(function(req, res){
-        res.sendFile(__dirname + '/public/src/validate/index.html');
-    })
-    // email is submitted
-    .post(function(req, res){
-        // we need to check the information again to make sure it didn't get changed in the URL
-        function checkInfo(date, team, hours){
-            if(date == ''){
-                return false;
-            }
-            else{
-                // min is first day of the same month last year
-                var min = new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`);
-                // max is next month
-                var max = new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`);
-                date = new Date(date);
-                if(date <= min || date > max){
-                    return false;
-                }
-                else{
-                    // need to update this if more teams are ever added
-                    if([1,2,3,4].includes(parseInt(team)) && parseInt(hours)){
-                        return true;
-                    }
-                    else{
-                        return false;
-                    }
-                }
-            }
-        }
-        // req.body.email is the email
-        // req.query has everything else
-        if(!checkInfo(req.query.date, req.query.team, req.query.hours)){
-            res.send('bad');
-        }
-        // info still looks good
-        else{
-            database.checkIfRegistered(req.query.name, req.body.email)
-            .then(id => {
-                if(!id){
-                    res.send('dne');
-                }
-                else{
-                    // id is vol_id, so let's log the info
-                    database.log(req.query.date, id, req.query.team, req.query.hours)
-                    .then(code => {
-                        res.send('success');
-                    })
-                    .catch(err => {
-                        res.send('error');
-                    })
-                }
-            })
-            .catch(err => {
-                res.send('error');
-            })
-        }
-    })
 // /data is database page with leaderboard, search, and inactive list
 app.get('/data', function(req, res){
     res.sendFile(__dirname + '/public/src/data/index.html');

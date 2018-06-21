@@ -6,11 +6,17 @@ var error = ['Please fill out the following information!'];
 const submit = document.getElementById('submitBtn');
 const close = document.getElementById('closeBtn');
 const close2 = document.getElementById('closeBtn2');
+const close4 = document.getElementById('closeBtn4');
 const back = document.getElementById('backBtn');
 
 // back button at top sends back to base volunteer form
 back.addEventListener('click', function(event){
     window.location.replace('/');
+})
+// close button in error modal
+close4.addEventListener('click', function(event){
+    document.getElementById('httpsqlerror').style['display'] = 'none';
+    enter = true;
 })
 // confirmation modal is closed -> reset the page
 close.addEventListener('click', function(event){
@@ -111,8 +117,7 @@ submit.addEventListener('click', function(event){
         .done(function(code){
             if(code == 'error'){
                 // error occurred in SQL
-                error = ['An error occurred while connecting to the database! Please try again.'];
-                displayError();
+                document.getElementById('httpsqlerror').style['display'] = 'block';
             }
             else{
                 // we got to the database... what did it do?
@@ -128,8 +133,7 @@ submit.addEventListener('click', function(event){
         })
         .fail(function(){
             // error occurred in HTTP POST request
-            error = ['An error occurred while sending your HTTP request! Please try again.'];
-            displayError();
+            document.getElementById('httpsqlerror').style['display'] = 'block';;
         })
     }
 })

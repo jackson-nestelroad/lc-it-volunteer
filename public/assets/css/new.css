@@ -181,6 +181,15 @@ hr{
     animation-duration: 0.8s;
 }
 
+.modal.dataErr{
+    z-index: 2 !important;
+}
+
+#confirmation.modal{
+    z-index: 3 !important;
+}
+
+
 @-webkit-keyframes slideIn {
     from {top: -600px; opacity: 0} 
     to {top: 50%; opacity: 1}
