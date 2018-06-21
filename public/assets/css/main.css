@@ -87,13 +87,14 @@ body *:focus{
     padding: 12px !important;
     border: solid 1px #dad8d6 !important;
     border-radius: 6px !important;
-    background-color: white !important;
+    background-color: white;
 }
 
 select{
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
+    /* add custom arrow */
 }
 
 
@@ -188,6 +189,14 @@ hr{
     animation-duration: 0.8s;
 }
 
+.modal.dataErr{
+    z-index: 2 !important;
+}
+
+.modal.confirmation{
+    z-index: 3 !important;
+}
+
 @-webkit-keyframes slideIn {
     from {top: -600px; opacity: 0} 
     to {top: 50%; opacity: 1}
@@ -221,6 +230,21 @@ hr{
     -webkit-animation-duration: 0.8s;
     animation-name: slideIn;
     animation-duration: 0.8s
+}
+
+#container.email{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    text-align: center;
+    min-width: 400px;
+    width: 300px;
+    height: 460px;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.8s;
+    animation-name: slideIn;
+    animation-duration: 0.8s   
 }
 
 #triangle-outer{
@@ -267,3 +291,7 @@ hr{
     top: -105px;
 }
 
+.validate-offset{
+    position: relative;
+    top: -150px;
+}

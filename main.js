@@ -23,31 +23,56 @@ app.route('/')
     // log form is successfully submitted
     .post(function(req, res){
         // req.body contains all of the information we submitted
-        database.searchByFullName(req.body.name)
-        .then(id => {
-            // searchByFullName came back false -- volunteer not registered
-            if(!id){
-                res.send('dne');
-            }
-            // we need to validate an email to see which volunteer this is
-            else if(id == 'duplicate'){
-                res.send('validate');
-            }
-            else{
-                // id is vol_id for logs
-                database.log(req.body.date, id, req.body.team, req.body.hours)
-                .then(code => {
-                    res.send('success');
-                })
-                .catch(err => {
-                    res.send('error');
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.send('error');
-        });
+        // we were given an email through validation
+        if(req.body.email !== ''){
+            database.checkIfRegistered(req.query.name, req.body.email)
+            .then(id => {
+                if(!id){
+                    res.send('dne');
+                }
+                else{
+                    // id is vol_id, so let's log the info
+                    database.log(req.query.date, id, req.query.team, req.query.hours)
+                    .then(code => {
+                        res.send('success');
+                    })
+                    .catch(err => {
+                        res.send('error');
+                    })
+                }
+            })
+            .catch(err => {
+                res.send('error');
+            })
+        }
+        // normal submission -- no email
+        else{
+            database.searchByFullName(req.body.name)
+            .then(id => {
+                // searchByFullName came back false -- volunteer not registered
+                if(!id){
+                    res.send('dne');
+                }
+                // we need to validate an email to see which volunteer this is
+                else if(id == 'duplicate'){
+                    res.send('validate');
+                }
+                else{
+                    // id is vol_id for logs
+                    database.log(req.body.date, id, req.body.team, req.body.hours)
+                    .then(code => {
+                        res.send('success');
+                    })
+                    .catch(err => {
+                        res.send('error');
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            });
+        }
     })
 // /new is new volunteer registration form
 app.route('/new')

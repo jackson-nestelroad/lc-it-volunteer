@@ -1,3 +1,5 @@
+// variable for if we are checking an email address
+var emailOn = false;
 // variable for allowing enter to be used to submit form
 var enter = true;
 // error array
@@ -7,14 +9,28 @@ const submit = document.getElementById('submitBtn');
 const display = document.getElementById('displayBtn');
 const close = document.getElementById('closeBtn');
 const close2 = document.getElementById('closeBtn2');
+const close3 = document.getElementById('closeBtn3');
+const close4 = document.getElementById('closeBtn4');
 const register = document.getElementById('registerBtn');
 const register2 = document.getElementById('registerBtn2');
 const data = document.getElementById('dataBtn');
+const emailSubmit = document.getElementById('emailBtn');
 // database button at top sends to database page
 data.addEventListener('click', function(event){
     window.location.replace('/data');
 })
-// close button in warning moda
+// close button in error modal
+close4.addEventListener('click', function(event){
+    document.getElementById('httpsqlerror').style['display'] = 'none';
+    enter = true;
+})
+// close button in email validation modal
+close3.addEventListener('click', function(event){
+    document.getElementById('validate').style['display'] = 'none';
+    enter = true;
+    emailOn = false;
+})
+// close button in warning modal
 close2.addEventListener('click', function(event){
     document.getElementById('warning').style['display'] = 'none';
     enter = true;
@@ -40,17 +56,22 @@ document.onkeydown = function(evt){
     var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
     if(keyCode == 13 && enter)
     {
-        submit.click();
+        if(emailOn){
+            emailSubmit.click();
+        }
+        if(!emailOn){
+            submit.click();
+        }
     }
     // test keys (Z and X) for modal display
-    if(keyCode == 90){
-        enter = false;
-        document.getElementById('warning').style['display'] = 'block';
-    }
-    if(keyCode == 88){
-        enter = false;
-        document.getElementById('confirmation').style['display'] = 'block';
-    }
+    // if(keyCode == 90){
+    //     emailOn = true;
+    //     document.getElementById('validate').style['display'] = 'block';
+    // }
+    // if(keyCode == 88){
+    //     enter = false;
+    //     document.getElementById('httpsqlerror').style['display'] = 'block';
+    // }
 }
 // display error at top of form
 function displayError(){
@@ -113,7 +134,6 @@ submit.addEventListener('click', function(event){
         // can use now.getDay() to get the day of week to reset the engagement statistics per week for team
         // send a POST request
         $.ajax({
-            url: '/',
             method: 'POST',
             context: document.body,
             data: {
@@ -126,8 +146,7 @@ submit.addEventListener('click', function(event){
         .done(function(code){
             if(code == 'error'){
                 // error occurred in SQL
-                error = ['An error occurred while connecting to the database! Please try again.'];
-                displayError();
+                document.getElementById('httpsqlerror').style['display'] = 'block';
             }
             else{
                 // volunteer not registered
@@ -136,7 +155,8 @@ submit.addEventListener('click', function(event){
                 }
                 // more than one volunteer with the same name -> validate the email
                 else if(code == 'validate'){
-                    window.location.replace(`/validate?name=${name}&team=${team}&date=${date}&hours=${hours}`);
+                    emailOn = true;
+                    document.getElementById('validate').style['display'] = 'block';
                 }
                 else{
                     // volunteer registered and logged
@@ -146,8 +166,54 @@ submit.addEventListener('click', function(event){
         })
         .fail(function(){
             // error occurred in HTTP POST request
-            error = ['An error occurred while sending your HTTP request! Please try again.'];
-            displayError();
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        })
+    }
+})
+// submit with an email validation -- for duplicate names
+emailSubmit.addEventListener('click', function(event){
+    // disable form submission multiple times
+    enter = false;
+    var email = document.getElementById('email-input').value;
+    var emailTest = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    emailTest = emailTest.test(email);
+    // invalid email
+    if(!emailTest){
+        document.getElementById(`email-input`).style['background-color'] = 'rgba(255,0,0,0.1)';   
+        document.getElementById('validate-text').style['color'] = '#ff4949';
+    }
+    // email is legit -- need to check database if it exists there
+    else{
+        $.ajax({
+            method: 'POST',
+            context: document.body,
+            data: {
+                'name': document.getElementById('name-input').value,
+                'team': document.getElementById('name-input').value,
+                'date': document.getElementById('name-input').value,
+                'hours': parseInt(document.getElementById('name-input').value),
+                'email': email
+            }
+        })
+        .done(function(code){
+            if(code == 'error'){
+                // error occurred in SQL
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            }
+            else{
+                // volunteer not found
+                if(code == 'dne'){
+                    document.getElementById('validate-text').innerHTML = 'Email not found.';
+                }
+                else{
+                    // volunteer registered and logged
+                    document.getElementById('confirmation').style['display'] = 'block';
+                }
+            }
+        })
+        .fail(function(code){
+            // error occurred in HTTP POST request
+            document.getElementById('httpsqlerror').style['display'] = 'block';
         })
     }
 })
