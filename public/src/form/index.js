@@ -177,7 +177,7 @@ submit.addEventListener('click', function(event){
 emailSubmit.addEventListener('click', function(event){
     // disable form submission multiple times
     enter = false;
-    var email = document.getElementById('email-input').value;
+    var email = document.getElementById('email-input').value.trim();
     var emailTest = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     emailTest = emailTest.test(email);
     // invalid email
