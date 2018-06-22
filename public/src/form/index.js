@@ -102,7 +102,7 @@ function checkDate(date){
 
 // form tries to submit
 submit.addEventListener('click', function(event){
-    var name = document.getElementById('name-input').value;
+    var name = document.getElementById('name-input').value.trim();
     var team = document.getElementById('team-input').value;
     var date = document.getElementById('date-input').value;
     var datePossible = checkDate(date);
