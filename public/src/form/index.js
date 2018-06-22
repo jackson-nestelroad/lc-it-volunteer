@@ -117,7 +117,7 @@ submit.addEventListener('click', function(event){
         'hours': hours
     }
 // info not given correctly, tell them why
-    if(name == '' || !date || team == '' || !hours){
+    if(name == '' || !datePossible || team == '' || !hours){
         displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
             var element = values[Object.keys(values)[i]];
