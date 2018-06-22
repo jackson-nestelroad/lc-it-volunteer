@@ -107,8 +107,9 @@ submit.addEventListener('click', function(event){
     var date = document.getElementById('date-input').value;
     var datePossible = checkDate(date);
     var hours = parseInt(document.getElementById('hours-input').value);
-    // make sure the number of hours is positive
+    // make sure the number of hours is positive and less than 24
     hours = (hours > 0) ? hours : false;
+    hours = (hours > 24) ? false : hours;
     var values = {
         'name': name,
         'team': team,
