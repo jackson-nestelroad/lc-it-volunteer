@@ -89,7 +89,7 @@ function checkDate(date){
         // max is next month
         var max = new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`);
         date = new Date(date);
-        if(date <= min || date > max){
+        if(date <= min || date >= max){
             error.push('Please enter a date within the last year.');
             error.push('You may not enter a future month\'s volunteers.');
             return false;
