@@ -46,7 +46,7 @@ body *:focus{
 
 #container{
     width: 80%;
-    min-width: 400px;
+    min-width: 350px;
     margin: 12px;
     padding: 12px;
     border-radius: 6px;
