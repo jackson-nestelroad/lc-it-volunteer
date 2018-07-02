@@ -253,7 +253,7 @@ hr{
     text-align: center;
     min-width: 400px;
     width: 400px;
-    height: 368px;
+    height: auto;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
     animation-name: slideIn;
@@ -268,7 +268,7 @@ hr{
     text-align: center;
     min-width: 400px;
     width: 400px;
-    height: 460px;
+    height: auto;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
     animation-name: slideIn;
