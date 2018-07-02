@@ -13,10 +13,10 @@ body *:focus{
 
 .topBtn{
     display: block;
-    float: right;
-    font-size: 10pt;
+    float: left;
+    font-size: 12pt;
     height: 32px;
-    width: 240px;
+    width: 270px;
     background-color: rgba(0, 0, 0, 0);
     border: solid 1px #00a8d8;
     color: #00A8D8;
@@ -35,6 +35,7 @@ body *:focus{
     -webkit-user-modify: none;
     -webkit-user-select: none;
     user-select: none;
+    margin-top: 24px;
 }
 
 .logo-row2{
