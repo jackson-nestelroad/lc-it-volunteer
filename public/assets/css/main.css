@@ -252,8 +252,8 @@ hr{
     margin: 0 auto;
     text-align: center;
     min-width: 400px;
-    width: 300px;
-    height: 425px;
+    width: 400px;
+    height: 368px;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
     animation-name: slideIn;
@@ -267,7 +267,7 @@ hr{
     margin: 0 auto;
     text-align: center;
     min-width: 400px;
-    width: 300px;
+    width: 400px;
     height: 460px;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
@@ -275,51 +275,14 @@ hr{
     animation-duration: 0.8s   
 }
 
-#triangle-outer{
-    width: 0;
-	height: 0;
-	border-left: 120px solid transparent;
-	border-right: 120px solid transparent;
-    border-bottom: 200px solid #ffc82c;
-    margin: 0 auto;
-}
-
-#triangle-inner{
-    width: 0;
-	height: 0;
-	border-left: 90px solid transparent;
-	border-right: 90px solid transparent;
-    border-bottom: 150px solid #fff;
-    margin: 0 auto;
-    position: relative;
-    top: -166px;   
-}
-
-#warning-text{
-    color: #ffc82c;
-    font-weight: 700;
-    text-align: center;
-    position: relative;
-    top: 8px;
-    left: -17px;
-    margin: 0;
-    font-size: 96pt;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
 .warning-msg{
     font-weight: 900;
     font-size: 20pt;
 }
 
-.warning-offset{
-    position: relative;
-    top: -105px;
-}
-
-.validate-offset{
-    position: relative;
-    top: -150px;
+.no-scan{
+    -webkit-user-drag: none;
+    -webkit-user-modify: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
