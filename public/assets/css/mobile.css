@@ -5,6 +5,7 @@ body{
     font-family: 'Montserrat';
     align-self: center;
     color: #404041;
+    overflow: hidden;
 }
 
 body *:focus{
@@ -12,7 +13,7 @@ body *:focus{
 }
 
 .topBtn{
-    display: none;
+    display: block;
     float: right;
     font-size: 12pt;
     height: 32px;
@@ -45,7 +46,7 @@ body *:focus{
 
 #container{
     width: 80%;
-    margin: 12px;
+    margin: 0px;
     padding: 12px;
     border-radius: 6px;
     background-color: white;
