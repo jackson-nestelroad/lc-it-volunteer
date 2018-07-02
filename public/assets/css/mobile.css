@@ -30,7 +30,7 @@ body *:focus{
 }
 
 .logo{
-    width: 100%;
+    width: 350px;
     height: auto;
     -webkit-user-drag: none;
     -webkit-user-modify: none;
@@ -45,8 +45,8 @@ body *:focus{
 }
 
 #container{
-    width: 100%;
-    /*min-width: 625px; */
+    width: 80%;
+    min-width: 625px;
     margin: 24px;
     padding: 24px;
     border-radius: 6px;
@@ -104,7 +104,6 @@ select{
     appearance: none;
     /* add custom arrow */
 }
-
 
 .input.name{
     grid-column: 1 / 2;
