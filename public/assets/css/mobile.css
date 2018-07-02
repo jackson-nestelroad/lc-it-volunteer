@@ -12,7 +12,7 @@ body *:focus{
 }
 
 .topBtn{
-    display: block;
+    display: none;
     float: right;
     font-size: 12pt;
     height: 32px;
