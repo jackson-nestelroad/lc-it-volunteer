@@ -1,42 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300.600");
 
-@media only screen and (max-width: 800px) {
-.grid-container-form{
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(1, minmax(200px, 1fr));
-    grid-template-rows: repeat(5, minmax(50px, 1fr));
-    grid-gap: 24px;
-    text-align: center;
-    align-items: center;
-}
-.input.name{
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-}
-
-.input.team{
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-}
-
-.input.date{
-    grid-column: 1 / 2;
-    grid-row: 3 / 4;
-}
-
-.input.hours{
-    grid-column: 1 / 2;
-    grid-row: 4 / 5;
-}
-
-.submit{
-    grid-column: 1 / 2;
-    grid-row: 5 / 6;
-}
-}
-
 body{
     background: rgb(245, 245, 245);
     font-family: 'Montserrat';
@@ -107,11 +70,19 @@ body *:focus{
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
-    grid-template-rows: repeat(3, minmax(50px, 1fr));
     grid-gap: 24px;
     text-align: center;
     align-items: center;
+}
+
+.grid-container-form.log-hours{
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    grid-template-rows: repeat(3, minmax(50px, 1fr));
+}
+
+.grid-container-form.new-form{
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+    grid-template-rows: repeat(3, minmax(50px, 1fr));
 }
 
 .input{
@@ -151,6 +122,26 @@ select{
 }
 
 .input.hours{
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.input.first{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.input.last{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.input.phone{
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.input.email{
     grid-column: 2 / 3;
     grid-row: 2 / 3;
 }
