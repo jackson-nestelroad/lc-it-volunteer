@@ -234,7 +234,7 @@ exports.leaderboard = function(){
                     ON g.vol_id = b.vol_id) h
                 ON a.vol_id = h.vol_id) f
                 ON f.vol_id = c.vol_id
-                ORDER BY c.month_hours DESC;
+                ORDER BY c.hours DESC;
             `)
             .then(res => {
                 resolve(res.rows);
