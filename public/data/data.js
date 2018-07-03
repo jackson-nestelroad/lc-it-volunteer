@@ -198,7 +198,11 @@ exports.leaderboard = function(){
                         FROM teams
                         LEFT OUTER JOIN 
                         (SELECT vol_id, mode() within group (order by team_id) temp_id
-                        FROM logs
+                        FROM 
+                            (SELECT *
+                            FROM logs
+                            WHERE extract(month from date) = 7
+                            AND extract(year from date) = 2018) k
                         WHERE vol_id IN
                             (SELECT volunteers.vol_id
                             FROM volunteers
