@@ -147,8 +147,8 @@ submit.addEventListener('click', function(event){
                     </tbody>
                 </table>
                 `
+                document.getElementById('search-results').appendChild(add);
             });
-            document.getElementById('search-results').appendChild(add);
             enter = true;
         }
     })
