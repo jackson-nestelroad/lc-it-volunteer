@@ -162,6 +162,7 @@ submit.addEventListener('click', function(event){
 // pops up info
 document.getElementById('search-results').onclick = function(element){
 	if(element.target.className == 'clickForInfo'){
+        enter = false;
         // get ID based on who you clicked on
         var id = parseInt(element.target.parentElement.children[0].innerHTML.substr(1));
         $.ajax({
