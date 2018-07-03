@@ -128,6 +128,15 @@ Display Page
     Leaderboard
         Top volunteers for the month
 
+New Search Plan
+Dynamic page /search
+    URL no longer changes
+Sends POST request to main.js
+    Searches database, returns all rows, and sends it back to search/index.js
+        search/index.js then displays all the data via the code below
+        will need a loading animation most likely
+
+
 How searching will work on /data
 
 // code for adding a row

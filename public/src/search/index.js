@@ -94,7 +94,7 @@ select.addEventListener('change', function(event){
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
     // check if search value if we need it
-    if(select.value != 1 && select.value != 6){
+    /*if(select.value != 1 && select.value != 6){
         if(query.value == ''){
             document.getElementById('search-query').style['background-color'] = 'rgba(255,0,0,0.1)';
             return;
@@ -107,7 +107,7 @@ submit.addEventListener('click', function(event){
     }
     else{
         window.location.replace(`/search?${category}=${query.value}`);
-    }
+    }*/
 })
 // pops up info
 document.getElementById('search-results').onclick = function(element){
