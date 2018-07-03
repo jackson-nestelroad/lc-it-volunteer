@@ -96,6 +96,9 @@ submit.addEventListener('click', function(event){
         }
         else{
             // rows is an array in order of returned rows
+            if(rows.length == 0){
+                // add a result that says "No results found!"
+            }
             rows.forEach(element => {
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
@@ -140,21 +143,6 @@ submit.addEventListener('click', function(event){
     .fail(function(code){
         document.getElementById('httpsqlerror').style['display'] = 'block';
     })
-    // check if search value if we need it
-    /*if(select.value != 1 && select.value != 6){
-        if(query.value == ''){
-            document.getElementById('search-query').style['background-color'] = 'rgba(255,0,0,0.1)';
-            return;
-        }
-    }
-    var category = searchCategories[select.value - 1];
-    // refresh URL --> new GET request in URL that will display results
-    if(select.value == 1 || select.value == 6){
-        window.location.replace(`/search?${category}`);
-    }
-    else{
-        window.location.replace(`/search?${category}=${query.value}`);
-    }*/
 })
 // pops up info
 document.getElementById('search-results').onclick = function(element){

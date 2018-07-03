@@ -137,7 +137,14 @@ app.route('/search')
         }
         // search by first name
         if(category == 2){
-
+            database.searchByFirstName(query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
         }
         // search by last name
         if(category == 3){

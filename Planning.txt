@@ -97,7 +97,10 @@ Updated Roadmap
     7/2/2018
         Added mobile support for both forms.
         Designed search page.
-        
+    7/3/2018
+        Leaderboard finished.
+        Information on click finished.
+        Base for search engine finished.
     7/5/18
 
     7/12/18
