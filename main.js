@@ -113,6 +113,17 @@ app.route('/search')
     .post(function(req, res){
         var category = req.body.category;
         var query = req.body.query;
+        // popup with email and phone number
+        if(category == 0){
+            database.getByID(query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
         // leaderboard, no query
         if(category == 1){
             database.leaderboard()

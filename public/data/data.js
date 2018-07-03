@@ -262,7 +262,28 @@ exports.getInactive = function(){
 }
 
 exports.getByID = function(id){
-
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT *
+                FROM volunteers
+                WHERE vol_id = ${id}
+            `)
+            .then(res => {
+                resolve(res.rows);
+            })
+            .catch(err => {
+                console.log(err);
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            client.release();
+            reject('error');
+        })
+    })
 }
 
 // fetches hours for a certain month

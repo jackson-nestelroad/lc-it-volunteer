@@ -38,9 +38,9 @@ document.onkeydown = function(evt){
         submit.click();
     }
     // test key
-    if(keyCode == 88){
-        document.getElementById('volunteerInfo').style['display'] = 'block';
-    }
+    // if(keyCode == 88){
+    //     document.getElementById('volunteerInfo').style['display'] = 'block';
+    // }
 }
 function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();
@@ -160,6 +160,34 @@ submit.addEventListener('click', function(event){
 document.getElementById('search-results').onclick = function(element){
 	if(element.target.className == 'clickForInfo'){
         // get ID based on who you clicked on
-		console.log(parseInt(element.target.parentElement.children[0].innerHTML.substr(1)));
+        var id = parseInt(element.target.parentElement.children[0].innerHTML.substr(1));
+        $.ajax({
+            method: 'POST',
+            context: document.body,
+            data: {
+                category: 0,
+                query: id
+            }
+        })
+        .done(function(rows){
+            if(rows == 'error'){
+                // this string is sent if something bad happened
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            }
+            else{
+                var name = rows[0].first_name + ' ' + rows[0].last_name;
+                var email = rows[0].email;
+                var phone = rows[0].phone;
+                // set the information in the modal
+                document.getElementById('name') = name;
+                document.getElementById('email') = email;
+                document.getElementById('phone') = phone;
+                // display modal with information
+                document.getElementById('volunteerInfo').style['display'] = 'block';
+            }
+        })
+        .fail(function(code){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        })
     }
 }
