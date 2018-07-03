@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>  
+    <head>
+        <meta charset="UTF-8">
+        <title>Life.Church IT Volunteer Database</title>
+        <script src="jquery/dist/jquery.js" onload="window.$ = window.jQuery = module.exports;"></script>
+        <link rel="stylesheet" href="assets/css/main.css">
+        <!--<link rel="stylesheet" media="(max-width: 800px)" href="assets/css/mobile.css">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0">-->
+        <link rel="stylesheet" href="air-datepicker/dist/css/datepicker.min.css">
+        <script src="air-datepicker/dist/js/datepicker.min.js"></script>
+        <script src="air-datepicker/dist/js/i18n/datepicker.en.js"></script>
+    </head>
+    <body>
+        <div id="httpsqlerror" class="modal dataErr">
+            <div id="container" class="warn" style="height: 360px !important">
+                <svg height="200" width="240">
+                    <polygon points="120,20 20,180 220,180" style="fill:white;stroke:#FFC82C;stroke-width:16" />
+                    <text x="104" y="155" class="no-scan" style="fill:#FFC82C;font-size:96pt;font-weight:700;">!</text>
+                </svg>
+                <p class="warning-msg">An error occurred.<br />Please try again.</p>
+                <hr />
+                <span id="closeBtn4" class="linkBtn">Close</span>
+            </div>
+        </div>
+        <div id="container" class="logo">
+            <button id="backBtn" class="topBtn">Log Hours</button>
+            <p><img src="../assets/images/logo-full.svg" class="logo"></p>
+            <p class="logo-row2">IT Volunteer Database</p>
+        </div>
+        <div id="container" class="search">
+            <div class="tool  grid-container-tool">
+                <span class="icon">O</span>
+                <p>Search:</p>
+                <select name="Category" id="category-select">
+                    <option value=1>Leaderboard</option>
+                    <option value=2>First Name</option>
+                    <option value=3>Last Name</option>
+                    <option value=4>Team</option>
+                    <option value=5>Date</option>
+                    <option value=6>Inactive</option>
+                </select>
+                <div>
+                    <input id="search-query" class="input-box" placeholder="Query">
+                </div>
+                <button id="searchBtn">Search</button>
+            </div>
+        </div>
+        <div id="container" class="search-header">
+            July Leaderboard
+        </div>
+        <div class="search-results">
+            <div class="result template">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="small">#1</td>
+                            <td>Jackson Nestelroad</td>
+                            <td class="center">
+                                <i>Hours</i>
+                                <br />
+                                <span>24</span>
+                            </td>
+                            <td class="center">
+                                <i>Team</i>
+                                <br />
+                                <span>Hardware</span>
+                            </td>
+                            <td class="center">
+                                <i>Last Active</i>
+                                <br />
+                                <span>6/28/2018</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="result">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="small">#1</td>
+                                <td>Jackson Nestelroad</td>
+                                <td class="center">
+                                    <i>Hours</i>
+                                    <br />
+                                    <span>24</span>
+                                </td>
+                                <td class="center">
+                                    <i>Team</i>
+                                    <br />
+                                    <span>Hardware</span>
+                                </td>
+                                <td class="center">
+                                    <i>Last Active</i>
+                                    <br />
+                                    <span>6/28/2018</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+        <script src="src/data/index.js"></script>
+    </body>
+</html>
