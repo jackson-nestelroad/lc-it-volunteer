@@ -14,7 +14,7 @@
     </head>
     <body>
         <div id="httpsqlerror" class="modal dataErr">
-            <div id="container" class="warn" style="height: 360px !important">
+            <div id="container" class="warn">
                 <svg height="200" width="240">
                     <polygon points="120,20 20,180 220,180" style="fill:white;stroke:#FFC82C;stroke-width:16" />
                     <text x="104" y="155" class="no-scan" style="fill:#FFC82C;font-size:96pt;font-weight:700;">!</text>
@@ -22,6 +22,15 @@
                 <p class="warning-msg">An error occurred.<br />Please try again.</p>
                 <hr />
                 <span id="closeBtn4" class="linkBtn">Close</span>
+            </div>
+        </div>
+        <div id="volunteerInfo" class="modal">
+            <div id="container" class="warn">
+                <p class="title">Jackson Nestelroad</p>
+                <p class="info">jacksonroad7@gmail.com</p>
+                <p class="info">(405) 657-9587</p>
+                <hr />
+                <span id="closeBtn5" class="linkBtn">Close</span>
             </div>
         </div>
         <div id="container" class="logo">
@@ -42,7 +51,7 @@
                     <option value=6>Inactive</option>
                 </select>
                 <div>
-                    <input id="search-query" class="input-box" placeholder="Query">
+                    <input type="text" id="search-query" class="input-box datepicker-here" data-datepicker data-position="top left" data-language='en' placeholder="Query">
                 </div>
                 <button id="searchBtn">Search</button>
             </div>
@@ -50,7 +59,7 @@
         <div id="container" class="search-header">
             July Leaderboard
         </div>
-        <div class="search-results">
+        <div id="search-results">
             <div class="result template">
                 <table>
                     <tbody>
@@ -81,7 +90,7 @@
                         <tbody>
                             <tr>
                                 <td class="small">#1</td>
-                                <td>Jackson Nestelroad</td>
+                                <td class="clickForInfo">Jackson Nestelroad</td>
                                 <td class="center">
                                     <i>Hours</i>
                                     <br />
@@ -96,6 +105,31 @@
                                     <i>Last Active</i>
                                     <br />
                                     <span>6/28/2018</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="result">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="small">#14</td>
+                                <td class="clickForInfo">Mike Ku</td>
+                                <td class="center">
+                                    <i>Hours</i>
+                                    <br />
+                                    <span>4</span>
+                                </td>
+                                <td class="center">
+                                    <i>Team</i>
+                                    <br />
+                                    <span>Database</span>
+                                </td>
+                                <td class="center">
+                                    <i>Last Active</i>
+                                    <br />
+                                    <span>4/3/2018</span>
                                 </td>
                             </tr>
                         </tbody>

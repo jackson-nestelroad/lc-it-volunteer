@@ -352,4 +352,15 @@ hr{
 .result td.clickForInfo{
     cursor: pointer;
     text-decoration: underline;
+    text-decoration-color: rgba(0,0,0,0.3);
+    width: 45%;
+}
+
+#volunteerInfo p.title{
+    font-weight: 700;
+    font-size: 24pt;
+}
+
+#volunteerInfo p.info{
+    font-size: 14pt;
 }
