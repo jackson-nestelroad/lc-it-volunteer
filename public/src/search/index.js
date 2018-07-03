@@ -148,6 +148,7 @@ submit.addEventListener('click', function(event){
                 </table>
                 `
             });
+            document.getElementById('search-results').appendChild(add);
             enter = true;
         }
     })
