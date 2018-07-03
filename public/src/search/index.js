@@ -42,20 +42,23 @@ document.onkeydown = function(evt){
         document.getElementById('volunteerInfo').style['display'] = 'block';
     }
 }
+function destroyDate(){
+    $('#search-query').datepicker().data('datepicker').destroy();
+}
 // retain old search information in URL paramters
 function updateQuery(id, first){
     if(id == 1 || id == 6){
-        $('#search-query').datepicker().data('datepicker').destroy();
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075)';
+        setTimeout(destroyDate, 10);
     }
     else if(id == 5){
         $('#search-query').datepicker().data('datepicker');
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'white';
+        query.value = '';
     }
     else{
-        $('#search-query').datepicker().data('datepicker').destroy();
         query.removeAttribute('readonly');
         query.style['background-color'] = 'white';
         if(first){
@@ -64,8 +67,10 @@ function updateQuery(id, first){
         else{
             query.value = '';
         }
+        setTimeout(destroyDate, 10);
     }
 }
+
 // retain old search information in URL paramters
 window.onload = function(){
     if(window.location.search.substr(1).indexOf('=') == -1){
@@ -86,13 +91,7 @@ window.onload = function(){
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){
-    var category = this.value;
-    if(category == 1 || category == 6){
-        updateQuery(category, false);
-    }
-    else{
-        updateQuery(category, false);
-    }
+    updateQuery(this.value, false);
 })
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
