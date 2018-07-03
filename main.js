@@ -105,7 +105,7 @@ app.route('/new')
         });
     })
 // /data is database page with leaderboard, search, and inactive list
-app.get('/data', function(req, res){
+app.get('/search', function(req, res){
     res.sendFile(__dirname + '/public/src/search/index.html');
 })
 // /display is the display for TV
