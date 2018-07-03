@@ -79,6 +79,13 @@ select.addEventListener('change', function(event){
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
     enter = false;
+    // check if there is a query if we need one
+    if(select.value != 1 || select.value != 6){
+        if(query.value == ''){
+            query.style['background-color'] = 'rgba(255,0,0,0.1)';
+            return;
+        }
+    }
     // clear search results
     document.getElementById('search-results').innerHTML = '';
     $.ajax({
@@ -107,6 +114,10 @@ submit.addEventListener('click', function(event){
 
                 var date = new Date(element.last_active);
                 var active = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+
+                hours = hours == null ? 0 : hours;
+                favorite = favorite == null ? '???' : favorite;
+                active = active == '12/31/1969' ? 'Never!' : active;
 
                 var add = document.createElement('div');
                 add.className = 'result';
