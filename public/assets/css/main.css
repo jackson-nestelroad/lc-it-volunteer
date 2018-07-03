@@ -286,3 +286,64 @@ hr{
     -webkit-user-select: none;
     user-select: none;
 }
+
+.grid-container-tool{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-gap: 6px;
+    text-align: center;
+    align-items: center;
+    grid-template-columns: 50px 75px 2fr 4fr 2fr;
+    grid-template-rows: repeat(1, minmax(50px, 1fr));
+}
+
+.tool input,
+.tool select{
+    width: 85% !important;
+}
+
+.tool p{
+    font-size: 14pt;
+    font-weight: 700;
+}
+
+.tool button{
+    width: 140px;
+}
+
+.search-header{
+    margin-bottom: 21px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 24pt;
+}
+
+.result{
+    width: 80%;
+    min-width: 625px;
+    margin: 12px 24px 12px 24px;
+    padding: 6px 24px;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.35);
+    flex: 1;   
+}
+
+.result.template{
+    display: none;
+}
+
+.result td.small{
+    width: 1%;
+    white-space: nowrap;
+    color: rgba(0,0,0,0.4);
+}
+
+.result td.center{
+    text-align: center;
+}
+
+.result td i{
+    color: rgba(0,0,0,0.5);
+}
