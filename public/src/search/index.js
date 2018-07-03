@@ -46,11 +46,12 @@ function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();
 }
 // retain old search information in URL paramters
-function updateQuery(id, first){
+function updateQuery(id){
     if(id == 1 || id == 6){
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075)';
         setTimeout(destroyDate, 10);
+        query.value = '';
     }
     else if(id == 5){
         $('#search-query').datepicker().data('datepicker');
@@ -61,12 +62,7 @@ function updateQuery(id, first){
     else{
         query.removeAttribute('readonly');
         query.style['background-color'] = 'white';
-        if(first){
-            query.value = window.location.search.substr(1).substr(window.location.search.substr(1).indexOf('=')+1);
-        }
-        else{
-            query.value = '';
-        }
+        query.value = '';
         setTimeout(destroyDate, 10);
     }
 }
@@ -82,20 +78,36 @@ window.onload = function(){
     category = searchCategories.indexOf(category) + 1;
     if(category == 0){
         select.value = 1;
-        updateQuery(1, true);
+        updateQuery(1);
     }
     else{
         select.value = category;
-        updateQuery(category, true);
+        updateQuery(category);
     }
+    // this will display the results retrieved from the GET request
+    displayResults();
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){
-    updateQuery(this.value, false);
+    updateQuery(this.value);
 })
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
-    // send GET request with HTML paramteres
+    // check if search value if we need it
+    if(select.value != 1 && select.value != 6){
+        if(query.value == ''){
+            document.getElementById('search-query').style['background-color'] = 'rgba(255,0,0,0.1)';
+            return;
+        }
+    }
+    var category = searchCategories[select.value - 1];
+    // refresh URL --> new GET request in URL that will display results
+    if(select.value == 1 || select.value == 6){
+        window.location.replace(`/search?${category}`);
+    }
+    else{
+        window.location.replace(`/search?${category}=${query.value}`);
+    }
 })
 // pops up info
 document.getElementById('search-results').onclick = function(element){
