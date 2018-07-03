@@ -94,6 +94,8 @@ select.addEventListener('change', function(event){
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
     enter = false;
+    // clear search results
+    document.getElementById('search-results').innerHTML = '';
     $.ajax({
         method: 'POST',
         context: document.body,
@@ -102,8 +104,52 @@ submit.addEventListener('click', function(event){
             query: query.value
         }
     })
-    .done(function(code){
-        
+    .done(function(rows){
+        if(rows == 'error'){
+            // this string is sent if something bad happened
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            // rows is an array in order of returned rows
+            rows.forEach(element => {
+                var id = element.vol_id;
+                var name = element.first_name + ' ' + element.last_name;
+                var hours = element.hours;
+                var favorite = element.favorite;
+
+                var date = new Date(element.last_active);
+                var active = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+
+                var add = document.createElement('div');
+                add.className = 'result';
+                add.innerHTML = `
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="small">#${id}</td>
+                            <td class="clickForInfo">${name}</td>
+                            <td class="center">
+                                <i>Hours</i>
+                                <br>
+                                <span>${hours}</span>
+                            </td>
+                            <td class="center">
+                                <i>Team</i>
+                                <br>
+                                <span>${favorite}</span>
+                            </td>
+                            <td class="center">
+                                <i>Last Active</i>
+                                <br>
+                                <span>${active}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                `
+            });
+            enter = true;
+        }
     })
     .fail(function(code){
         document.getElementById('httpsqlerror').style['display'] = 'block';

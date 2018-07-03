@@ -154,16 +154,18 @@ exports.leaderboard = function(){
         pool.connect()
         .then(client => {
             var date = new Date();
+            var month = date.getMonth();
+            var year = date.getFullYear();
             client.query(`
-                SELECT c.vol_id, c.first_name, c.last_name, c.month_hours, f.favorite, f.last_active
+                SELECT c.vol_id, c.first_name, c.last_name, c.hours, f.favorite, f.last_active
                 FROM 
-                (SELECT volunteers.vol_id, first_name, last_name, SUM(hours) month_hours
+                (SELECT volunteers.vol_id, first_name, last_name, SUM(hours) hours
                 FROM volunteers
                 JOIN 
                         (SELECT *
                         FROM logs
-                        WHERE extract(month from date) = 7
-                        AND extract(year from date) = 2018) a
+                        WHERE extract(month from date) = ${month}
+                        AND extract(year from date) = ${year}) a
                     ON a.vol_id = volunteers.vol_id
                     GROUP BY volunteers.vol_id
                     ORDER BY SUM(hours) DESC
@@ -182,8 +184,8 @@ exports.leaderboard = function(){
                         JOIN 
                             (SELECT *
                             FROM logs
-                            WHERE extract(month from date) = 7
-                            AND extract(year from date) = 2018) a
+                            WHERE extract(month from date) = ${month}
+                            AND extract(year from date) = ${year}) a
                         ON a.vol_id = volunteers.vol_id
                         GROUP BY volunteers.vol_id
                         ORDER BY SUM(hours) DESC
@@ -203,8 +205,8 @@ exports.leaderboard = function(){
                             JOIN 
                                 (SELECT *
                                 FROM logs
-                                WHERE extract(month from date) = 7
-                                AND extract(year from date) = 2018) a
+                                WHERE extract(month from date) = ${month}
+                                AND extract(year from date) = ${year}) a
                             ON a.vol_id = volunteers.vol_id
                             GROUP BY volunteers.vol_id
                             ORDER BY SUM(hours) DESC
@@ -222,8 +224,8 @@ exports.leaderboard = function(){
                             JOIN 
                                 (SELECT *
                                 FROM logs
-                                WHERE extract(month from date) = 7
-                                AND extract(year from date) = 2018) a
+                                WHERE extract(month from date) = ${month}
+                                AND extract(year from date) = ${year}) a
                             ON a.vol_id = volunteers.vol_id
                             GROUP BY volunteers.vol_id
                             ORDER BY SUM(hours) DESC
@@ -235,8 +237,7 @@ exports.leaderboard = function(){
                 ORDER BY c.month_hours DESC;
             `)
             .then(res => {
-                console.log(res);
-                resolve('success');
+                resolve(res.rows);
             })
             .catch(err => {
                 console.log(err);

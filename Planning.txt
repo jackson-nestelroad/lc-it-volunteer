@@ -148,7 +148,7 @@ var add = document.createElement('div');
 add.className = 'result';
 // edit the innerHTML of the template
 add.innerHTML = document.getElementsByClassName('template')[0].innerHTML;
-document.getElementsByClassName('search-results')[0].appendChild(add);
+document.getElementById('search-results').appendChild(add);
 
 /data == /data?leaderboard
 

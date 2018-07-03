@@ -116,6 +116,13 @@ app.route('/search')
         // leaderboard, no query
         if(category == 1){
             database.leaderboard()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
         }
         // search by first name
         if(category == 2){
@@ -135,7 +142,7 @@ app.route('/search')
         }
         // inactivity list, no query
         if(category == 6){
-            
+
         }
     })
 // /display is the display for TV
