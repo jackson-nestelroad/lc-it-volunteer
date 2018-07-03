@@ -80,13 +80,15 @@ select.addEventListener('change', function(event){
 submit.addEventListener('click', function(event){
     enter = false;
     // check if there is a query if we need one
-    if(select.value != 1 || select.value != 6){
+    if(select.value != 1 && select.value != 6){
         if(query.value == ''){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
+            enter = true;
             return;
         }
     }
     // clear search results
+    query.style['background-color'] = 'white';
     document.getElementById('search-results').innerHTML = '';
     $.ajax({
         method: 'POST',
