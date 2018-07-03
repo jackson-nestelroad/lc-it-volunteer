@@ -348,3 +348,8 @@ hr{
 .result td i{
     color: rgba(0,0,0,0.5);
 }
+
+.result td.clickForInfo{
+    cursor: pointer;
+    text-decoration: underline;
+}
