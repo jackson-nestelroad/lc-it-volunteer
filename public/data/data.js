@@ -138,9 +138,6 @@ exports.searchByFirstName = function(search){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
-            var date = new Date();
-            var month = date.getMonth() + 1;
-            var year = date.getFullYear();
             client.query(`
             SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
             FROM 
