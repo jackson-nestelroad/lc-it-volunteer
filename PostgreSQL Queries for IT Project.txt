@@ -88,17 +88,69 @@ LEFT OUTER JOIN
 ON f.customer_id = c.customer_id
 ORDER BY c.customer_id;
 
+// DVDRENTAL NEW VERSION WITH LAST_ACTIVE
+
+SELECT c.customer_id, c.first_name, c.last_name, c.email, f.money, f.total, f.last_active
+FROM 
+  (SELECT customer.customer_id, first_name, last_name, email
+  FROM customer
+  WHERE first_name LIKE 'Ja%') c
+LEFT OUTER JOIN
+  (SELECT a.customer_id, a.money_spent money, h.favorite_staff_name total, h.last_active
+  FROM
+    (SELECT customer.customer_id, SUM(amount) money_spent
+    FROM payment
+    LEFT OUTER JOIN customer
+    ON customer.customer_id = payment.customer_id
+    GROUP BY customer.customer_id
+    HAVING customer.customer_id IN
+      (SELECT customer.customer_id
+      FROM customer
+      WHERE first_name LIKE 'Ja%')
+    ORDER BY customer.customer_id) a
+  JOIN
+    (SELECT b.customer_id, b.favorite_staff_name, g.last_active
+    FROM
+      (SELECT e.customer_id, first_name favorite_staff_name
+        FROM staff
+        LEFT OUTER JOIN 
+          (SELECT customer_id, mode() within group (order by staff_id) temp_id
+          FROM payment
+          WHERE customer_id IN
+            (SELECT customer.customer_id
+            FROM customer
+            WHERE first_name LIKE 'Ja%')
+          GROUP BY customer_id
+          ORDER BY customer_id) e
+        ON e.temp_id = staff.staff_id) b
+    JOIN
+      (SELECT customer.customer_id, MAX(payment.payment_date) last_active
+      FROM customer
+      JOIN payment
+      ON customer.customer_id = payment.customer_id
+      WHERE customer.customer_id 
+      IN
+      (SELECT customer.customer_id
+        FROM customer
+        WHERE first_name LIKE 'Ja%')
+      GROUP BY customer.customer_id
+      ORDER BY customer.customer_id) g
+    ON g.customer_id = b.customer_id) h
+  ON a.customer_id = h.customer_id) f
+ON f.customer_id = c.customer_id
+ORDER BY c.customer_id;
+
 // my version
 
-SELECT c.vol_id, c.first_name, c.last_name, c.email, f.hours, f.favorite
+SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
 FROM 
   (SELECT volunteers.vol_id, first_name, last_name, email
   FROM volunteers
-  WHERE first_name LIKE 'B%') c
+  WHERE lower(first_name) LIKE 'b%') c
 LEFT OUTER JOIN
-  (SELECT a.vol_id, a.total_hours hours, b.favorite_team_name favorite
+  (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
   FROM
-    (SELECT volunteers.vol_id, SUM(amount) total_hours
+    (SELECT volunteers.vol_id, SUM(hours) total_hours
     FROM logs
     LEFT OUTER JOIN volunteers
     ON volunteers.vol_id = logs.vol_id
@@ -106,23 +158,37 @@ LEFT OUTER JOIN
     HAVING volunteers.vol_id IN
       (SELECT volunteers.vol_id
       FROM volunteers
-      WHERE first_name LIKE 'B%')
-    ORDER BY volunteers.vol_id) a
-  JOIN 
-    (SELECT e.vol_id, name favorite_team_name
-    FROM teams
-    LEFT OUTER JOIN 
-      (SELECT vol_id, mode() within group (order by team_id) most_id
-      FROM logs
-      WHERE vol_id IN
-        (SELECT volunteers.vol_id
+      WHERE lower(first_name) LIKE 'b%')
+    ) a
+  JOIN
+    (SELECT b.vol_id, b.favorite_team_name, g.last_active
+    FROM
+      (SELECT e.vol_id, name favorite_team_name
+        FROM teams
+        LEFT OUTER JOIN 
+          (SELECT vol_id, mode() within group (order by team_id) temp_id
+          FROM logs
+          WHERE vol_id IN
+            (SELECT volunteers.vol_id
+            FROM volunteers
+            WHERE lower(first_name) LIKE 'b%')
+          GROUP BY vol_id) e
+        ON e.temp_id = teams.team_id) b
+    JOIN
+      (SELECT volunteers.vol_id, MAX(logs.date) last_active
+      FROM volunteers
+      JOIN logs
+      ON volunteers.vol_id = logs.vol_id
+      WHERE volunteers.vol_id 
+      IN
+      (SELECT volunteers.vol_id
         FROM volunteers
-        WHERE first_name LIKE 'B%')
-      GROUP BY vol_id
-      ORDER BY vol_id) e
-    ON e.most_id = teams.team_id) b
-  ON a.vol_id = b.vol_id) f
-ON f.vol_id = c.vol_id;
+        WHERE lower(first_name) LIKE 'b%')
+      GROUP BY volunteers.vol_id) g
+    ON g.vol_id = b.vol_id) h
+  ON a.vol_id = h.vol_id) f
+ON f.vol_id = c.vol_id
+ORDER BY c.vol_id;
 
 
 Get Information by Team Search !!!
@@ -175,57 +241,259 @@ ON f.customer_id = g.customer_id;
 
 // my version
 
-SELECT g.vol_id, g.first_name, g.last_name, g.email, f.hours, f.favorite
+SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
 FROM 
-	(SELECT volunteers.vol_id, first_name, last_name, email
+  (SELECT volunteers.vol_id, first_name, last_name, email
 	FROM volunteers
 	JOIN
 		(SELECT vol_id
 		FROM logs
 		GROUP BY vol_id
 		HAVING mode() within group (order by team_id) = 1
-		ORDER BY vol_id) c
-	ON c.vol_id = volunteers.vol_id) g
-JOIN
-  (SELECT a.vol_id, a.total_hours hours, b.favorite_team_name favorite
+		ORDER BY vol_id) j
+	ON j.vol_id = volunteers.vol_id) c
+LEFT OUTER JOIN
+  (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
   FROM
-    (SELECT volunteers.vol_id, SUM(amount) total_hours
+    (SELECT volunteers.vol_id, SUM(hours) total_hours
     FROM logs
-    JOIN volunteers
+    LEFT OUTER JOIN volunteers
     ON volunteers.vol_id = logs.vol_id
     GROUP BY volunteers.vol_id
     HAVING volunteers.vol_id IN
-      (SELECT vol_id
-      FROM logs
-      GROUP BY vol_id
-      HAVING mode() within group (order by team_id) = 1
-      ORDER BY vol_id)	
-    ORDER BY volunteers.vol_id) a
-  JOIN 
-    (SELECT e.vol_id, name favorite_team_name
-    FROM teams
-    JOIN 
-      (SELECT vol_id, mode() within group (order by team_id) most_id
-      FROM logs
-      WHERE vol_id IN
-		(SELECT vol_id
-		FROM logs
-		GROUP BY vol_id
-		HAVING mode() within group (order by team_id) = 1
-		ORDER BY vol_id)
-      GROUP BY vol_id
-      ORDER BY vol_id) e
-    ON e.most_id = teams.team_id) b
-  ON a.vol_id = b.vol_id) f
-ON f.vol_id = g.vol_id;
+      (SELECT volunteers.vol_id
+      FROM volunteers
+      JOIN
+        (SELECT vol_id
+        FROM logs
+        GROUP BY vol_id
+        HAVING mode() within group (order by team_id) = 1
+        ORDER BY vol_id) c
+      ON c.vol_id = volunteers.vol_id)
+    ) a
+  JOIN
+    (SELECT b.vol_id, b.favorite_team_name, g.last_active
+    FROM
+      (SELECT e.vol_id, name favorite_team_name
+        FROM teams
+        LEFT OUTER JOIN 
+          (SELECT vol_id, mode() within group (order by team_id) temp_id
+          FROM logs
+          WHERE vol_id IN
+            (SELECT volunteers.vol_id
+            FROM volunteers
+            JOIN
+              (SELECT vol_id
+              FROM logs
+              GROUP BY vol_id
+              HAVING mode() within group (order by team_id) = 1
+              ORDER BY vol_id) c
+            ON c.vol_id = volunteers.vol_id)
+          GROUP BY vol_id) e
+        ON e.temp_id = teams.team_id) b
+    JOIN
+      (SELECT volunteers.vol_id, MAX(logs.date) last_active
+      FROM volunteers
+      JOIN logs
+      ON volunteers.vol_id = logs.vol_id
+      WHERE volunteers.vol_id IN
+        (SELECT volunteers.vol_id
+        FROM volunteers
+        JOIN
+          (SELECT vol_id
+          FROM logs
+          GROUP BY vol_id
+          HAVING mode() within group (order by team_id) = 1
+          ORDER BY vol_id) c
+        ON c.vol_id = volunteers.vol_id)
+      GROUP BY volunteers.vol_id) g
+    ON g.vol_id = b.vol_id) h
+  ON a.vol_id = h.vol_id) f
+ON f.vol_id = c.vol_id
+ORDER BY c.vol_id;
 
 
 Search by Date !!!
 
-SELECT *
-FROM volunteers
-JOIN logs
-ON logs.vol_id = volunteers.vol_id;
+SELECT c.vol_id, c.total_hours, c.team, d.last_active
+FROM
+	(SELECT a.vol_id, a.total_hours, b.team
+	FROM
+		(SELECT volunteers.vol_id, SUM(hours) total_hours
+		FROM volunteers
+		JOIN logs
+		ON logs.vol_id = volunteers.vol_id
+		WHERE date = '6/21/2018'
+		GROUP BY volunteers.vol_id) a
+	JOIN
+		(SELECT volunteers.vol_id, mode() within group (order by team_id) team
+		FROM volunteers
+		 JOIN logs
+		 ON logs.vol_id = volunteers.vol_id
+		 WHERE date = '6/21/2018'
+		 GROUP BY volunteers.vol_id) b
+	ON a.vol_id = b.vol_id) c
+JOIN 
+	(SELECT volunteers.vol_id, MAX(logs.date) last_active
+	 FROM volunteers
+	 JOIN logs
+	 ON volunteers.vol_id = logs.vol_id
+	 WHERE volunteers.vol_id IN
+		 (SELECT volunteers.vol_id
+		 FROM volunteers
+		 JOIN logs
+		 ON logs.vol_id = volunteers.vol_id
+		 WHERE date = '6/21/2018'
+		 GROUP BY volunteers.vol_id)
+	 GROUP BY volunteers.vol_id) d
+ON d.vol_id = c.vol_id;
+
+	 
+
+
+!! Leaderboard with All Info !!
+
+// dvdrental
+
+SELECT c.customer_id, c.first_name, c.last_name, c.email, f.total, c.monthHours
+FROM 
+  (SELECT customer.customer_id, first_name, last_name, email, SUM(amount) monthHours
+  FROM customer
+  JOIN 
+		(SELECT *
+		FROM payment
+		WHERE extract(month from payment_date) = 4
+		AND extract(year from payment_date) = 2007) a
+	ON a.customer_id = customer.customer_id
+	GROUP BY customer.customer_id
+	ORDER BY SUM(amount) DESC
+	LIMIT 10) c
+LEFT OUTER JOIN
+  (SELECT a.customer_id, a.money_spent money, b.favorite_staff_name total
+  FROM
+    (SELECT customer.customer_id, SUM(amount) money_spent
+    FROM payment
+    LEFT OUTER JOIN customer
+    ON customer.customer_id = payment.customer_id
+    GROUP BY customer.customer_id
+    HAVING customer.customer_id IN
+      (SELECT customer.customer_id
+      FROM customer
+      JOIN 
+        (SELECT *
+        FROM payment
+        WHERE extract(month from payment_date) = 4
+        AND extract(year from payment_date) = 2007) a
+      ON a.customer_id = customer.customer_id
+      GROUP BY customer.customer_id
+      ORDER BY SUM(amount) DESC
+      LIMIT 10)
+    ) a
+  JOIN 
+    (SELECT e.customer_id, first_name favorite_staff_name
+    FROM staff
+    LEFT OUTER JOIN 
+      (SELECT customer_id, mode() within group (order by staff_id) temp_id
+      FROM payment
+      WHERE customer_id IN
+        (SELECT customer.customer_id
+  FROM customer
+  JOIN 
+		(SELECT *
+		FROM payment
+		WHERE extract(month from payment_date) = 4
+		AND extract(year from payment_date) = 2007) a
+	ON a.customer_id = customer.customer_id
+	GROUP BY customer.customer_id
+	ORDER BY SUM(amount) DESC
+	LIMIT 10)
+      GROUP BY customer_id) e
+    ON e.temp_id = staff.staff_id) b
+  ON a.customer_id = b.customer_id) f
+ON f.customer_id = c.customer_id
+ORDER BY c.monthHours DESC;
+
+// my version
+
+SELECT c.vol_id, c.first_name, c.last_name, c.month_hours, f.favorite, f.last_active
+FROM 
+  (SELECT volunteers.vol_id, first_name, last_name, SUM(hours) month_hours
+  FROM volunteers
+  JOIN 
+		(SELECT *
+		FROM logs
+		WHERE extract(month from date) = 7
+		AND extract(year from date) = 2018) a
+	ON a.vol_id = volunteers.vol_id
+	GROUP BY volunteers.vol_id
+	ORDER BY SUM(hours) DESC
+	LIMIT 10) c
+LEFT OUTER JOIN
+  (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
+  FROM
+    (SELECT volunteers.vol_id, SUM(hours) total_hours
+    FROM logs
+    LEFT OUTER JOIN volunteers
+    ON volunteers.vol_id = logs.vol_id
+    GROUP BY volunteers.vol_id
+    HAVING volunteers.vol_id IN
+		(SELECT volunteers.vol_id
+		FROM volunteers
+		JOIN 
+			(SELECT *
+			FROM logs
+			WHERE extract(month from date) = 7
+			AND extract(year from date) = 2018) a
+		ON a.vol_id = volunteers.vol_id
+		GROUP BY volunteers.vol_id
+		ORDER BY SUM(hours) DESC
+		LIMIT 10)
+    ) a
+  JOIN
+    (SELECT b.vol_id, b.favorite_team_name, g.last_active
+    FROM
+      (SELECT e.vol_id, name favorite_team_name
+        FROM teams
+        LEFT OUTER JOIN 
+          (SELECT vol_id, mode() within group (order by team_id) temp_id
+          FROM logs
+          WHERE vol_id IN
+            (SELECT volunteers.vol_id
+			FROM volunteers
+			JOIN 
+				(SELECT *
+				FROM logs
+				WHERE extract(month from date) = 7
+				AND extract(year from date) = 2018) a
+			ON a.vol_id = volunteers.vol_id
+			GROUP BY volunteers.vol_id
+			ORDER BY SUM(hours) DESC
+			LIMIT 10)
+          GROUP BY vol_id) e
+        ON e.temp_id = teams.team_id) b
+    JOIN
+      (SELECT volunteers.vol_id, MAX(logs.date) last_active
+      FROM volunteers
+      JOIN logs
+      ON volunteers.vol_id = logs.vol_id
+      WHERE volunteers.vol_id IN
+		  (SELECT volunteers.vol_id
+			FROM volunteers
+			JOIN 
+				(SELECT *
+				FROM logs
+				WHERE extract(month from date) = 7
+				AND extract(year from date) = 2018) a
+			ON a.vol_id = volunteers.vol_id
+			GROUP BY volunteers.vol_id
+			ORDER BY SUM(hours) DESC
+			LIMIT 10)
+      GROUP BY volunteers.vol_id) g
+    ON g.vol_id = b.vol_id) h
+  ON a.vol_id = h.vol_id) f
+ON f.vol_id = c.vol_id
+ORDER BY c.month_hours DESC;
+
 
 
 Leaderboard

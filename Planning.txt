@@ -94,6 +94,10 @@ Updated Roadmap
     6/21/18
         Email validation for duplicate names.
         Log form and Registration Form finished.
+    7/2/2018
+        Added mobile support for both forms.
+        Designed search page.
+        
     7/5/18
 
     7/12/18

@@ -106,9 +106,37 @@ app.route('/new')
     })
 // /search is database page with leaderboard, search, and inactive list
 app.route('/search')
-    // this is where we will handle what was searched for
     .get(function(req, res){
         res.sendFile(__dirname + '/public/src/search/index.html');
+    })
+    // this is where we will handle what was searched for
+    .post(function(req, res){
+        var category = req.body.category;
+        var query = req.body.query;
+        // leaderboard, no query
+        if(category == 1){
+            database.leaderboard()
+        }
+        // search by first name
+        if(category == 2){
+
+        }
+        // search by last name
+        if(category == 3){
+
+        }
+        // search by favorite team
+        if(category == 4){
+
+        }
+        // search by date
+        if(category == 5){
+
+        }
+        // inactivity list, no query
+        if(category == 6){
+            
+        }
     })
 // /display is the display for TV
 app.route('/display')

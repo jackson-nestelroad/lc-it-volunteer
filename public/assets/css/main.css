@@ -332,7 +332,7 @@ hr{
 }
 
 .result.template{
-    display: none;
+    display: block;
 }
 
 .result td.small{

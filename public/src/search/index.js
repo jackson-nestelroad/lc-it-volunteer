@@ -93,6 +93,21 @@ select.addEventListener('change', function(event){
 })
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
+    enter = false;
+    $.ajax({
+        method: 'POST',
+        context: document.body,
+        data: {
+            category: select.value,
+            query: query.value
+        }
+    })
+    .done(function(code){
+        
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
     // check if search value if we need it
     /*if(select.value != 1 && select.value != 6){
         if(query.value == ''){
