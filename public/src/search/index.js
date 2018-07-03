@@ -41,6 +41,7 @@ function updateQuery(id){
     else{
         query.disabled = false;
         query.style['background-color'] = 'white';
+        query.value = window.location.search.substr(1).substr(window.location.search.substr(1).indexOf('=')+1);
     }
 }
 
@@ -57,7 +58,6 @@ window.onload = function(){
         select.value = category;
         updateQuery(category);
     }
-    query.value = window.location.search.substr(1).substr(window.location.search.substr(1).indexOf('=')+1);
 }
 
 select.addEventListener('change', function(event){
