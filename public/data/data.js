@@ -40,7 +40,6 @@ exports.searchByFullName = function(name){
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         })
     })
@@ -76,7 +75,6 @@ exports.checkIfRegistered = function(name, email){
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         })
     })
@@ -94,15 +92,16 @@ exports.add = function(first, last, email, phone){
             `)
             .then(res => {
                 resolve('success');
+                client.release();
             })
             .catch(err => {
                 console.log(err);
+                client.release();
                 reject('error');
             })
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         }) 
     })
@@ -119,15 +118,16 @@ exports.log = function(date, id, team, hours){
             `)
             .then(res => {
                 resolve('success');
+                client.release();
             })
             .catch(err => {
                 console.log(err);
+                client.release();
                 reject('error');
             })
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         })
     })
@@ -189,15 +189,16 @@ exports.searchByFirstName = function(search){
             `)
             .then(res => {
                 resolve(res.rows);
+                client.release();
             })
             .catch(err => {
                 console.log(err);
+                client.release();
                 reject('error');
             })
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         })
     })
@@ -312,15 +313,16 @@ exports.leaderboard = function(){
             `)
             .then(res => {
                 resolve(res.rows);
+                client.release();
             })
             .catch(err => {
                 console.log(err);
+                client.release();
                 reject('error');
             })
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         })
     })
@@ -342,15 +344,16 @@ exports.getByID = function(id){
             `)
             .then(res => {
                 resolve(res.rows);
+                client.release();
             })
             .catch(err => {
                 console.log(err);
+                client.release();
                 reject('error');
             })
         })
         .catch(err => {
             console.log(err);
-            client.release();
             reject('error');
         })
     })
