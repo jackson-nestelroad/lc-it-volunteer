@@ -17,7 +17,7 @@ const data = document.getElementById('dataBtn');
 const emailSubmit = document.getElementById('emailBtn');
 // database button at top sends to database page
 data.addEventListener('click', function(event){
-    window.location.replace('/data');
+    window.location.replace('/search?leaderboard');
 })
 // close button in error modal
 close4.addEventListener('click', function(event){
