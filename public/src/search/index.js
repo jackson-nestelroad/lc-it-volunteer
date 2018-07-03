@@ -179,9 +179,9 @@ document.getElementById('search-results').onclick = function(element){
                 var email = rows[0].email;
                 var phone = rows[0].phone;
                 // set the information in the modal
-                document.getElementById('name') = name;
-                document.getElementById('email') = email;
-                document.getElementById('phone') = phone;
+                document.getElementById('name').innerHTML = name;
+                document.getElementById('email').innerHTML = email;
+                document.getElementById('phone').innerHTML = phone;
                 // display modal with information
                 document.getElementById('volunteerInfo').style['display'] = 'block';
             }
