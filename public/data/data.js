@@ -154,7 +154,7 @@ exports.leaderboard = function(){
         pool.connect()
         .then(client => {
             var date = new Date();
-            var month = date.getMonth();
+            var month = date.getMonth() + 1;
             var year = date.getFullYear();
             client.query(`
                 SELECT c.vol_id, c.first_name, c.last_name, c.hours, f.favorite, f.last_active
