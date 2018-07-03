@@ -69,23 +69,8 @@ function updateQuery(id){
 
 // retain old search information in URL paramters
 window.onload = function(){
-    if(window.location.search.substr(1).indexOf('=') == -1){
-        var category = window.location.search.substr(1);
-    }
-    else{
-        var category = window.location.search.substr(1).substr(0, window.location.search.substr(1).indexOf('='));
-    }
-    category = searchCategories.indexOf(category) + 1;
-    if(category == 0){
-        select.value = 1;
-        updateQuery(1);
-    }
-    else{
-        select.value = category;
-        updateQuery(category);
-    }
-    // this will display the results retrieved from the GET request
-    displayResults();
+    updateQuery(1);
+    submit.click();
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){
