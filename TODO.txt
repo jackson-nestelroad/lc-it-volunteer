@@ -1,12 +1,11 @@
 
-Begin Database page
-
-
-link submission to database
---what things do we want to see?
-delete volunteer option -- for mistakes
---search for volunteer and give option to delete data
-linking database to graphs and statistics
+Create title handler for search page
+    July Leaderboard
+    First Name: "J..."
+    Last Name: "N...:
+    Team: Hardware
+    Date: 7/3/2018
+    Inactivity List
 
 
 Deployment Notes
