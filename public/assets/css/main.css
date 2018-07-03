@@ -165,7 +165,8 @@ button{
     cursor: pointer;
 }
 
-#submitBtn:hover{
+#submitBtn:hover,
+#searchBtn:hover{
     background-color: #0094bd;
     border: solid 1px #0094bd;
 }
