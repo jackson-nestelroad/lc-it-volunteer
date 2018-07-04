@@ -16,9 +16,14 @@ const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
 const select = document.getElementById('category-select');
 const query = document.getElementById('search-query');
-// change arrow direction
-select.addEventListener('click', function(event){
-    select.className == 'closed' ? select.className = 'open' : select.className = 'closed';	
+// change arrow on dropdown
+document.getElementsByTagName('body')[0].addEventListener('click', function(event){
+	if(event.target.id == 'category-select'){
+		select.className == 'closed' ? select.className = 'open' : select.className = 'closed';	
+    }
+	else{
+		select.className == 'open' ? select.className = 'closed' : select.className = 'closed';
+    }
 })
 // close button in info modal
 close5.addEventListener('click', function(event){
