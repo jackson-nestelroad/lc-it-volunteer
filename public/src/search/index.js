@@ -106,7 +106,7 @@ submit.addEventListener('click', function(event){
         else{
             // rows is an array in order of returned rows
             // need to add a handler to create headers based off of search
-            document.getElementById('search-header').innerHTML = 'Search complete!';
+            // document.getElementById('search-header').innerHTML = 'Search complete!';
             if(rows.length == 0){
                 // add a result that says "No results found!"
             }
