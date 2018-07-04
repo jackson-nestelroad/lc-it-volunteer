@@ -16,6 +16,10 @@ const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
 const select = document.getElementById('category-select');
 const query = document.getElementById('search-query');
+// change arrow direction
+select.addEventListener('click', function(event){
+    select.className == 'closed' ? select.className = 'open' : select.className = 'closed';	
+})
 // close button in info modal
 close5.addEventListener('click', function(event){
     document.getElementById('volunteerInfo').style['display'] = 'none';
