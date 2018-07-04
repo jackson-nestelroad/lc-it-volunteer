@@ -373,3 +373,9 @@ hr{
 #volunteerInfo p.info{
     font-size: 14pt;
 }
+
+.icon{
+    width: 50px;
+    height: 42px;
+    background: url('/assets/images/search_icon.png') no-repeat; 
+}
