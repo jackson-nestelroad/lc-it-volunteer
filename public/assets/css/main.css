@@ -102,8 +102,8 @@ select{
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
-    content: url('/assets/images/down_arrow.png')
-    /* add custom arrow */
+    background: url('/assets/images/down_arrow.png') no-repeat;
+    background-position: right;
 }
 
 
