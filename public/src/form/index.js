@@ -15,6 +15,11 @@ const register = document.getElementById('registerBtn');
 const register2 = document.getElementById('registerBtn2');
 const data = document.getElementById('dataBtn');
 const emailSubmit = document.getElementById('emailBtn');
+const select = document.getElementById('team-input');
+// change arrow on dropdown
+select.addEventListener('click', function(event){
+    select.className == 'closed' ? select.className = 'open' : select.className = 'closed';	
+})
 // database button at top sends to database page
 data.addEventListener('click', function(event){
     window.location.replace('/search');
