@@ -102,8 +102,16 @@ select{
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
+}
+
+.closed{
     background: url('/assets/images/down_arrow.png') no-repeat;
-    background-position: right;
+    background-position: right 5px bottom 11px;
+}
+
+.open{
+    background: url('/assets/images/up_arrow.png') no-repeat;
+    background-position: right 5px bottom 11px;
 }
 
 
