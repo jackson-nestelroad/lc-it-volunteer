@@ -15,6 +15,7 @@ const register = document.getElementById('registerBtn');
 const register2 = document.getElementById('registerBtn2');
 const data = document.getElementById('dataBtn');
 const emailSubmit = document.getElementById('emailBtn');
+const select = document.getElementById('team-input');
 // change arrow on dropdown
 document.getElementsByTagName('body')[0].addEventListener('click', function(event){
 	if(event.target.id == 'team-input'){
