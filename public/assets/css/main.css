@@ -102,6 +102,7 @@ select{
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
+    content: url('../../images/down_arrow.png')
     /* add custom arrow */
 }
 
