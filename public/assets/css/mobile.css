@@ -29,7 +29,7 @@ body *:focus{
 }
 
 .logo{
-    width: 350px;
+    width: 250px;
     height: auto;
     -webkit-user-drag: none;
     -webkit-user-modify: none;
@@ -39,14 +39,14 @@ body *:focus{
 }
 
 .logo-row2{
-    font-size: 20pt;
+    font-size: 18pt;
     -webkit-user-select: none;
     user-select: none;
 }
 
 #container{
     width: 80%;
-    min-width: 350px;
+    min-width: 275px;
     margin: 12px 0px;
     padding: 12px;
     border-radius: 6px;
@@ -347,7 +347,7 @@ hr{
 
 .result{
     width: 80%;
-    min-width: 350px;
+    min-width: 275px;
     margin: 6px 0px;
     padding: 6px 12px;
     border-radius: 6px;
