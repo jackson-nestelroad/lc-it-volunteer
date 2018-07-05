@@ -1,11 +1,35 @@
+// months array
+const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'Septemember',
+    'October',
+    'November',
+    'December'
+]
+
 // possible categories to search for
 const searchCategories = [
     'Leaderboard',
-    'First',
-    'Last',
+    'First Name',
+    'Last Name',
     'Team',
     'Date',
     'Inactivity List'
+]
+// teams to search for
+const teams = [
+    'Hardware',
+    'Software',
+    'Database',
+    'Project',
+    'Communication'
 ]
 // can we press enter to submit search?
 var enter = true;
@@ -85,6 +109,23 @@ window.onload = function(){
 select.addEventListener('change', function(event){
     updateQuery(this.value);
 })
+// update header after search 
+function updateHeader(category, query){
+    var string;
+    if(category == 1){
+        string = `${months[(new Date()).getMonth()]} ${searchCategories[category-1]}`;
+    }
+    else if(category == 2, 3, 5){
+        string = `${searchCategories[category-1]}: ${query}...`;
+    }
+    else if(category == 4){
+        string = `${searchCategories[category-1]}: ${teams[query-1]}`;
+    }
+    else if(category == 6){
+        string = `${searchCategories[category-1]}`;
+    }
+    document.getElementById('search-header').innerHTML = string;
+}
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
     enter = false;
@@ -149,11 +190,21 @@ submit.addEventListener('click', function(event){
         }
         else{
             // rows is an array in order of returned rows
-            // need to add a handler to create headers based off of search
-            // document.getElementById('search-header').innerHTML = 'Search complete!';
+            // change header at top of page
+            updateHeader(select.value, query.value);
+            // no results found
             if(rows.length == 0){
-                // add a result that says "No results found!"
+                var add = document.createElement('div');
+                add.className = 'result none';
+
+                add.innerHTML = `
+                No results found!
+                `
+                document.getElementById('search-results').appendChild(add);
+                enter = true;
+                return;
             }
+            // results were found
             rows.forEach(element => {
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
