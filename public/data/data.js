@@ -658,7 +658,7 @@ exports.getInactive = function(){
                         ((SELECT vol_id
                             FROM logs
                             GROUP BY vol_id
-                            HAVING MAX(date) < '${date})
+                            HAVING MAX(date) < '${date}')
                             UNION ALL
                             (SELECT vol_id
                             FROM volunteers
