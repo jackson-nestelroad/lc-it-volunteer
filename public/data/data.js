@@ -375,16 +375,31 @@ exports.searchByDate = function(date){
         pool.connect()
         .then(client => {
             client.query(`
-            SELECT c.vol_id, c.total_hours, c.team, d.last_active
+            SELECT c.vol_id, c.first_name, c.last_name, c.hours, c.team, d.last_active
             FROM
-                (SELECT a.vol_id, a.total_hours, b.team
+                (SELECT g.vol_id, g.first_name, g.last_name, g.hours, b.team
                 FROM
-                    (SELECT volunteers.vol_id, SUM(hours) total_hours
-                    FROM volunteers
-                    JOIN logs
-                    ON logs.vol_id = volunteers.vol_id
-                    WHERE date = '${date}'
-                    GROUP BY volunteers.vol_id) a
+                    (SELECT a.vol_id, a.hours, e.first_name, e.last_name
+                    FROM 
+                        (SELECT volunteers.vol_id, SUM(hours) hours
+                        FROM volunteers
+                        JOIN logs
+                        ON logs.vol_id = volunteers.vol_id
+                        WHERE date = '${date}'
+                        GROUP BY volunteers.vol_id) a
+                    JOIN
+                        (SELECT volunteers.vol_id, first_name, last_name
+                        FROM volunteers
+                        WHERE volunteers.vol_id IN
+                            (SELECT volunteers.vol_id
+                                FROM volunteers
+                                JOIN logs
+                                ON logs.vol_id = volunteers.vol_id
+                                WHERE date = '${date}'
+                                GROUP BY volunteers.vol_id)
+                        ) e
+                    ON e.vol_id = a.vol_id
+                    ) g
                 JOIN
                     (SELECT volunteers.vol_id, mode() within group (order by team_id) team
                     FROM volunteers
@@ -392,7 +407,7 @@ exports.searchByDate = function(date){
                     ON logs.vol_id = volunteers.vol_id
                     WHERE date = '${date}'
                     GROUP BY volunteers.vol_id) b
-                ON a.vol_id = b.vol_id) c
+                ON g.vol_id = b.vol_id) c
             JOIN 
                 (SELECT volunteers.vol_id, MAX(logs.date) last_active
                 FROM volunteers

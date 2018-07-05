@@ -57,21 +57,21 @@ function destroyDate(){
 // retain old search information in URL paramters
 function updateQuery(id){
     if(id == 1 || id == 6){
+        query.value = '';
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075) !important';
         setTimeout(destroyDate, 10);
-        query.value = '';
     }
     else if(id == 5){
+        query.value = '';
         $('#search-query').datepicker().data('datepicker');
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'white';
-        query.value = '';
     }
     else{
+        query.value = '';
         query.removeAttribute('readonly');
         query.style['background-color'] = 'white';
-        query.value = '';
         setTimeout(destroyDate, 10);
     }
 }
@@ -153,6 +153,7 @@ submit.addEventListener('click', function(event){
                 var favorite = element.favorite;
 
                 var date = new Date(element.last_active);
+                date = new Date(date.setTime(date.getTime() + 1 * 86400000));
                 var active = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
 
                 hours = hours == null ? 0 : hours;
