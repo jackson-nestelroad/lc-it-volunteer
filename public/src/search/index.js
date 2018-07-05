@@ -78,7 +78,6 @@ function updateQuery(id){
 
 // retain old search information in URL paramters
 window.onload = function(){
-    updateQuery(1);
     submit.click();
 }
 // update search tool when category changes
@@ -113,6 +112,12 @@ submit.addEventListener('click', function(event){
         // project
         else if(query.value.toLowerCase().startsWith('p')){
             query.value = 4;
+        }
+        // invalid team
+        else{
+            query.style['background-color'] = 'rgba(255,0,0,0.1)';
+            enter = true;
+            return;
         }
     }
     // clear search results
