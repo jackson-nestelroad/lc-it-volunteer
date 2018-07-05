@@ -189,7 +189,7 @@ exports.searchByFirstName = function(search){
                     ON f.vol_id = c.vol_id) z
                 JOIN teams
                 ON z.preferred = teams.team_id
-                ORDER BY z.vol_id;
+                ORDER BY z.first_name;
             `)
             .then(res => {
                 resolve(res.rows);
@@ -264,7 +264,7 @@ exports.searchByLastName = function(search){
                     ON f.vol_id = c.vol_id) z
                 JOIN teams
                 ON z.preferred = teams.team_id
-                ORDER BY z.vol_id;
+                ORDER BY z.last_name;
             `)
             .then(res => {
                 resolve(res.rows);
@@ -671,7 +671,7 @@ exports.getInactive = function(){
                     ON f.vol_id = c.vol_id) z
                 JOIN teams
                 ON z.preferred = teams.team_id
-                ORDER BY z.vol_id;
+                ORDER BY z.last_active DESC;
             `)
             .then(res => {
                 resolve(res.rows);
