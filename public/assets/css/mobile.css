@@ -193,7 +193,7 @@ button{
     transform: translateY(-50%);
     margin: 0 auto;
     text-align: center;
-    width: 625px;
+    width: 3px;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
     animation-name: slideIn;
