@@ -124,7 +124,7 @@ function updateHeader(category, query){
     else if(category == 6){
         string = `${searchCategories[category-1]}`;
     }
-    document.getElementById('search-header').innerHTML = string;
+    document.getElementsByClassName('search-header')[0].innerHTML = string;
 }
 // search submitted -- GET request
 submit.addEventListener('click', function(event){
