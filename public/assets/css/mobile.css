@@ -283,8 +283,8 @@ hr{
     transform: translateY(-50%);
     margin: 0 auto;
     text-align: center;
-    min-width: 400px;
-    width: 400px;
+    min-width: 250px !important;
+    width: 250px;
     height: auto;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
