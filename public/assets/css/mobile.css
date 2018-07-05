@@ -268,7 +268,7 @@ hr{
     transform: translateY(-50%);
     margin: 0 auto;
     text-align: center;
-    width: 3px;
+    width: 200px;
     height: auto;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.8s;
