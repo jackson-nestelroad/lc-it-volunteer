@@ -216,7 +216,7 @@ exports.searchByLastName = function(search){
             client.query(`
                 SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
                 FROM
-                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active, c.preferred
                     FROM 
                     (SELECT volunteers.vol_id, first_name, last_name, email
                     FROM volunteers
@@ -575,7 +575,7 @@ exports.getInactive = function(){
             client.query(`
                 SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
                 FROM
-                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active, c.preferred
                     FROM 
                     (SELECT vol_id, first_name, last_name
                     FROM volunteers
