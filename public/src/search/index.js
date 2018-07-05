@@ -157,7 +157,7 @@ submit.addEventListener('click', function(event){
                 var active = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
 
                 hours = hours == null ? 0 : hours;
-                favorite = favorite == null ? '???' : favorite;
+                team = team == null ? '???' : team;
                 active = active == '12/31/1969' ? 'Never!' : active;
 
                 var add = document.createElement('div');
