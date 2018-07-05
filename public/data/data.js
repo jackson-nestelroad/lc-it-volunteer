@@ -186,7 +186,7 @@ exports.searchByFirstName = function(search){
                             GROUP BY volunteers.vol_id) g
                             ON g.vol_id = b.vol_id) h
                         ON a.vol_id = h.vol_id) f
-                    ON f.vol_id = c.vol_id
+                    ON f.vol_id = c.vol_id) z
                 JOIN teams
                 ON z.preferred = teams.team_id
                 ORDER BY z.vol_id;
@@ -216,7 +216,7 @@ exports.searchByLastName = function(search){
             client.query(`
                 SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
                 FROM
-                    SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
                     FROM 
                     (SELECT volunteers.vol_id, first_name, last_name, email
                     FROM volunteers
@@ -261,7 +261,7 @@ exports.searchByLastName = function(search){
                         GROUP BY volunteers.vol_id) g
                         ON g.vol_id = b.vol_id) h
                     ON a.vol_id = h.vol_id) f
-                    ON f.vol_id = c.vol_id
+                    ON f.vol_id = c.vol_id) z
                 JOIN teams
                 ON z.preferred = teams.team_id
                 ORDER BY z.vol_id;
@@ -574,8 +574,8 @@ exports.getInactive = function(){
             date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
             client.query(`
                 SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
-                    FROM
-                    SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                FROM
+                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
                     FROM 
                     (SELECT vol_id, first_name, last_name
                     FROM volunteers
@@ -652,7 +652,7 @@ exports.getInactive = function(){
                         GROUP BY volunteers.vol_id) g
                         ON g.vol_id = b.vol_id) h
                     ON a.vol_id = h.vol_id) f
-                    ON f.vol_id = c.vol_id
+                    ON f.vol_id = c.vol_id) z
                 JOIN teams
                 ON z.preferred = teams.team_id
                 ORDER BY z.vol_id;
