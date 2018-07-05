@@ -81,6 +81,19 @@ function validate(type, string){
                 return string;
             }
         }
+        if(type == 'team'){
+            if(['Hardware',
+                'Software',
+                'Database',
+                'Project',
+                'Communication']
+            .includes(string)){
+                return string;
+            }
+            else{
+                return false;
+            }
+        }
     }
 }
 
@@ -93,6 +106,7 @@ submit.addEventListener('click', function(event){
     var phone = document.getElementById('phone-input').value;
     first = validate('name', first);
     last = validate('name', last);
+    team = validate('team', team);
     var emailTrue = validate('email', email);
     var phoneTrue = validate('phone', phone);
     var values = {
@@ -103,7 +117,7 @@ submit.addEventListener('click', function(event){
         'phone': phoneTrue
     }
 // info not given correctly, tell them why
-    if(first == '' || last == '' || !emailTrue || !phoneTrue){
+    if(first == '' || last == '' || !emailTrue || !phoneTrue || !team){
         displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
             var element = values[Object.keys(values)[i]];
@@ -131,6 +145,7 @@ submit.addEventListener('click', function(event){
             data: {
                 'first': first,
                 'last': last,
+                'team': team,
                 'email': email,
                 'phone': phoneNumber
             }
