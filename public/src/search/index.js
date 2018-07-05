@@ -122,7 +122,9 @@ submit.addEventListener('click', function(event){
         }
     }
     // clear search results
-    query.style['background-color'] = 'white';
+    if(select.value != 1 && select.value != 6){
+        query.style['background-color'] = 'white';
+    }
     document.getElementById('search-results').innerHTML = '';
     $.ajax({
         method: 'POST',
