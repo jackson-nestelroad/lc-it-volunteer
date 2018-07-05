@@ -120,6 +120,8 @@ submit.addEventListener('click', function(event){
     // make sure the number of hours is positive and less than 24
     hours = (hours > 0) ? hours : false;
     hours = (hours > 24) ? false : hours;
+    // make sure they didn't enter a fake team
+    team = ([1,2,3,4,5].includes(team)) ? team : false;
     var values = {
         'name': name,
         'team': team,
@@ -127,7 +129,7 @@ submit.addEventListener('click', function(event){
         'hours': hours
     }
 // info not given correctly, tell them why
-    if(name == '' || !datePossible || team == '' || !hours){
+    if(name == '' || !datePossible || team == '' || !team || !hours){
         displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
             var element = values[Object.keys(values)[i]];
