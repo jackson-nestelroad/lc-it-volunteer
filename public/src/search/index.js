@@ -111,11 +111,11 @@ select.addEventListener('change', function(event){
 })
 // update header after search 
 function updateHeader(category, query){
-    var string;
+    var string = '';
     if(category == 1){
         string = `${months[(new Date()).getMonth()]} ${searchCategories[category-1]}`;
     }
-    else if(category == 2, 3, 5){
+    else if(category == 2 || category == 3 || category == 5){
         string = `${searchCategories[category-1]}: ${query}...`;
     }
     else if(category == 4){
