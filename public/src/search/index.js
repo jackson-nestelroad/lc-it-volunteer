@@ -225,10 +225,12 @@ document.getElementById('search-results').onclick = function(element){
             }
             else{
                 var name = rows[0].first_name + ' ' + rows[0].last_name;
+                var team = rows[0].team;
                 var email = rows[0].email;
                 var phone = rows[0].phone;
                 // set the information in the modal
                 document.getElementById('name').innerHTML = name;
+                document.getElementById('team').innerHTML = team;
                 document.getElementById('email').innerHTML = email;
                 document.getElementById('phone').innerHTML = phone;
                 // display modal with information

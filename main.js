@@ -137,7 +137,7 @@ app.route('/search')
         }
         // search by first name
         if(category == 2){
-            database.searchByFirstName(query)
+            database.searchByFirstName(query.toLowerCase())
             .then(rows => {
                 res.send(rows);
             })
@@ -148,7 +148,7 @@ app.route('/search')
         }
         // search by last name
         if(category == 3){
-            database.searchByLastName(query)
+            database.searchByLastName(query.toLowerCase())
             .then(rows => {
                 res.send(rows);
             })
@@ -159,7 +159,7 @@ app.route('/search')
         }
         // search by favorite team
         if(category == 4){
-            database.searchByTeam(query)
+            database.searchByTeam(query.toLowerCase())
             .then(rows => {
                 res.send(rows);
             })

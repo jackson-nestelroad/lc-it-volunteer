@@ -82,12 +82,7 @@ function validate(type, string){
             }
         }
         if(type == 'team'){
-            if(['Hardware',
-                'Software',
-                'Database',
-                'Project',
-                'Communication']
-            .includes(string)){
+            if([1,2,3,4,5].includes(string)){
                 return string;
             }
             else{
