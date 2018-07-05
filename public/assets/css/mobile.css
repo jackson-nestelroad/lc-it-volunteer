@@ -45,7 +45,7 @@ body *:focus{
 }
 
 #container{
-    width: 80%;
+    width: 92%;
     min-width: 275px;
     margin: 12px 0px;
     padding: 12px;
@@ -345,7 +345,7 @@ hr{
 }
 
 .result{
-    width: 80%;
+    width: 92%;
     min-width: 275px;
     margin: 6px 0px;
     padding: 6px 12px;
