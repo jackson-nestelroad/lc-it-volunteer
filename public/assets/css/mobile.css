@@ -102,7 +102,20 @@ select{
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
-    /* add custom arrow */
+}
+
+.new-width{
+    width: 70% !important;
+}
+
+.closed{
+    background: url('/assets/images/down_arrow.svg') no-repeat;
+    background-position: right 5px bottom 9px;
+}
+
+.open{
+    background: url('/assets/images/up_arrow.svg') no-repeat;
+    background-position: right 5px bottom 11px;
 }
 
 .input.name{
