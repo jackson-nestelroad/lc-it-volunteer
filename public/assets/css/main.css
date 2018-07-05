@@ -352,6 +352,7 @@ hr{
 
 .result td.center{
     text-align: center;
+    width: 20%;
 }
 
 .result td i{

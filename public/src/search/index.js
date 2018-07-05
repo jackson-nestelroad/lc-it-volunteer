@@ -114,6 +114,10 @@ submit.addEventListener('click', function(event){
         else if(query.value.toLowerCase().startsWith('p')){
             query.value = 4;
         }
+        // communication
+        else if(query.value.toLowerCase().startsWith('c')){
+            query.value = 5;
+        }
         // invalid team
         else{
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
