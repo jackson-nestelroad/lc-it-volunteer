@@ -139,13 +139,13 @@ exports.searchByFirstName = function(search){
         pool.connect()
         .then(client => {
             client.query(`
-            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
+            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
             FROM 
               (SELECT volunteers.vol_id, first_name, last_name, email
               FROM volunteers
               WHERE lower(first_name) LIKE '${search}%') c
             LEFT OUTER JOIN
-              (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
+              (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
               FROM
                 (SELECT volunteers.vol_id, SUM(hours) total_hours
                 FROM logs
@@ -210,13 +210,13 @@ exports.searchByLastName = function(search){
         pool.connect()
         .then(client => {
             client.query(`
-            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
+            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
             FROM 
               (SELECT volunteers.vol_id, first_name, last_name, email
               FROM volunteers
               WHERE lower(last_name) LIKE '${search}%') c
             LEFT OUTER JOIN
-              (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
+              (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
               FROM
                 (SELECT volunteers.vol_id, SUM(hours) total_hours
                 FROM logs
@@ -281,7 +281,7 @@ exports.searchByTeam = function(team){
         pool.connect()
         .then(client => {
             client.query(`
-            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
+            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
             FROM 
             (SELECT volunteers.vol_id, first_name, last_name, email
                 FROM volunteers
@@ -293,7 +293,7 @@ exports.searchByTeam = function(team){
                     ORDER BY vol_id) j
                 ON j.vol_id = volunteers.vol_id) c
             LEFT OUTER JOIN
-            (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
+            (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
             FROM
                 (SELECT volunteers.vol_id, SUM(hours) total_hours
                 FROM logs
@@ -449,7 +449,7 @@ exports.leaderboard = function(){
             var month = date.getMonth() + 1;
             var year = date.getFullYear();
             client.query(`
-                SELECT c.vol_id, c.first_name, c.last_name, c.hours, f.favorite, f.last_active
+                SELECT c.vol_id, c.first_name, c.last_name, c.hours, f.team, f.last_active
                 FROM 
                 (SELECT volunteers.vol_id, first_name, last_name, SUM(hours) hours
                 FROM volunteers
@@ -463,7 +463,7 @@ exports.leaderboard = function(){
                     ORDER BY SUM(hours) DESC
                     LIMIT 10) c
                 LEFT OUTER JOIN
-                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
+                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
                 FROM
                     (SELECT volunteers.vol_id, SUM(hours) total_hours
                     FROM logs

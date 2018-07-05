@@ -150,7 +150,7 @@ submit.addEventListener('click', function(event){
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
                 var hours = element.hours;
-                var favorite = element.favorite;
+                var team = element.team;
 
                 var date = new Date(element.last_active);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
@@ -176,7 +176,7 @@ submit.addEventListener('click', function(event){
                             <td class="center">
                                 <i>Team</i>
                                 <br>
-                                <span>${favorite}</span>
+                                <span>${team}</span>
                             </td>
                             <td class="center">
                                 <i>Last Active</i>

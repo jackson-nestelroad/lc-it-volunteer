@@ -315,9 +315,9 @@ ORDER BY c.vol_id;
 
 Search by Date !!!
 
-SELECT c.vol_id, c.first_name, c.last_name, c.hours, c.team, d.last_active
+SELECT c.vol_id, c.first_name, c.last_name, c.hours, c.favorite, d.last_active
 FROM
-	(SELECT g.vol_id, g.first_name, g.last_name, g.hours, b.team
+	(SELECT g.vol_id, g.first_name, g.last_name, g.hours, b.team favorite
 	FROM
 		(SELECT a.vol_id, a.hours, e.first_name, e.last_name
 		 FROM 
