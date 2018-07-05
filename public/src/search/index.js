@@ -160,7 +160,7 @@ submit.addEventListener('click', function(event){
             query.value = 5;
         }
         // number codes already searched
-        else if([1,2,3,4,5].includes(query.value)){
+        else if([1,2,3,4,5].includes(parseInt(query.value))){
             query.value;
         }
         // invalid team
