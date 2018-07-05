@@ -90,7 +90,7 @@ app.route('/new')
             }
             else{
                 // create the volunteer
-                database.add(req.body.first, req.body.last, req.body.email, req.body.phone)
+                database.add(req.body.first, req.body.last, req.body.email, req.body.phone, req.body.team)
                 .then(code => {
                     res.send('success');
                 })

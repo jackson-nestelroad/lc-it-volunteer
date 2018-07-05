@@ -82,13 +82,13 @@ exports.checkIfRegistered = function(name, email){
 
 
 // adds a new volunteer
-exports.add = function(first, last, email, phone){
+exports.add = function(first, last, email, phone, team){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
             client.query(`
-                INSERT INTO volunteers(first_name, last_name, email, phone)
-                VALUES('${first}', '${last}', '${email}', '${phone}');
+                INSERT INTO volunteers(first_name, last_name, email, phone, preferred)
+                VALUES('${first}', '${last}', '${email}', '${phone}', '${team}');
             `)
             .then(res => {
                 resolve('success');

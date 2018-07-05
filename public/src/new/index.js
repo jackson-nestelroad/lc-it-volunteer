@@ -8,7 +8,16 @@ const close = document.getElementById('closeBtn');
 const close2 = document.getElementById('closeBtn2');
 const close4 = document.getElementById('closeBtn4');
 const back = document.getElementById('backBtn');
-
+const select = document.getElementById('team-input');
+// change arrow on dropdown
+document.getElementsByTagName('body')[0].addEventListener('click', function(event){
+	if(event.target.id == 'team-input'){
+		select.className == 'closed new-width' ? select.className = 'open new-width' : select.className = 'closed new-width';	
+    }
+	else{
+		select.className == 'open new-width' ? select.className = 'closed new-width' : select.className = 'closed new-width';
+    }
+})
 // back button at top sends back to base volunteer form
 back.addEventListener('click', function(event){
     window.location.replace('/');
@@ -79,6 +88,7 @@ function validate(type, string){
 submit.addEventListener('click', function(event){
     var first = document.getElementById('first-input').value;
     var last = document.getElementById('last-input').value;
+    var team = document.getElementById('team-input').value;
     var email = document.getElementById('email-input').value;
     var phone = document.getElementById('phone-input').value;
     first = validate('name', first);
@@ -88,6 +98,7 @@ submit.addEventListener('click', function(event){
     var values = {
         'first': first,
         'last': last,
+        'team': team,
         'email': emailTrue,
         'phone': phoneTrue
     }
