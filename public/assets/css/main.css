@@ -102,7 +102,16 @@ select{
     -webkit-appearance: none; 
     -moz-appearance: none;
     appearance: none;
-    /* add custom arrow */
+}
+
+.closed{
+    background: url('/assets/images/down_arrow.png') no-repeat;
+    background-position: right 5px bottom 11px;
+}
+
+.open{
+    background: url('/assets/images/up_arrow.png') no-repeat;
+    background-position: right 5px bottom 13px;
 }
 
 
@@ -363,4 +372,10 @@ hr{
 
 #volunteerInfo p.info{
     font-size: 14pt;
+}
+
+.icon{
+    width: 50px;
+    height: 42px;
+    background: url('/assets/images/search_icon.png') no-repeat; 
 }
