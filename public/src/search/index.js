@@ -166,10 +166,15 @@ submit.addEventListener('click', function(event){
 
                 hours = hours == null ? 0 : hours;
                 team = team == null ? element.preferred : team;
-                active = active == '1/1/1970' ? 'Never!' : active;
 
                 var add = document.createElement('div');
                 add.className = 'result';
+
+                if(active == '1/1/1970'){
+                    active = 'Never!';
+                    add.className = 'result red';
+                }
+
                 add.innerHTML = `
                 <table>
                     <tbody>
