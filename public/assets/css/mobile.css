@@ -311,8 +311,17 @@ hr{
     grid-gap: 6px;
     text-align: center;
     align-items: center;
-    grid-template-columns: 32px 75px 2fr 4fr 2fr;
-    grid-template-rows: repeat(1, minmax(50px, 1fr));
+    grid-template-columns: 32px 75px 1fr 1fr 1fr 1fr;
+    grid-template-rows: repeat(2, minmax(50px, 1fr));
+}
+
+.mobile-category{
+    grid-column: 3 / 7;
+}
+
+.mobile-query{
+    grid-column: 1 / 6;
+    grid-row : 2 / 3;
 }
 
 .tool input,
@@ -379,6 +388,10 @@ hr{
     text-decoration: underline;
     text-decoration-color: rgba(0,0,0,0.3);
     width: 45%;
+}
+
+.result td.no-mobile{
+    display: none;
 }
 
 #volunteerInfo p.title{

@@ -102,7 +102,10 @@ Updated Roadmap
         Information on click finished.
         Base for search engine finished.
     7/5/18
-
+        First name, last name, team, and date search finished
+        Added preferred team on registration.
+        Added inactivity list.
+        Search page finished.
     7/12/18
 
     7/19/18
@@ -142,36 +145,3 @@ Sends POST request to main.js
     Searches database, returns all rows, and sends it back to search/index.js
         search/index.js then displays all the data via the code below
         will need a loading animation most likely
-
-
-How searching will work on /data
-
-// code for adding a row
-var add = document.createElement('div');
-add.className = 'result';
-// edit the innerHTML of the template
-add.innerHTML = document.getElementsByClassName('template')[0].innerHTML;
-document.getElementById('search-results').appendChild(add);
-
-/data == /data?leaderboard
-
-Search -> HTML parameters
-/data?leaderboard
-/data?first=jackson
-/data?last=nestelroad
-/data?team=1
-/data?date=6/28/2018
-/data?inactive
-
-GET request in main.js will handle these parameters and send to database
-every row returned will be a row on the page
-
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}

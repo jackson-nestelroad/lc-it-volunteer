@@ -43,10 +43,10 @@ const query = document.getElementById('search-query');
 // change arrow on dropdown
 document.getElementsByTagName('body')[0].addEventListener('click', function(event){
 	if(event.target.id == 'category-select'){
-		select.className == 'closed' ? select.className = 'open' : select.className = 'closed';	
+		select.className == 'closed mobile-category' ? select.className = 'open mobile-category' : select.className = 'closed mobile-category';	
     }
 	else{
-		select.className == 'open' ? select.className = 'closed' : select.className = 'closed';
+		select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
     }
 })
 // close button in info modal
