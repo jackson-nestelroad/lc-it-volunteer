@@ -395,7 +395,7 @@ exports.searchByDate = function(date){
                                     FROM volunteers
                                     JOIN logs
                                     ON logs.vol_id = volunteers.vol_id
-                                    WHERE date = '${date}8'
+                                    WHERE date = '${date}'
                                     GROUP BY volunteers.vol_id)
                             ) e
                         ON e.vol_id = a.vol_id
