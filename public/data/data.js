@@ -143,7 +143,7 @@ exports.searchByFirstName = function(search){
                 FROM
                     (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active, c.preferred
                         FROM 
-                        (SELECT volunteers.vol_id, first_name, last_name, email, team preferred
+                        (SELECT volunteers.vol_id, first_name, last_name, team preferred
                         FROM volunteers
                         WHERE lower(first_name) LIKE '${search}%') c
                         LEFT OUTER JOIN
@@ -218,7 +218,7 @@ exports.searchByLastName = function(search){
                 FROM
                     (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active, c.preferred
                     FROM 
-                    (SELECT volunteers.vol_id, first_name, last_name, email
+                    (SELECT volunteers.vol_id, first_name, last_name, team preferred
                     FROM volunteers
                     WHERE lower(last_name) LIKE '${search}%') c
                     LEFT OUTER JOIN
@@ -577,7 +577,7 @@ exports.getInactive = function(){
                 FROM
                     (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active, c.preferred
                     FROM 
-                    (SELECT vol_id, first_name, last_name
+                    (SELECT vol_id, first_name, last_name, team preferred
                     FROM volunteers
                     WHERE vol_id IN
                             (((SELECT vol_id
