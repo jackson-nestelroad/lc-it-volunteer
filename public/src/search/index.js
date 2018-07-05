@@ -162,7 +162,7 @@ submit.addEventListener('click', function(event){
 
                 hours = hours == null ? 0 : hours;
                 team = team == null ? '???' : team;
-                active = active == '12/31/1969' ? 'Never!' : active;
+                active = active == '1/1/1970' ? 'Never!' : active;
 
                 var add = document.createElement('div');
                 add.className = 'result';

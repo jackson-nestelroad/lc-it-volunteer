@@ -565,18 +565,24 @@ exports.getInactive = function(){
             date = new Date(date.setTime(date.getTime() - 60 * 86400000));
             date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
             client.query(`
-                SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
                 FROM 
                 (SELECT vol_id, first_name, last_name
                 FROM volunteers
                 WHERE vol_id IN
-                        (SELECT vol_id
+                        (((SELECT vol_id
                         FROM logs
                         GROUP BY vol_id
-                        HAVING MAX(date) < '${date}')
+                        HAVING MAX(date) < '7/1/2018')
+                        UNION ALL
+                        (SELECT vol_id
+                        FROM volunteers
+                        WHERE vol_id NOT IN
+                        (SELECT vol_id
+                        FROM logs))))
                     ) c
                 LEFT OUTER JOIN
-                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
+                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
                 FROM
                     (SELECT volunteers.vol_id, SUM(hours) total_hours
                     FROM logs
@@ -584,10 +590,16 @@ exports.getInactive = function(){
                     ON volunteers.vol_id = logs.vol_id
                     GROUP BY volunteers.vol_id
                     HAVING volunteers.vol_id IN
-                    (SELECT vol_id
+                    ((SELECT vol_id
                         FROM logs
                         GROUP BY vol_id
-                        HAVING MAX(date) < '${date}')
+                        HAVING MAX(date) < '7/1/2018')
+                        UNION ALL
+                        (SELECT vol_id
+                        FROM volunteers
+                        WHERE vol_id NOT IN
+                        (SELECT vol_id
+                        FROM logs)))
                     ) a
                 JOIN
                     (SELECT b.vol_id, b.favorite_team_name, g.last_active
@@ -598,10 +610,16 @@ exports.getInactive = function(){
                         (SELECT vol_id, mode() within group (order by team_id) temp_id
                         FROM logs
                         WHERE vol_id IN
-                            (SELECT vol_id
+                            ((SELECT vol_id
                             FROM logs
                             GROUP BY vol_id
-                            HAVING MAX(date) < '${date}')
+                            HAVING MAX(date) < '7/1/2018')
+                            UNION ALL
+                            (SELECT vol_id
+                            FROM volunteers
+                            WHERE vol_id NOT IN
+                            (SELECT vol_id
+                            FROM logs)))
                         GROUP BY vol_id) e
                         ON e.temp_id = teams.team_id) b
                     JOIN
@@ -611,10 +629,16 @@ exports.getInactive = function(){
                     ON volunteers.vol_id = logs.vol_id
                     WHERE volunteers.vol_id 
                     IN
-                    (SELECT vol_id
+                    ((SELECT vol_id
                         FROM logs
                         GROUP BY vol_id
-                        HAVING MAX(date) < '${date}')
+                        HAVING MAX(date) < '7/1/2018')
+                        UNION ALL
+                        (SELECT vol_id
+                        FROM volunteers
+                        WHERE vol_id NOT IN
+                        (SELECT vol_id
+                        FROM logs)))
                     GROUP BY volunteers.vol_id) g
                     ON g.vol_id = b.vol_id) h
                 ON a.vol_id = h.vol_id) f

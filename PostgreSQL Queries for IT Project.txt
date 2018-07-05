@@ -723,7 +723,7 @@ LEFT OUTER JOIN
   ON a.vol_id = b.vol_id) f
 ON f.vol_id = c.vol_id;
 
-INACTIVITY List
+!!! INACTIVITY LIST NEW !!!
 
 SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
 FROM 
