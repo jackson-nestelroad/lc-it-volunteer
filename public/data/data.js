@@ -87,7 +87,7 @@ exports.add = function(first, last, email, phone, team){
         pool.connect()
         .then(client => {
             client.query(`
-                INSERT INTO volunteers(first_name, last_name, email, phone, preferred)
+                INSERT INTO volunteers(first_name, last_name, email, phone, team)
                 VALUES('${first}', '${last}', '${email}', '${phone}', '${team}');
             `)
             .then(res => {
