@@ -59,7 +59,7 @@ function updateQuery(id){
     if(id == 1 || id == 6){
         query.value = '';
         query.setAttribute('readonly', true);
-        query.style['background-color'] = 'rgba(0,0,0,0.075) !important';
+        query.style['background-color'] = 'rgba(0,0,0,0.075)';
         setTimeout(destroyDate, 10);
     }
     else if(id == 5){
