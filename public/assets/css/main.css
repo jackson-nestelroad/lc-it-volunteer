@@ -105,13 +105,13 @@ select{
 }
 
 .closed{
-    background: url('/assets/images/down_arrow.png') no-repeat;
-    background-position: right 5px bottom 11px;
+    background: url('/assets/images/down_arrow.svg') no-repeat;
+    background-position: right 5px bottom 9px;
 }
 
 .open{
-    background: url('/assets/images/up_arrow.png') no-repeat;
-    background-position: right 5px bottom 13px;
+    background: url('/assets/images/up_arrow.svg') no-repeat;
+    background-position: right 5px bottom 11px;
 }
 
 
@@ -304,7 +304,7 @@ hr{
     grid-gap: 6px;
     text-align: center;
     align-items: center;
-    grid-template-columns: 50px 75px 2fr 4fr 2fr;
+    grid-template-columns: 32px 75px 2fr 4fr 2fr;
     grid-template-rows: repeat(1, minmax(50px, 1fr));
 }
 
@@ -375,7 +375,8 @@ hr{
 }
 
 .icon{
-    width: 50px;
-    height: 42px;
-    background: url('/assets/images/search_icon.png') no-repeat; 
+    width: 32px;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
 }
