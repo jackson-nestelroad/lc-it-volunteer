@@ -58,7 +58,7 @@ function destroyDate(){
 function updateQuery(id){
     if(id == 1 || id == 6){
         query.setAttribute('readonly', true);
-        query.style['background-color'] = 'rgba(0,0,0,0.075)';
+        query.style['background-color'] = 'rgba(0,0,0,0.075) !important';
         setTimeout(destroyDate, 10);
         query.value = '';
     }
@@ -78,6 +78,7 @@ function updateQuery(id){
 
 // retain old search information in URL paramters
 window.onload = function(){
+    updateQuery(1);
     submit.click();
 }
 // update search tool when category changes
