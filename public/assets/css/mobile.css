@@ -82,7 +82,7 @@ body *:focus{
 
 .grid-container-form.new-form{
     grid-template-columns: repeat(1, minmax(200px, 1fr));
-    grid-template-rows: repeat(5, minmax(50px, 1fr));
+    grid-template-rows: repeat(6, minmax(50px, 1fr));
 }
 
 .input{
@@ -110,7 +110,7 @@ select{
     grid-row: 1 / 2;
 }
 
-.input.team{
+.input.team.hours{
     grid-column: 1 / 2;
     grid-row: 2 / 3;
 }
@@ -135,19 +135,24 @@ select{
     grid-row: 2 / 3;
 }
 
-.input.phone{
+.input.team.new{
     grid-column: 1 / 2;
     grid-row: 3 / 4;
 }
 
-.input.email{
+.input.phone{
     grid-column: 1 / 2;
     grid-row: 4 / 5;
 }
 
-.submit{
+.input.email{
     grid-column: 1 / 2;
     grid-row: 5 / 6;
+}
+
+.submit{
+    grid-column: 1 / 2;
+    grid-row: 6 / 7;
 }
 
 button{
@@ -284,4 +289,97 @@ hr{
     -webkit-user-modify: none;
     -webkit-user-select: none;
     user-select: none;
+}
+
+.grid-container-tool{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-gap: 6px;
+    text-align: center;
+    align-items: center;
+    grid-template-columns: 32px 75px 2fr 4fr 2fr;
+    grid-template-rows: repeat(1, minmax(50px, 1fr));
+}
+
+.tool input,
+.tool select{
+    width: 85% !important;
+}
+
+.tool p{
+    font-size: 14pt;
+    font-weight: 700;
+}
+
+.tool button{
+    width: 140px;
+}
+
+.search-header{
+    margin-bottom: 21px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 24pt;
+}
+
+.result{
+    width: 80%;
+    min-width: 625px;
+    margin: 12px 24px 12px 24px;
+    padding: 6px 24px;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.35);
+    flex: 1;   
+}
+
+.result.red{
+    background-color: rgba(255,0,0,0.1) !important;
+}
+.result.none{
+    text-align: center;
+    font-weight: 700;
+}
+
+.result.template{
+    display: none;
+}
+
+.result td.small{
+    width: 1%;
+    white-space: nowrap;
+    color: rgba(0,0,0,0.4);
+}
+
+.result td.center{
+    text-align: center;
+    width: 20%;
+}
+
+.result td i{
+    color: rgba(0,0,0,0.5);
+}
+
+.result td.clickForInfo{
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: rgba(0,0,0,0.3);
+    width: 45%;
+}
+
+#volunteerInfo p.title{
+    font-weight: 700;
+    font-size: 24pt;
+}
+
+#volunteerInfo p.info{
+    font-size: 14pt;
+}
+
+.icon{
+    width: 32px;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
 }
