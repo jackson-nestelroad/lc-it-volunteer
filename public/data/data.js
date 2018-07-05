@@ -139,53 +139,57 @@ exports.searchByFirstName = function(search){
         pool.connect()
         .then(client => {
             client.query(`
-                SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
-                FROM 
-                (SELECT volunteers.vol_id, first_name, last_name, email
-                FROM volunteers
-                WHERE lower(first_name) LIKE '${search}%') c
-                LEFT OUTER JOIN
-                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
+                SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
                 FROM
-                    (SELECT volunteers.vol_id, SUM(hours) total_hours
-                    FROM logs
-                    LEFT OUTER JOIN volunteers
-                    ON volunteers.vol_id = logs.vol_id
-                    GROUP BY volunteers.vol_id
-                    HAVING volunteers.vol_id IN
-                    (SELECT volunteers.vol_id
-                    FROM volunteers
-                    WHERE lower(first_name) LIKE '${search}%')
-                    ) a
-                JOIN
-                    (SELECT b.vol_id, b.favorite_team_name, g.last_active
-                    FROM
-                    (SELECT e.vol_id, name favorite_team_name
-                        FROM teams
-                        LEFT OUTER JOIN 
-                        (SELECT vol_id, mode() within group (order by team_id) temp_id
-                        FROM logs
-                        WHERE vol_id IN
+                    (SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active, c.preferred
+                        FROM 
+                        (SELECT volunteers.vol_id, first_name, last_name, email, team preferred
+                        FROM volunteers
+                        WHERE lower(first_name) LIKE '${search}%') c
+                        LEFT OUTER JOIN
+                        (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
+                        FROM
+                            (SELECT volunteers.vol_id, SUM(hours) total_hours
+                            FROM logs
+                            LEFT OUTER JOIN volunteers
+                            ON volunteers.vol_id = logs.vol_id
+                            GROUP BY volunteers.vol_id
+                            HAVING volunteers.vol_id IN
                             (SELECT volunteers.vol_id
                             FROM volunteers
                             WHERE lower(first_name) LIKE '${search}%')
-                        GROUP BY vol_id) e
-                        ON e.temp_id = teams.team_id) b
-                    JOIN
-                    (SELECT volunteers.vol_id, MAX(logs.date) last_active
-                    FROM volunteers
-                    JOIN logs
-                    ON volunteers.vol_id = logs.vol_id
-                    WHERE volunteers.vol_id 
-                    IN
-                    (SELECT volunteers.vol_id
-                        FROM volunteers
-                        WHERE lower(first_name) LIKE '${search}%')
-                    GROUP BY volunteers.vol_id) g
-                    ON g.vol_id = b.vol_id) h
-                ON a.vol_id = h.vol_id) f
-                ON f.vol_id = c.vol_id
-                ORDER BY c.vol_id;
+                            ) a
+                        JOIN
+                            (SELECT b.vol_id, b.favorite_team_name, g.last_active
+                            FROM
+                            (SELECT e.vol_id, name favorite_team_name
+                                FROM teams
+                                LEFT OUTER JOIN 
+                                (SELECT vol_id, mode() within group (order by team_id) temp_id
+                                FROM logs
+                                WHERE vol_id IN
+                                    (SELECT volunteers.vol_id
+                                    FROM volunteers
+                                    WHERE lower(first_name) LIKE '${search}%')
+                                GROUP BY vol_id) e
+                                ON e.temp_id = teams.team_id) b
+                            JOIN
+                            (SELECT volunteers.vol_id, MAX(logs.date) last_active
+                            FROM volunteers
+                            JOIN logs
+                            ON volunteers.vol_id = logs.vol_id
+                            WHERE volunteers.vol_id 
+                            IN
+                            (SELECT volunteers.vol_id
+                                FROM volunteers
+                                WHERE lower(first_name) LIKE '${search}%')
+                            GROUP BY volunteers.vol_id) g
+                            ON g.vol_id = b.vol_id) h
+                        ON a.vol_id = h.vol_id) f
+                    ON f.vol_id = c.vol_id
+                JOIN teams
+                ON z.preferred = teams.team_id
+                ORDER BY z.vol_id;
             `)
             .then(res => {
                 resolve(res.rows);
@@ -210,53 +214,57 @@ exports.searchByLastName = function(search){
         pool.connect()
         .then(client => {
             client.query(`
-                SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
-                FROM 
-                (SELECT volunteers.vol_id, first_name, last_name, email
-                FROM volunteers
-                WHERE lower(last_name) LIKE '${search}%') c
-                LEFT OUTER JOIN
-                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
+                SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
                 FROM
-                    (SELECT volunteers.vol_id, SUM(hours) total_hours
-                    FROM logs
-                    LEFT OUTER JOIN volunteers
-                    ON volunteers.vol_id = logs.vol_id
-                    GROUP BY volunteers.vol_id
-                    HAVING volunteers.vol_id IN
-                    (SELECT volunteers.vol_id
+                    SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                    FROM 
+                    (SELECT volunteers.vol_id, first_name, last_name, email
                     FROM volunteers
-                    WHERE lower(last_name) LIKE '${search}%')
-                    ) a
-                JOIN
-                    (SELECT b.vol_id, b.favorite_team_name, g.last_active
+                    WHERE lower(last_name) LIKE '${search}%') c
+                    LEFT OUTER JOIN
+                    (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
                     FROM
-                    (SELECT e.vol_id, name favorite_team_name
-                        FROM teams
-                        LEFT OUTER JOIN 
-                        (SELECT vol_id, mode() within group (order by team_id) temp_id
+                        (SELECT volunteers.vol_id, SUM(hours) total_hours
                         FROM logs
-                        WHERE vol_id IN
-                            (SELECT volunteers.vol_id
-                            FROM volunteers
-                            WHERE lower(last_name) LIKE '${search}%')
-                        GROUP BY vol_id) e
-                        ON e.temp_id = teams.team_id) b
-                    JOIN
-                    (SELECT volunteers.vol_id, MAX(logs.date) last_active
-                    FROM volunteers
-                    JOIN logs
-                    ON volunteers.vol_id = logs.vol_id
-                    WHERE volunteers.vol_id 
-                    IN
-                    (SELECT volunteers.vol_id
+                        LEFT OUTER JOIN volunteers
+                        ON volunteers.vol_id = logs.vol_id
+                        GROUP BY volunteers.vol_id
+                        HAVING volunteers.vol_id IN
+                        (SELECT volunteers.vol_id
                         FROM volunteers
                         WHERE lower(last_name) LIKE '${search}%')
-                    GROUP BY volunteers.vol_id) g
-                    ON g.vol_id = b.vol_id) h
-                ON a.vol_id = h.vol_id) f
-                ON f.vol_id = c.vol_id
-                ORDER BY c.vol_id;
+                        ) a
+                    JOIN
+                        (SELECT b.vol_id, b.favorite_team_name, g.last_active
+                        FROM
+                        (SELECT e.vol_id, name favorite_team_name
+                            FROM teams
+                            LEFT OUTER JOIN 
+                            (SELECT vol_id, mode() within group (order by team_id) temp_id
+                            FROM logs
+                            WHERE vol_id IN
+                                (SELECT volunteers.vol_id
+                                FROM volunteers
+                                WHERE lower(last_name) LIKE '${search}%')
+                            GROUP BY vol_id) e
+                            ON e.temp_id = teams.team_id) b
+                        JOIN
+                        (SELECT volunteers.vol_id, MAX(logs.date) last_active
+                        FROM volunteers
+                        JOIN logs
+                        ON volunteers.vol_id = logs.vol_id
+                        WHERE volunteers.vol_id 
+                        IN
+                        (SELECT volunteers.vol_id
+                            FROM volunteers
+                            WHERE lower(last_name) LIKE '${search}%')
+                        GROUP BY volunteers.vol_id) g
+                        ON g.vol_id = b.vol_id) h
+                    ON a.vol_id = h.vol_id) f
+                    ON f.vol_id = c.vol_id
+                JOIN teams
+                ON z.preferred = teams.team_id
+                ORDER BY z.vol_id;
             `)
             .then(res => {
                 resolve(res.rows);
@@ -565,52 +573,34 @@ exports.getInactive = function(){
             date = new Date(date.setTime(date.getTime() - 60 * 86400000));
             date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
             client.query(`
-                SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
-                FROM 
-                (SELECT vol_id, first_name, last_name
-                FROM volunteers
-                WHERE vol_id IN
-                        (((SELECT vol_id
-                        FROM logs
-                        GROUP BY vol_id
-                        HAVING MAX(date) < '7/1/2018')
-                        UNION ALL
-                        (SELECT vol_id
-                        FROM volunteers
-                        WHERE vol_id NOT IN
-                        (SELECT vol_id
-                        FROM logs))))
-                    ) c
-                LEFT OUTER JOIN
-                (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
-                FROM
-                    (SELECT volunteers.vol_id, SUM(hours) total_hours
-                    FROM logs
-                    LEFT OUTER JOIN volunteers
-                    ON volunteers.vol_id = logs.vol_id
-                    GROUP BY volunteers.vol_id
-                    HAVING volunteers.vol_id IN
-                    ((SELECT vol_id
-                        FROM logs
-                        GROUP BY vol_id
-                        HAVING MAX(date) < '7/1/2018')
-                        UNION ALL
-                        (SELECT vol_id
-                        FROM volunteers
-                        WHERE vol_id NOT IN
-                        (SELECT vol_id
-                        FROM logs)))
-                    ) a
-                JOIN
-                    (SELECT b.vol_id, b.favorite_team_name, g.last_active
+                SELECT z.vol_id, z.first_name, z.last_name, z.hours, z.team, z.last_active, teams.name preferred
                     FROM
-                    (SELECT e.vol_id, name favorite_team_name
-                        FROM teams
-                        LEFT OUTER JOIN 
-                        (SELECT vol_id, mode() within group (order by team_id) temp_id
+                    SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.team, f.last_active
+                    FROM 
+                    (SELECT vol_id, first_name, last_name
+                    FROM volunteers
+                    WHERE vol_id IN
+                            (((SELECT vol_id
+                            FROM logs
+                            GROUP BY vol_id
+                            HAVING MAX(date) < '7/1/2018')
+                            UNION ALL
+                            (SELECT vol_id
+                            FROM volunteers
+                            WHERE vol_id NOT IN
+                            (SELECT vol_id
+                            FROM logs))))
+                        ) c
+                    LEFT OUTER JOIN
+                    (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
+                    FROM
+                        (SELECT volunteers.vol_id, SUM(hours) total_hours
                         FROM logs
-                        WHERE vol_id IN
-                            ((SELECT vol_id
+                        LEFT OUTER JOIN volunteers
+                        ON volunteers.vol_id = logs.vol_id
+                        GROUP BY volunteers.vol_id
+                        HAVING volunteers.vol_id IN
+                        ((SELECT vol_id
                             FROM logs
                             GROUP BY vol_id
                             HAVING MAX(date) < '7/1/2018')
@@ -620,30 +610,52 @@ exports.getInactive = function(){
                             WHERE vol_id NOT IN
                             (SELECT vol_id
                             FROM logs)))
-                        GROUP BY vol_id) e
-                        ON e.temp_id = teams.team_id) b
+                        ) a
                     JOIN
-                    (SELECT volunteers.vol_id, MAX(logs.date) last_active
-                    FROM volunteers
-                    JOIN logs
-                    ON volunteers.vol_id = logs.vol_id
-                    WHERE volunteers.vol_id 
-                    IN
-                    ((SELECT vol_id
-                        FROM logs
-                        GROUP BY vol_id
-                        HAVING MAX(date) < '7/1/2018')
-                        UNION ALL
-                        (SELECT vol_id
+                        (SELECT b.vol_id, b.favorite_team_name, g.last_active
+                        FROM
+                        (SELECT e.vol_id, name favorite_team_name
+                            FROM teams
+                            LEFT OUTER JOIN 
+                            (SELECT vol_id, mode() within group (order by team_id) temp_id
+                            FROM logs
+                            WHERE vol_id IN
+                                ((SELECT vol_id
+                                FROM logs
+                                GROUP BY vol_id
+                                HAVING MAX(date) < '7/1/2018')
+                                UNION ALL
+                                (SELECT vol_id
+                                FROM volunteers
+                                WHERE vol_id NOT IN
+                                (SELECT vol_id
+                                FROM logs)))
+                            GROUP BY vol_id) e
+                            ON e.temp_id = teams.team_id) b
+                        JOIN
+                        (SELECT volunteers.vol_id, MAX(logs.date) last_active
                         FROM volunteers
-                        WHERE vol_id NOT IN
-                        (SELECT vol_id
-                        FROM logs)))
-                    GROUP BY volunteers.vol_id) g
-                    ON g.vol_id = b.vol_id) h
-                ON a.vol_id = h.vol_id) f
-                ON f.vol_id = c.vol_id
-                ORDER BY c.vol_id;
+                        JOIN logs
+                        ON volunteers.vol_id = logs.vol_id
+                        WHERE volunteers.vol_id 
+                        IN
+                        ((SELECT vol_id
+                            FROM logs
+                            GROUP BY vol_id
+                            HAVING MAX(date) < '7/1/2018')
+                            UNION ALL
+                            (SELECT vol_id
+                            FROM volunteers
+                            WHERE vol_id NOT IN
+                            (SELECT vol_id
+                            FROM logs)))
+                        GROUP BY volunteers.vol_id) g
+                        ON g.vol_id = b.vol_id) h
+                    ON a.vol_id = h.vol_id) f
+                    ON f.vol_id = c.vol_id
+                JOIN teams
+                ON z.preferred = teams.team_id
+                ORDER BY z.vol_id;
             `)
             .then(res => {
                 resolve(res.rows);
