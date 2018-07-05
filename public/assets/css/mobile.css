@@ -268,7 +268,7 @@ hr{
     transform: translateY(-50%);
     margin: 0 auto;
     text-align: center;
-    min-width: 0px !important;
+    min-width: 250px !important;
     width: 3px;
     height: auto;
     -webkit-animation-name: slideIn;
@@ -397,11 +397,11 @@ hr{
 
 #volunteerInfo p.title{
     font-weight: 700;
-    font-size: 18pt;
+    font-size: 16pt;
 }
 
 #volunteerInfo p.info{
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 .icon{
