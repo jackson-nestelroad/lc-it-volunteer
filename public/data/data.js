@@ -371,7 +371,58 @@ exports.searchByTeam = function(team){
 
 // searches by date
 exports.searchByDate = function(date){
-
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+            SELECT c.vol_id, c.total_hours, c.team, d.last_active
+            FROM
+                (SELECT a.vol_id, a.total_hours, b.team
+                FROM
+                    (SELECT volunteers.vol_id, SUM(hours) total_hours
+                    FROM volunteers
+                    JOIN logs
+                    ON logs.vol_id = volunteers.vol_id
+                    WHERE date = '${date}'
+                    GROUP BY volunteers.vol_id) a
+                JOIN
+                    (SELECT volunteers.vol_id, mode() within group (order by team_id) team
+                    FROM volunteers
+                    JOIN logs
+                    ON logs.vol_id = volunteers.vol_id
+                    WHERE date = '${date}'
+                    GROUP BY volunteers.vol_id) b
+                ON a.vol_id = b.vol_id) c
+            JOIN 
+                (SELECT volunteers.vol_id, MAX(logs.date) last_active
+                FROM volunteers
+                JOIN logs
+                ON volunteers.vol_id = logs.vol_id
+                WHERE volunteers.vol_id IN
+                    (SELECT volunteers.vol_id
+                    FROM volunteers
+                    JOIN logs
+                    ON logs.vol_id = volunteers.vol_id
+                    WHERE date = '${date}'
+                    GROUP BY volunteers.vol_id)
+                GROUP BY volunteers.vol_id) d
+            ON d.vol_id = c.vol_id;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
 }
 
 // fetches the monthly leaderboard

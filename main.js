@@ -170,7 +170,14 @@ app.route('/search')
         }
         // search by date
         if(category == 5){
-
+            database.searchByDate(query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
         }
         // inactivity list, no query
         if(category == 6){
