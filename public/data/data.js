@@ -299,11 +299,11 @@ exports.searchByTeam = function(team){
                                 ((SELECT vol_id
                                 FROM logs
                                 GROUP BY vol_id
-                                HAVING mode() within group (order by team_id) = ${search})
+                                HAVING mode() within group (order by team_id) = ${team})
                                 UNION 
                                 (SELECT vol_id
                                 FROM volunteers
-                                WHERE team = ${search})) j
+                                WHERE team = ${team})) j
                             ON j.vol_id = volunteers.vol_id) c
                         LEFT OUTER JOIN
                         (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name team, h.last_active
@@ -320,11 +320,11 @@ exports.searchByTeam = function(team){
                                 ((SELECT vol_id
                                 FROM logs
                                 GROUP BY vol_id
-                                HAVING mode() within group (order by team_id) = ${search})
+                                HAVING mode() within group (order by team_id) = ${team})
                                 UNION 
                                 (SELECT vol_id
                                 FROM volunteers
-                                WHERE team = ${search})) c
+                                WHERE team = ${team})) c
                             ON c.vol_id = volunteers.vol_id)
                             ) a
                         JOIN
@@ -342,11 +342,11 @@ exports.searchByTeam = function(team){
                                     ((SELECT vol_id
                                     FROM logs
                                     GROUP BY vol_id
-                                    HAVING mode() within group (order by team_id) = ${search})
+                                    HAVING mode() within group (order by team_id) = ${team})
                                     UNION 
                                     (SELECT vol_id
                                     FROM volunteers
-                                    WHERE team = ${search})) c
+                                    WHERE team = ${team})) c
                                     ON c.vol_id = volunteers.vol_id)
                                 GROUP BY vol_id) e
                                 ON e.temp_id = teams.team_id) b
@@ -362,11 +362,11 @@ exports.searchByTeam = function(team){
                                 ((SELECT vol_id
                                 FROM logs
                                 GROUP BY vol_id
-                                HAVING mode() within group (order by team_id) = ${search})
+                                HAVING mode() within group (order by team_id) = ${team})
                                 UNION 
                                 (SELECT vol_id
                                 FROM volunteers
-                                WHERE team = ${search})) c
+                                WHERE team = ${team})) c
                                 ON c.vol_id = volunteers.vol_id)
                             GROUP BY volunteers.vol_id) g
                             ON g.vol_id = b.vol_id) h
