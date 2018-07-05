@@ -118,6 +118,10 @@ submit.addEventListener('click', function(event){
         else if(query.value.toLowerCase().startsWith('c')){
             query.value = 5;
         }
+        // number codes already searched
+        else if([1,2,3,4,5].includes(query.value)){
+            query.value;
+        }
         // invalid team
         else{
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
