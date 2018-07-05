@@ -148,7 +148,14 @@ app.route('/search')
         }
         // search by last name
         if(category == 3){
-
+            database.searchByLastName(query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
         }
         // search by favorite team
         if(category == 4){
