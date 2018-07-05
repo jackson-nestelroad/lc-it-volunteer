@@ -181,7 +181,14 @@ app.route('/search')
         }
         // inactivity list, no query
         if(category == 6){
-
+            database.getInactive()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
         }
     })
 // /display is the display for TV
