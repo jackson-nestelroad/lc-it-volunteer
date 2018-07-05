@@ -159,7 +159,14 @@ app.route('/search')
         }
         // search by favorite team
         if(category == 4){
-
+            database.searchByTeam(query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
         }
         // search by date
         if(category == 5){

@@ -96,6 +96,25 @@ submit.addEventListener('click', function(event){
             return;
         }
     }
+    // handle team searches
+    if(select.value == 4){
+        // hardware
+        if(query.value.toLowerCase().startsWith('h')){
+            query.value = 1;
+        }
+        // software
+        else if(query.value.toLowerCase().startsWith('s')){
+            query.value = 2;
+        }
+        // database
+        else if(query.value.toLowerCase().startsWith('d')){
+            query.value = 3;
+        }
+        // project
+        else if(query.value.toLowerCase().startsWith('p')){
+            query.value = 4;
+        }
+    }
     // clear search results
     query.style['background-color'] = 'white';
     document.getElementById('search-results').innerHTML = '';
@@ -104,7 +123,7 @@ submit.addEventListener('click', function(event){
         context: document.body,
         data: {
             category: select.value,
-            query: query.value
+            query: send
         }
     })
     .done(function(rows){

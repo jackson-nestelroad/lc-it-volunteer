@@ -277,7 +277,96 @@ exports.searchByLastName = function(search){
 
 // searches by most active team
 exports.searchByTeam = function(team){
-
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+            SELECT c.vol_id, c.first_name, c.last_name, f.hours, f.favorite, f.last_active
+            FROM 
+            (SELECT volunteers.vol_id, first_name, last_name, email
+                FROM volunteers
+                JOIN
+                    (SELECT vol_id
+                    FROM logs
+                    GROUP BY vol_id
+                    HAVING mode() within group (order by team_id) = ${team}
+                    ORDER BY vol_id) j
+                ON j.vol_id = volunteers.vol_id) c
+            LEFT OUTER JOIN
+            (SELECT a.vol_id, a.total_hours hours, h.favorite_team_name favorite, h.last_active
+            FROM
+                (SELECT volunteers.vol_id, SUM(hours) total_hours
+                FROM logs
+                LEFT OUTER JOIN volunteers
+                ON volunteers.vol_id = logs.vol_id
+                GROUP BY volunteers.vol_id
+                HAVING volunteers.vol_id IN
+                (SELECT volunteers.vol_id
+                FROM volunteers
+                JOIN
+                    (SELECT vol_id
+                    FROM logs
+                    GROUP BY vol_id
+                    HAVING mode() within group (order by team_id) = ${team}
+                    ORDER BY vol_id) c
+                ON c.vol_id = volunteers.vol_id)
+                ) a
+            JOIN
+                (SELECT b.vol_id, b.favorite_team_name, g.last_active
+                FROM
+                (SELECT e.vol_id, name favorite_team_name
+                    FROM teams
+                    LEFT OUTER JOIN 
+                    (SELECT vol_id, mode() within group (order by team_id) temp_id
+                    FROM logs
+                    WHERE vol_id IN
+                        (SELECT volunteers.vol_id
+                        FROM volunteers
+                        JOIN
+                        (SELECT vol_id
+                        FROM logs
+                        GROUP BY vol_id
+                        HAVING mode() within group (order by team_id) = ${team}
+                        ORDER BY vol_id) c
+                        ON c.vol_id = volunteers.vol_id)
+                    GROUP BY vol_id) e
+                    ON e.temp_id = teams.team_id) b
+                JOIN
+                (SELECT volunteers.vol_id, MAX(logs.date) last_active
+                FROM volunteers
+                JOIN logs
+                ON volunteers.vol_id = logs.vol_id
+                WHERE volunteers.vol_id IN
+                    (SELECT volunteers.vol_id
+                    FROM volunteers
+                    JOIN
+                    (SELECT vol_id
+                    FROM logs
+                    GROUP BY vol_id
+                    HAVING mode() within group (order by team_id) = ${team}
+                    ORDER BY vol_id) c
+                    ON c.vol_id = volunteers.vol_id)
+                GROUP BY volunteers.vol_id) g
+                ON g.vol_id = b.vol_id) h
+            ON a.vol_id = h.vol_id) f
+            ON f.vol_id = c.vol_id
+            ORDER BY c.vol_id;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
 }
 
 // searches by date
