@@ -123,7 +123,7 @@ submit.addEventListener('click', function(event){
         context: document.body,
         data: {
             category: select.value,
-            query: send
+            query: query.value
         }
     })
     .done(function(rows){
