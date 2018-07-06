@@ -11,9 +11,13 @@ This application is built using **Express** and **Node.js**. It is deployed thro
 
 *CSS* - Web Styling
 
-*Javascript* - Form Validation and Web Events
+*Javascript* - Form Validation, Web Events, and Database Communication
 
 *PostgreSQL* - Database
+
+### How it Connects
+
+User → http GET request → main.js (routing) → index.html, index.js (display) → http POST request → main.js (handle) → data.js (communicate) → PostgreSQL (query) → data.js → main.js → index.html, index.js (display)
 
 ## Layout
 ### Volunteering Form
