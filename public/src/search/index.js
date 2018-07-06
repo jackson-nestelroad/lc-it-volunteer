@@ -115,11 +115,14 @@ function updateHeader(category, query){
     if(category == 1){
         string = `${months[(new Date()).getMonth()]} ${searchCategories[category-1]}`;
     }
-    else if(category == 2 || category == 3 || category == 5){
+    else if(category == 2 || category == 3 ){
         string = `${searchCategories[category-1]}: ${query}...`;
     }
     else if(category == 4){
         string = `${searchCategories[category-1]}: ${teams[query-1]}`;
+    }
+    else if(category == 5){
+        string = `${searchCategories[category-1]}: ${query}`;
     }
     else if(category == 6){
         string = `${searchCategories[category-1]}`;
