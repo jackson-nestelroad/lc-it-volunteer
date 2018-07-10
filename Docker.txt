@@ -1,0 +1,6 @@
+Get IP Address
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <NAME>
+
+Run Locally
+docker run -p 8080:3000 -d jacksonnestelroad/lc-it-volunteer
+--> localhost:8080

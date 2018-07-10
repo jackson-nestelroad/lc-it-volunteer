@@ -106,6 +106,9 @@ Updated Roadmap
         Added preferred team on registration.
         Added inactivity list.
         Search page finished.
+    7/10/18
+        Can deploy locally with Docker container.
+        Start transition to Google Kubernetes/Cloud.
     7/12/18
 
     7/19/18
