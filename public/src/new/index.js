@@ -94,11 +94,11 @@ function validate(type, string){
 
 // form tries to submit
 submit.addEventListener('click', function(event){
-    var first = document.getElementById('first-input').value;
-    var last = document.getElementById('last-input').value;
+    var first = document.getElementById('first-input').value.trim();
+    var last = document.getElementById('last-input').value.trim();
     var team = document.getElementById('team-input').value;
-    var email = document.getElementById('email-input').value;
-    var phone = document.getElementById('phone-input').value;
+    var email = document.getElementById('email-input').value.trim();
+    var phone = document.getElementById('phone-input').value.trim();
     first = validate('name', first);
     last = validate('name', last);
     team = validate('team', team);

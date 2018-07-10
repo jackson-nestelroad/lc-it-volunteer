@@ -204,7 +204,7 @@ emailSubmit.addEventListener('click', function(event){
             method: 'POST',
             context: document.body,
             data: {
-                'name': document.getElementById('name-input').value,
+                'name': document.getElementById('name-input').value.trim(),
                 'team': document.getElementById('team-input').value,
                 'date': document.getElementById('date-input').value,
                 'hours': parseInt(document.getElementById('hours-input').value),
