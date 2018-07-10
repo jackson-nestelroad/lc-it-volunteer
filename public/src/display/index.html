@@ -14,6 +14,17 @@
         <script src="air-datepicker/dist/js/i18n/datepicker.en.js"></script> -->
     </head>
     <body style="overflow: hidden;">
+        <div id="httpsqlerror" class="modal dataErr">
+            <div id="container" class="warn">
+                <svg height="200" width="240">
+                    <polygon points="120,20 20,180 220,180" style="fill:white;stroke:#FFC82C;stroke-width:16" />
+                    <text x="104" y="155" class="no-scan" style="fill:#FFC82C;font-size:96pt;font-weight:700;">!</text>
+                </svg>
+                <p class="warning-msg">An error occurred.<br />Please try again.</p>
+                <hr />
+                <span id="closeBtn4" class="linkBtn">Close</span>
+            </div>
+        </div>
         <div class="grid-container display">
             <div id="container" class="graph">
                 <p class="top">Volunteer Hours per Month</p>

@@ -718,7 +718,78 @@ exports.getByID = function(id){
     })
 }
 
-// fetches hours for a certain month
-exports.month = function(){
+exports.getGraphData = function(id){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            // var date = new Date();
+            // var months = [];
+            // var currentMonth = date.getMonth();
+            // var currentYear = date.getFullYear();
+            // for(var k = 0; k < 13; k++){
+            //     months.push({
+            //         month: currentMonth,
+            //         year: currentYear
+            //     });
+            //     if(currentMonth == 1){
+            //         currentYear -= 1;
+            //         currentMonth -= 1;
+            //     }
+            //     else{
+            //         currentMonth -= 1;
+            //     }
+            // }
+            client.query(`
+                SELECT SUM(hours),
+                to_date(concat(extract(month from date), '/', extract(year from date)),'MM/YYYY') month_year
+                FROM logs
+                WHERE date >= '7/1/2017'
+                AND date < '8/1/2018'
+                GROUP BY month_year
+                ORDER BY month_year;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
 
+exports.getPieData = function(id){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT SUM(hours), team_id
+                FROM logs
+                WHERE date >= '7/1/2018'
+                AND date < '8/1/2018'
+                GROUP BY team_id
+                ORDER BY team_id;  
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
 }

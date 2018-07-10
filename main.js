@@ -196,5 +196,27 @@ app.route('/display')
     .get(function(req, res){
         res.sendFile(__dirname + '/public/src/display/index.html');
     })
+    .post(function(req, res){
+        if(req.body.graph){
+            database.getGraphData()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(req.body.pie){
+            database.getPieData()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+    })
 // port
 app.listen(port, () => console.log('Listening on port '+ port + '!'));
