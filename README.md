@@ -67,33 +67,15 @@ This application's PostgreSQL database is found within **Heroku**.
 ### Tables
 #### volunteers
 
-vol_id
-
-first_name
-
-last_name
-
-email
-
-phone
-
-team
+vol_id, first_name, last_name, email, phone, team
 
 #### teams
 
-team_id
-
-name
+team_id, name
 
 #### logs
 
-date
-
-vol_id
-
-team_id
-
-hours
+date, vol_id, team_id, hours
 
 ### Extra Queries
 
