@@ -65,6 +65,8 @@ window.onload = function(){
                 var date = new Date(rows[index].month_year);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
                 var string = `${date.getMonth()+1}/1/${date.getFullYear()}`;
+                console.log(string);
+                console.log(data[k]);
                 if(string == data[k]){
                     data[k] = rows[index].hours;
                     index += 1;
@@ -73,6 +75,7 @@ window.onload = function(){
                 else{
                     data[k] = 0;
                 }
+                console.log(data[k]);
             }
             // at this point, labels is the x-axis and data is the y-axis
             // we can now create the graph
