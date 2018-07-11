@@ -425,6 +425,7 @@ hr{
 
 #container.pie{
     width: auto;
+    height: auto;
     min-width: 225px;
     margin: 12px 12px 12px 3px;
     padding: 6px;

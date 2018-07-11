@@ -109,6 +109,8 @@ Updated Roadmap
     7/10/18
         Can deploy locally with Docker container.
         Start transition to Google Kubernetes/Cloud.
+    7/11/18
+        Finished display page.
     7/12/18
 
     7/19/18
