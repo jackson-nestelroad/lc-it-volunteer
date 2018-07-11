@@ -464,10 +464,8 @@ hr{
 
 #container.pie #sad-face{
     display: none;
-    width: 80%;
+    width: 90%;
     height: auto;
-    margin-right: auto;
-    margin-left: auto;
     -webkit-user-drag: none;
     -webkit-user-modify: none;
     -webkit-user-select: none;
