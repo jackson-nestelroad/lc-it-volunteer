@@ -740,13 +740,13 @@ exports.getGraphData = function(id){
             //     }
             // }
             client.query(`
-                SELECT SUM(hours),
+                SELECT SUM(hours) hours,
                 to_date(concat(extract(month from date), '/', extract(year from date)),'MM/YYYY') month_year
                 FROM logs
                 WHERE date >= '7/1/2017'
                 AND date < '8/1/2018'
                 GROUP BY month_year
-                ORDER BY month_year;
+                ORDER BY month_year DESC;
             `)
             .then(res => {
                 resolve(res.rows);
