@@ -461,3 +461,13 @@ hr{
     -webkit-user-select: none;
     user-select: none;
 }
+
+#container.pie #sad-face{
+    display: none;
+    width: 90%;
+    height: auto;
+    -webkit-user-drag: none;
+    -webkit-user-modify: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

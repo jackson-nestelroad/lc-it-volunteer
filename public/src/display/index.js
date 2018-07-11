@@ -134,7 +134,7 @@ window.onload = function(){
             var none = rows.every(checkZero);
             // no hours
             if(none){
-
+                document.getElementById('sad-face').style['display'] = 'block';
             }
             // hours found
             else{
