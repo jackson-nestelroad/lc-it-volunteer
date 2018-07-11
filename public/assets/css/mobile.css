@@ -5,6 +5,7 @@ body{
     font-family: 'Montserrat';
     align-self: center;
     color: #404041;
+    overflow: visible;
 }
 
 body *:focus{

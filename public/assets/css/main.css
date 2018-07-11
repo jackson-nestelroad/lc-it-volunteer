@@ -6,6 +6,7 @@ body{
     margin: 20px;
     align-self: center;
     color: #404041;
+    overflow: hidden;
 }
 
 body *:focus{
