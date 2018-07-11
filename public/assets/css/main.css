@@ -437,3 +437,12 @@ hr{
     font-weight: 700;
     font-size: 24pt;
 }
+
+#container.graph #back-to-form{
+    width: 32px;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    float: left;
+    cursor: pointer;   
+}

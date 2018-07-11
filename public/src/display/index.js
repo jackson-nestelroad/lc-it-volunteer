@@ -15,6 +15,11 @@ const months = [
 ]
 // buttons for events
 const close4 = document.getElementById('closeBtn4');
+const back = document.getElementById('back-to-form');
+// back button
+back.addEventListener('click', function(event){
+    window.location.replace('/');
+})
 // close button in error modal
 close4.addEventListener('click', function(event){
     document.getElementById('httpsqlerror').style['display'] = 'none';
