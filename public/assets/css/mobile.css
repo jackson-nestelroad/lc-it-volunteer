@@ -442,6 +442,7 @@ hr{
     grid-gap: 6px;
     text-align: center;
     align-items: top;
+    grid-template-columns: 1fr !important;
 }
 
 #container.graph .top,
