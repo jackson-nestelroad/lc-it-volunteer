@@ -6,6 +6,9 @@ body{
     margin: 20px;
     align-self: center;
     color: #404041;
+}
+
+body.display{
     overflow: hidden;
 }
 

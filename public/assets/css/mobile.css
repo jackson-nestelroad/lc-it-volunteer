@@ -5,6 +5,9 @@ body{
     font-family: 'Montserrat';
     align-self: center;
     color: #404041;
+}
+
+body.display{
     overflow: visible;
 }
 
