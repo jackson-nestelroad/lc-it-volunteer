@@ -162,7 +162,7 @@ window.onload = function(){
                         display: false
                     },
                     legend: {
-                        fullWidth: false
+                        display: false
                     }
                 }
             })
