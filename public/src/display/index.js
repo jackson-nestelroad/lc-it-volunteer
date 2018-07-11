@@ -150,7 +150,7 @@ window.onload = function(){
                         display: false
                     },
                     legend: {
-                        display: true,
+                        display: false,
                         onClick: null
                     }
                 }
