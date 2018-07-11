@@ -120,10 +120,6 @@ window.onload = function(){
         if(rows == 'error'){
             document.getElementById('httpsqlerror').style['display'] = 'block';
         }
-        else if(rows.length == 0){
-            // draw something for no volunteers this month
-            // this will actually happen -- when a month resets
-        }
         else{
             var teams = [];
             var data = [];
@@ -131,30 +127,42 @@ window.onload = function(){
                 teams.push(element.name);
                 rows.hours == null ? data.push(0) : data.push(element.hours);
             });
-            var ctx = document.getElementById('pie').getContext('2d');
-            new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: teams,
-                    datasets: [
-                        {
-                            label: 'Hours',
-                            backgroundColor: ['#ff8484', '#ffb083', '#79e085', '#91e6f7', '#97b2fc', '#bd89e5'],
-                            data: [0,0,0,0,0]
-                        }
-                    ]
-                },
-                options: {
-                    title: {
-                        display: false
+            // check if there have been no volunteers for this month yet
+            function checkZero(n){
+                return n == 0;
+            }
+            var none = rows.every(checkZero);
+            // no hours
+            if(none){
+
+            }
+            // hours found
+            else{
+                var ctx = document.getElementById('pie').getContext('2d');
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: teams,
+                        datasets: [
+                            {
+                                label: 'Hours',
+                                backgroundColor: ['#ff8484', '#ffb083', '#79e085', '#91e6f7', '#97b2fc', '#bd89e5'],
+                                data: data
+                            }
+                        ]
                     },
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        onclick: null
+                    options: {
+                        title: {
+                            display: false
+                        },
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            onclick: null
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     })
     .fail(function(code){
