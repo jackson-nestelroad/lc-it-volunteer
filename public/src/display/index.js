@@ -80,7 +80,6 @@ window.onload = function(){
             }
             // at this point, labels is the x-axis and data is the y-axis
             // we can now create the graph
-            // var progress = document.getElementById('animationProgress');
             var ctx = document.getElementById('graph').getContext('2d');
             var graph = new Chart(ctx, {
                 type: 'line',
@@ -132,7 +131,6 @@ window.onload = function(){
                 teams.push(element.name);
                 data.push(element.hours);
             });
-            // var progress = document.getElementById('animationProgress');
             var ctx = document.getElementById('pie').getContext('2d');
             new Chart(ctx, {
                 type: 'doughnut',
@@ -151,7 +149,8 @@ window.onload = function(){
                         display: false
                     },
                     legend: {
-                        display: false
+                        display: true,
+                        onClick: null
                     }
                 }
             })
