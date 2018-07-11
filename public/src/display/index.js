@@ -49,7 +49,7 @@ window.onload = function(){
                 // get months as words to display on x-axis
                 labels.push(months[n]);
                 // get months as dates to check with database result
-                data.push(`${n}/1/${y}`);
+                data.push(`${n+1}/1/${y}`);
                 if(n == 0){
                     y -= 1;
                     n = 11;
