@@ -129,7 +129,7 @@ window.onload = function(){
             var data = [];
             rows.forEach(element => {
                 teams.push(element.name);
-                data.push(element.hours);
+                rows.hours == null ? data.push(0) : data.push(element.hours);
             });
             var ctx = document.getElementById('pie').getContext('2d');
             new Chart(ctx, {
@@ -140,7 +140,7 @@ window.onload = function(){
                         {
                             label: 'Hours',
                             backgroundColor: ['#ff8484', '#ffb083', '#79e085', '#91e6f7', '#97b2fc', '#bd89e5'],
-                            data: data
+                            data: [0,0,0,0,0]
                         }
                     ]
                 },
