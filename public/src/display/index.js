@@ -129,7 +129,7 @@ window.onload = function(){
             });
             // check if there have been no volunteers for this month yet
             function checkZero(n){
-                return n != 0;
+                return n == 0;
             }
             var none = rows.every(checkZero);
             // no hours
