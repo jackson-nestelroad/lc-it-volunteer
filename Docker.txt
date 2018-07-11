@@ -10,3 +10,8 @@ kubectl run volunteer --image=jacksonnestelroad/lc-it-volunteer --port 8080
 
 Create Service
 kubectl expose deployment volunteer --type=LoadBalancer --port 80 --target-port 8080
+
+Update image
+docker pull jacksonnestelroad/lc-it-volunteer
+gcloud docker -- push jacksonnestelroad/lc-it-volunteer
+kubectl set image deployment/volunteer volunteer=jacksonnestelroad/lc-it-volunteer:latest
