@@ -5,8 +5,6 @@ Connect to database with data.js
 
 Create a URL? Is this needed?
 
-Display Page
-
 
 
 

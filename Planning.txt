@@ -126,26 +126,8 @@ Updated Roadmap
     8/2/18 -- Old database transfer.
         Test every single aspect for a long time.
 
-    All along the way is bug testing to assure each step works before it is completed.
 
-Display Page 
-    Progress Graph 
-        Up or down in volunteers per month and hours per month
-        Both or just one?
-        chart.js http://www.chartjs.org/samples/latest/advanced/progress-bar.html
-    Goal Gauge
-        Set goal in database or auto increase last month by X
-        Shows hours per month
-        progressbar.js https://progressbarjs.readthedocs.io/en/latest/
-    Recent Events 
-        Recent logs to database
-    Leaderboard
-        Top volunteers for the month
-
-New Search Plan
-Dynamic page /search
-    URL no longer changes
-Sends POST request to main.js
-    Searches database, returns all rows, and sends it back to search/index.js
-        search/index.js then displays all the data via the code below
-        will need a loading animation most likely
+As of 7/11/2018, the project has been completed and hosted on Heroku.
+The next step is to deploy it in a docker container off of Google Kuberentes Engine for long-term use.
+We will also need to move the database and reconnect to it.
+This database relocation will not affect any of the queries or database functions.
