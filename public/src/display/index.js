@@ -84,12 +84,13 @@ window.onload = function(){
             var graph = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: labels.reverse(),
                     datasets: [{
+                        label: 'Hours per Month',
                         fill: false,
-                        borderColor: 'rgb(233,0,0)',
-                        backgroundColor: 'rgb(233,0,0)',
-                        data: data
+                        borderColor: '#00a8d8',
+                        backgroundColor: '#00a8d8',
+                        data: data.reverse()
                     }],
                     options: {
                         title: {
