@@ -58,7 +58,7 @@ The inactive option displays the inactivity list. Any volunteer who has not been
 
 *link here*
 
-The TV display page is used for the TVs in the IT room at the Life.Church Central Offices. This page showcases a graph with the number of volunteers month to month. This page will also showcase recent volunteer activity.
+The TV display page is used for the TVs in the IT room at the Life.Church Central Offices. This page showcases a graph with the number of volunteers month to month and a doughnut chart that distributes the current month's volunteer hours per team.
 
 ## PostgreSQL Documentation
 
