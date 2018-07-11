@@ -410,3 +410,50 @@ hr{
     user-select: none;
     -webkit-user-drag: none;
 }
+
+#container.graph{
+    width: auto;
+    height: auto;
+    min-width: 225px;
+    margin: 12px 3px 12px 12px;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.35);
+    flex: 1; 
+}
+
+#container.pie{
+    width: auto;
+    min-width: 225px;
+    margin: 12px 12px 12px 3px;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: white;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.35);
+    flex: 1; 
+}
+
+.grid-container.display{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-gap: 6px;
+    text-align: center;
+    align-items: top;
+}
+
+#container.graph .top,
+#container.pie .top{
+    font-weight: 700;
+    font-size: 16pt;
+}
+
+#container.graph #back-to-form{
+    width: 32px;
+    height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    float: left;
+    cursor: pointer;   
+}

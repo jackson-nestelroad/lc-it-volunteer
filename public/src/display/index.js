@@ -150,7 +150,8 @@ window.onload = function(){
                     },
                     legend: {
                         display: true,
-                        position: 'top'
+                        position: 'top',
+                        onclick: null
                     }
                 }
             })
