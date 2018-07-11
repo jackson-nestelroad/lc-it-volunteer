@@ -125,7 +125,7 @@ window.onload = function(){
             var data = [];
             rows.forEach(element => {
                 teams.push(element.name);
-                rows.hours == null ? data.push(0) : data.push(element.hours);
+                element.hours == null ? data.push(0) : data.push(element.hours);
             });
             // check if there have been no volunteers for this month yet
             function checkZero(n){
