@@ -145,13 +145,11 @@ window.onload = function(){
                     ]
                 },
                 options: {
-                    responsive: false,
                     title: {
                         display: false
                     },
                     legend: {
                         display: false,
-                        onClick: null
                     }
                 }
             })
