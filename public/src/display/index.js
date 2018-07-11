@@ -80,7 +80,7 @@ window.onload = function(){
             }
             // at this point, labels is the x-axis and data is the y-axis
             // we can now create the graph
-            var progress = document.getElementById('animationProgress');
+            // var progress = document.getElementById('animationProgress');
             var ctx = document.getElementById('graph').getContext('2d');
             var graph = new Chart(ctx, {
                 type: 'line',
@@ -100,17 +100,6 @@ window.onload = function(){
                     },
                     legend: {
                         display: false
-                    },
-                    animation: {
-                        duration: 2000,
-                        onProgress: function(animation){
-                            progress.value = animation.currentStep / animation.numSteps;
-                        },
-                        onComplete: function(){
-                            window.setTimeout(function(){
-                                progress.value = 0;
-                            }, 2000);
-                        }
                     }
                 }
             });
