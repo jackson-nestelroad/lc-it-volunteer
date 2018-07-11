@@ -283,7 +283,7 @@ exports.searchByLastName = function(search){
     })
 }
 
-// searches by most active team
+// searches by most active OR preferred team
 exports.searchByTeam = function(team){
     return new Promise((resolve, reject) => {
         pool.connect()
@@ -690,6 +690,7 @@ exports.getInactive = function(){
     })
 }
 
+// gets info by ID number
 exports.getByID = function(id){
     return new Promise((resolve, reject) => {
         pool.connect()
@@ -718,6 +719,7 @@ exports.getByID = function(id){
     })
 }
 
+// gets hours per month for graph
 exports.getGraphData = function(id){
     return new Promise((resolve, reject) => {
         pool.connect()
@@ -773,6 +775,7 @@ exports.getGraphData = function(id){
     })
 }
 
+// gets this month's hours by team for pie chart
 exports.getPieData = function(id){
     return new Promise((resolve, reject) => {
         pool.connect()

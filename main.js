@@ -196,7 +196,9 @@ app.route('/display')
     .get(function(req, res){
         res.sendFile(__dirname + '/public/src/display/index.html');
     })
+    // this is received as soon as the page loads
     .post(function(req, res){
+        // get graph data
         if(req.body.graph){
             database.getGraphData()
             .then(rows => {
@@ -207,6 +209,7 @@ app.route('/display')
                 res.send('error');
             })
         }
+        // get pie chart data
         if(req.body.pie){
             database.getPieData()
             .then(rows => {

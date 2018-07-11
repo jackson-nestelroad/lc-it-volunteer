@@ -54,6 +54,7 @@ window.onload = function(){
                 labels.push(months[n]);
                 // get months as dates to check with database result
                 data.push(`${n+1}/1/${y}`);
+                // handle when year rolls back
                 if(n == 0){
                     y -= 1;
                     n = 11;
@@ -65,15 +66,16 @@ window.onload = function(){
             // initalize data
             var index = 0;
             for(var k = 0; k < data.length; k++){
-                // we have data for this month -- save it
+                // put data from database into a format we can easily compare to
                 var date = new Date(rows[index].month_year);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
                 var string = `${date.getMonth()+1}/1/${date.getFullYear()}`;
+                // we have data from our database for this month -> save it
                 if(string == data[k]){
                     data[k] = rows[index].hours;
                     index += 1;
                 }
-                // we do not have data for this month -- default to 0
+                // we do not have data for this month -> default to 0
                 else{
                     data[k] = 0;
                 }
@@ -124,7 +126,9 @@ window.onload = function(){
             var teams = [];
             var data = [];
             rows.forEach(element => {
+                // get all teams
                 teams.push(element.name);
+                // null hours -> 0 hours
                 element.hours == null ? data.push(0) : data.push(element.hours);
             });
             // check if there have been no volunteers for this month yet
@@ -132,11 +136,11 @@ window.onload = function(){
                 return n == 0;
             }
             var none = rows.every(checkZero);
-            // no hours
+            // no hours -> sad face
             if(none){
                 document.getElementById('sad-face').style['display'] = 'block';
             }
-            // hours found
+            // hours found -> pie chart
             else{
                 var ctx = document.getElementById('pie').getContext('2d');
                 new Chart(ctx, {
