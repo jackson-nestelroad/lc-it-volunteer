@@ -92,24 +92,24 @@ window.onload = function(){
                         borderColor: '#00a8d8',
                         backgroundColor: '#00a8d8',
                         data: data.reverse()
-                    }],
-                    options: {
-                        title: {
-                            display: false
+                    }]
+                },
+                options: {
+                    title: {
+                        display: false
+                    },
+                    legend: {
+                        display: false
+                    },
+                    animation: {
+                        duration: 2000,
+                        onProgress: function(animation){
+                            progress.value = animation.currentStep / animation.numSteps;
                         },
-                        legend: {
-                            display: false
-                        },
-                        animation: {
-                            duration: 2000,
-                            onProgress: function(animation){
-                                progress.value = animation.currentStep / animation.numSteps;
-                            },
-                            onComplete: function(){
-                                window.setTimeout(function(){
-                                    progress.value = 0;
-                                }, 2000);
-                            }
+                        onComplete: function(){
+                            window.setTimeout(function(){
+                                progress.value = 0;
+                            }, 2000);
                         }
                     }
                 }
