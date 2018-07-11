@@ -149,7 +149,8 @@ window.onload = function(){
                         display: false
                     },
                     legend: {
-                        display: false,
+                        display: true,
+                        position: 'top'
                     }
                 }
             })

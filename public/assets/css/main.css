@@ -401,7 +401,6 @@ hr{
 
 #container.graph{
     width: auto;
-    height: 95vh;
     min-width: 500px;
     margin: 12px 3px 12px 12px;
     padding: 6px;
@@ -413,7 +412,6 @@ hr{
 
 #container.pie{
     width: auto;
-    height: 95vh;
     min-width: 225px;
     margin: 12px 12px 12px 3px;
     padding: 6px;
