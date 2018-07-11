@@ -156,7 +156,7 @@ window.onload = function(){
                 },
                 options: {
                     title: {
-                        display: false
+                        display: false,
                         responsive: false
                     }
                 }
