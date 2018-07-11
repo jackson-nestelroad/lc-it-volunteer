@@ -14,7 +14,7 @@ const months = [
     'December'
 ]
 // buttons for events
-const closeBtn4 = document.getElementById('closeBtn4');
+const close4 = document.getElementById('closeBtn4');
 // close button in error modal
 close4.addEventListener('click', function(event){
     document.getElementById('httpsqlerror').style['display'] = 'none';
