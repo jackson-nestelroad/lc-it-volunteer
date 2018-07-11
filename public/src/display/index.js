@@ -145,6 +145,7 @@ window.onload = function(){
                     ]
                 },
                 options: {
+                    responsive: false,
                     title: {
                         display: false
                     },
