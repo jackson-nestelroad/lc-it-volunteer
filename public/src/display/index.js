@@ -97,6 +97,9 @@ window.onload = function(){
                         title: {
                             display: false
                         },
+                        legend: {
+                            display: false
+                        },
                         animation: {
                             duration: 2000,
                             onProgress: function(animation){
@@ -156,8 +159,10 @@ window.onload = function(){
                 },
                 options: {
                     title: {
-                        display: false,
-                        responsive: false
+                        display: false
+                    },
+                    legend: {
+                        fullWidth: false
                     }
                 }
             })
