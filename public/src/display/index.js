@@ -133,6 +133,17 @@ window.onload = function(){
         if(rows == 'error'){
             document.getElementById('httpsqlerror').style['display'] = 'block';
         }
+        else if(rows.length == 0){
+            // draw something for no volunteers this month
+            // this will actually happen -- when a month resets
+        }
+        else{
+            var teams = ['Hardware', 'Software', 'Database', 'Project', 'Communication'];
+            var data = [];
+            rows.forEach(element => {
+                
+            });
+        }
     })
     .fail(function(code){
         document.getElementById('httpsqlerror').style['display'] = 'block';

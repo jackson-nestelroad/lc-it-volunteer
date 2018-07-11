@@ -739,12 +739,20 @@ exports.getGraphData = function(id){
             //         currentMonth -= 1;
             //     }
             // }
+            var now = new Date();
+            var startDate = `${now.getMonth()+1}/1/${now.getFullYear()-1}`;
+            if(now.getMonth() == 11){
+                var endDate = `1/1/${now.getFullYear()+1}`
+            }
+            else{
+                var endDate = `${now.getMonth()+2}/1/${now.getFullYear()}`;
+            }
             client.query(`
                 SELECT SUM(hours) hours,
                 to_date(concat(extract(month from date), '/', extract(year from date)),'MM/YYYY') month_year
                 FROM logs
-                WHERE date >= '7/1/2017'
-                AND date < '8/1/2018'
+                WHERE date >= '${startDate}'
+                AND date < '${endDate}'
                 GROUP BY month_year
                 ORDER BY month_year DESC;
             `)
@@ -769,13 +777,25 @@ exports.getPieData = function(id){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
+            var now = new Date();
+            var startDate = `${now.getMonth()+1}/1/${now.getFullYear()}`;
+            if(now.getMonth() == 11){
+                var endDate = `1/1/${now.getFullYear()+1}`;
+            }
+            else{
+                var endDate = `${now.getMonth()+2}/1/${now.getFullYear()}`;
+            }
             client.query(`
-                SELECT SUM(hours), team_id
-                FROM logs
-                WHERE date >= '7/1/2018'
-                AND date < '8/1/2018'
-                GROUP BY team_id
-                ORDER BY team_id;  
+                SELECT hours, name
+                FROM teams
+                JOIN
+                    (SELECT SUM(hours) hours, team_id
+                    FROM logs
+                    WHERE date >= '${startDate}'
+                    AND date < '${endDate}'
+                    GROUP BY team_id
+                    ORDER BY team_id) a
+                ON a.team_id = teams.team_id;
             `)
             .then(res => {
                 resolve(res.rows);
