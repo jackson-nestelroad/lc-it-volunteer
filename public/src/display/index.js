@@ -64,7 +64,7 @@ window.onload = function(){
                 // we have data for this month -- save it
                 var date = new Date(rows[index].month_year);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
-                var string = `${date.getMonth()}/1/${date.getFullYear}`;
+                var string = `${date.getMonth()+1}/1/${date.getFullYear()}`;
                 if(string == data[k]){
                     data[k] = rows[index].hours;
                     index += 1;
