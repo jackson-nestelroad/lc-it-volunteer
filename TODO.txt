@@ -1,11 +1,13 @@
 
-Create title handler for search page
-    July Leaderboard
-    First Name: "J..."
-    Last Name: "N...:
-    Team: Hardware
-    Date: 7/3/2018
-    Inactivity List
+Configure PostgreSQL in Google Cloud
+Move database over
+Connect to database with data.js
+
+Create a URL? Is this needed?
+
+Display Page
+
+
 
 
 Deployment Notes
