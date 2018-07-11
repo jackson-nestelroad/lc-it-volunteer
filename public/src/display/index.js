@@ -149,7 +149,7 @@ window.onload = function(){
                     datasets: [
                         {
                             label: 'Hours',
-                            backgroundColor: ['#ff8484', '#ffb083', '#86e895', '#91e6f7', '#97b2fc', '#bd89e5'],
+                            backgroundColor: ['#ff8484', '#ffb083', '#79e085', '#91e6f7', '#97b2fc', '#bd89e5'],
                             data: data
                         }
                     ]
@@ -157,6 +157,7 @@ window.onload = function(){
                 options: {
                     title: {
                         display: false
+                        responsive: false
                     }
                 }
             })
