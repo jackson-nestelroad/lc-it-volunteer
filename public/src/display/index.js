@@ -86,7 +86,7 @@ window.onload = function(){
                 data: {
                     labels: labels.reverse(),
                     datasets: [{
-                        label: 'Hours per Month',
+                        label: 'Hours',
                         fill: false,
                         borderColor: '#00a8d8',
                         backgroundColor: '#00a8d8',
