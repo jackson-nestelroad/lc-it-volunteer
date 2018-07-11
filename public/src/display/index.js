@@ -35,7 +35,6 @@ window.onload = function(){
         }
     })
     .done(function(rows){
-        console.log(rows);
         if(rows == 'error'){
             document.getElementById('httpsqlerror').style['display'] = 'block';
         }
@@ -70,8 +69,6 @@ window.onload = function(){
                 var date = new Date(rows[index].month_year);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
                 var string = `${date.getMonth()+1}/1/${date.getFullYear()}`;
-                console.log(string);
-                console.log(data[k]);
                 if(string == data[k]){
                     data[k] = rows[index].hours;
                     index += 1;
@@ -80,7 +77,6 @@ window.onload = function(){
                 else{
                     data[k] = 0;
                 }
-                console.log(data[k]);
             }
             // at this point, labels is the x-axis and data is the y-axis
             // we can now create the graph
@@ -138,11 +134,32 @@ window.onload = function(){
             // this will actually happen -- when a month resets
         }
         else{
-            var teams = ['Hardware', 'Software', 'Database', 'Project', 'Communication'];
+            var teams = [];
             var data = [];
             rows.forEach(element => {
-                
+                teams.push(element.name);
+                data.push(element.hours);
             });
+            // var progress = document.getElementById('animationProgress');
+            var ctx = document.getElementById('pie').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: teams,
+                    datasets: [
+                        {
+                            label: 'Hours',
+                            backgroundColor: ['#ff8484', '#ffb083', '#86e895', '#91e6f7', '#97b2fc', '#bd89e5'],
+                            data: data
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: false
+                    }
+                }
+            })
         }
     })
     .fail(function(code){

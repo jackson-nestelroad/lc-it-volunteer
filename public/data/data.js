@@ -788,7 +788,7 @@ exports.getPieData = function(id){
             client.query(`
                 SELECT hours, name
                 FROM teams
-                JOIN
+                LEFT OUTER JOIN
                     (SELECT SUM(hours) hours, team_id
                     FROM logs
                     WHERE date >= '${startDate}'
