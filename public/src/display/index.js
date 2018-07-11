@@ -30,7 +30,11 @@ window.onload = function(){
         }
     })
     .done(function(rows){
+        console.log(rows);
         if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
             document.getElementById('httpsqlerror').style['display'] = 'block';
         }
         else{
@@ -60,10 +64,10 @@ window.onload = function(){
                 // we have data for this month -- save it
                 if(rows[index].month_year == data[k]){
                     data[k] = rows[index].hours;
+                    index += 1;
                 }
                 // we do not have data for this month -- default to 0
                 else{
-                    index += 1;
                     data[k] = 0;
                 }
             }
