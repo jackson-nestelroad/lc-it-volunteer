@@ -2,6 +2,3 @@ node_modules
 Dockerfile
 docker-compose.yaml
 pgdata
-PostgreSQL Queries for IT Project.xtx
-TODO.txt
-Docker.txt
