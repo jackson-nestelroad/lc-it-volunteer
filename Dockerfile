@@ -14,6 +14,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+COPY wait-for-it.sh .
 
 EXPOSE 3000
 CMD [ "npm", "start" ]

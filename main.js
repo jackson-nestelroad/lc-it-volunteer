@@ -5,7 +5,7 @@ const database = require(__dirname + '/public/data/data.js');
 const app = new express();
 
 // let Heroku define the port
-var port = process.env.PORT || 3000;
+var port = 3000;
 
 // need these for receiving POST requests
 app.use(express.urlencoded({ extended: false }));
