@@ -141,7 +141,7 @@ window.onload = function(){
             function checkZero(n){
                 return n == 0;
             }
-            var none = rows.every(checkZero);
+            var none = data.every(checkZero);
             // no hours -> sad face
             if(none){
                 document.getElementById('sad-face').style['display'] = 'block';
