@@ -1,3 +1,21 @@
+cd Desktop/volunteer-app
+docker build -t volunteer-app_web . 
+docker-compose up 
+docker-compose down
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Get IP Address
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <NAME>
 

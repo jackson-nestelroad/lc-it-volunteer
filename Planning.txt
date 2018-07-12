@@ -117,22 +117,20 @@ Updated Roadmap
         Created postgreSQL container.
         Deployed locally with database.
 
-    Next step: Google Container Registry
-    
-    7/17/18
+    Next steps
+
+    Docker-Compose --> Kubernetes w/ Google Cloud
         
     7/19/18
-
+        Talked to Alex --> other features to add?
+        Deployed in Kubernetes.
+        Exposed to the Internet.
+        Database saves and persists.
     7/26/18
-
+        Replicate old database data.
+        Database backup?
     8/2/18
-    
-
-    7/12/18 -- Docker container deployment. Database in Google Cloud?
-    7/19/18 -- Finish Statistics page.
-    7/26/18 -- Catch up week.
-    8/2/18 -- Old database transfer.
-        Test every single aspect for a long time.
+        Finished.
 
 
 As of 7/11/2018, the project has been completed and hosted on Heroku.
