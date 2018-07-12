@@ -132,6 +132,15 @@ app.route('/search')
             })
             .catch(err => {
                 console.log(err);
+                // database.createVolunteers()
+                // .then(() => {
+                //     database.createTeams()
+                //     .then(() => {
+                //         database.createLogs()
+                //         .then(() => {
+                //         })
+                //     })
+                // })
                 res.send('error');
             })
         }

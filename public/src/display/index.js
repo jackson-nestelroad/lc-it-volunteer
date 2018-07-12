@@ -67,9 +67,15 @@ window.onload = function(){
             var index = 0;
             for(var k = 0; k < data.length; k++){
                 // put data from database into a format we can easily compare to
-                var date = new Date(rows[index].month_year);
-                date = new Date(date.setTime(date.getTime() + 1 * 86400000));
-                var string = `${date.getMonth()+1}/1/${date.getFullYear()}`;
+                // we have no more data to look at
+                if(index > rows.length-1){
+                    string = 'don\'t even try';
+                }
+                else{
+                    var date = new Date(rows[index].month_year);
+                    date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                    var string = `${date.getMonth()+1}/1/${date.getFullYear()}`;
+                }
                 // we have data from our database for this month -> save it
                 if(string == data[k]){
                     data[k] = rows[index].hours;

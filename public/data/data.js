@@ -19,6 +19,123 @@ const pool = new Pool({
 
 var exports = module.exports = {};
 
+// test function
+exports.test = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+            SELECT *
+            FROM logs
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                reject('error');
+                client.release();
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
+
+// create volunteers table -- initialization
+exports.createVolunteers = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                CREATE TABLE IF NOT EXISTS volunteers(
+                    vol_id serial PRIMARY KEY,
+                    first_name VARCHAR(255) NOT NULL,
+                    last_name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    phone VARCHAR(255) NOT NULL,
+                    team integer NOT NULL
+                );
+            `)
+            .then(res => {
+                resolve('done');
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
+// create logs table -- initialization
+exports.createLogs = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                CREATE TABLE IF NOT EXISTS logs(
+                    date DATE NOT NULL,
+                    vol_id integer NOT NULL,
+                    team_id integer NOT NULL,
+                    hours integer NOT NULL
+                );
+            `)
+            .then(res => {
+                resolve('done');
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
+// create teams table -- initialization
+exports.createTeams = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                CREATE TABLE IF NOT EXISTS teams(
+                    team_id serial PRIMARY KEY,
+                    name VARCHAR(255) NOT NULL
+                );
+            `)
+            .then(res => {
+                resolve('done');
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
 // searches by full name and returns ID
 exports.searchByFullName = function(name){
     return new Promise((resolve, reject) => {
