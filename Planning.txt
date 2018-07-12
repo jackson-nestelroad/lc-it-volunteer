@@ -122,10 +122,10 @@ Updated Roadmap
     Docker-Compose --> Kubernetes w/ Google Cloud
         
     7/19/18
+        Database saves and persists. -- probably need to create an external volume in Google then call to it in docker-compose.yaml
         Talked to Alex --> other features to add?
         Deployed in Kubernetes.
         Exposed to the Internet.
-        Database saves and persists.
     7/26/18
         Replicate old database data.
         Database backup?
