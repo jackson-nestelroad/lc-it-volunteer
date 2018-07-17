@@ -116,9 +116,12 @@ Updated Roadmap
         Created docker-compile.yaml.
         Created postgreSQL container.
         Deployed locally with database.
+    7/17/18
+        Kubernetes deployment.
+        Database hopefully saves? How can we test this further?
 
-    Next steps
-
+    Next steps 
+    
     Docker-Compose --> Kubernetes w/ Google Cloud
         
     7/19/18

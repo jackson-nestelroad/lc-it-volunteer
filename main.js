@@ -111,6 +111,13 @@ app.route('/search')
     })
     // this is where we will handle what was searched for
     .post(function(req, res){
+        // database.build()
+        // .then(res => {
+        //     res.send([]);
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // })
         var category = req.body.category;
         var query = req.body.query;
         // popup with email and phone number

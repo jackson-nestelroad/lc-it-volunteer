@@ -1,7 +1,17 @@
+// docker-compose deployment
 cd Desktop/volunteer-app
 docker build -t volunteer-app_web . 
 docker-compose up 
 docker-compose down
+
+// kubernetes deployment
+kubectl create -f ./deployment
+
+// updating 
+docker build -t gcr.io/lc-it-volunteer/it-vol .
+docker push gcr.io/lc-it-volunteer/it-vol
+kubectl delete deployment it-volunteer
+kubectl create -f ./deployment/web-deploy.yaml
 
 
 

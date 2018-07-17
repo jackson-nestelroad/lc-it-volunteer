@@ -39,14 +39,24 @@ const submit = document.getElementById('searchBtn');
 const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
 const select = document.getElementById('category-select');
+const campusSelect = document.getElementById('campus-search');
 const query = document.getElementById('search-query');
+const campusSearch = document.getElementsByClassName('mobile-query')[0];
+const normalSearch = document.getElementsByClassName('mobile-query')[1];
 // change arrow on dropdown
 document.getElementsByTagName('body')[0].addEventListener('click', function(event){
-	if(event.target.id == 'category-select'){
+    var clicked = event.target.id;
+	if(clicked == 'category-select'){
 		select.className == 'closed mobile-category' ? select.className = 'open mobile-category' : select.className = 'closed mobile-category';	
+        campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
     }
-	else{
-		select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
+    else if(clicked == 'campus-search'){
+        select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
+        campusSelect.className == 'closed' ? campusSelect.className = 'open' : campusSelect.className = 'closed';
+    }
+    else{
+        select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
+        campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
     }
 })
 // close button in info modal
@@ -70,10 +80,16 @@ document.onkeydown = function(evt){
     if(keyCode == 13 && enter){
         submit.click();
     }
-    // test key
-    // if(keyCode == 88){
-    //     document.getElementById('volunteerInfo').style['display'] = 'block';
-    // }
+    if(keyCode == 88){
+        if(campusSearch.className == 'mobile-query invisible'){
+            campusSearch.className = 'mobile-query';
+            normalSearch.className = 'mobile-query invisible';
+        }
+        else if(normalSearch.className == 'mobile-query invisible'){
+            campusSearch.className = 'mobile-query invisible';
+            normalSearch.className = 'mobile-query';
+        }
+    }
 }
 function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();

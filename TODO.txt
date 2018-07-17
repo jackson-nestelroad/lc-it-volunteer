@@ -1,9 +1,32 @@
 
-Configure PostgreSQL in Google Cloud
-Move database over
-Connect to database with data.js
-
 Create a URL? Is this needed?
+
+Postgres Container --> Google Disk
+OR
+Google PostgreSQL Instance
+
+Teams 
+Hardware
+Software
+Database
+Project
+Communication
+Development?
+
+Campus Option
+    optional in registration
+    can be edited in the search page
+        just click to edit on the nametag
+            will send another POST request
+                will have to rebuild database... don't worry about it
+    could we get this data from the official life.church database?
+        in RMS?
+        Idea
+            window.onload (registration) --> pull campus data
+            create an option for each campus data (full name) with value of three-letter code
+            three-letter code will be stored to the volunteer -- appears on their info modal
+            search page (search by campus)
+                gives options just like registration page does
 
 
 

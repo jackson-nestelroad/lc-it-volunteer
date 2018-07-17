@@ -1,23 +1,98 @@
 const { Pool } = require('pg');
 
-// const pool = new Pool({
-//     database: process.env.PGDATABASE,
-//     user: process.env.PGUSER,
-//     password: process.env.PGPASSWORD,
-//     port: process.env.PGPORT,
-//     host: process.env.PGHOST,
-//     ssl: false,
-//     max: 20
-// });
-
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    database: process.env.PGDATABASE,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    port: process.env.PGPORT,
+    host: process.env.PGHOST,
     max: 20
-})
+});
+
+// const pool = new Pool({
+//     connectionString: process.env.DATABASE_URL,
+//     max: 20
+// })
 
 // const pool = new Pool();
 
 var exports = module.exports = {};
+
+// builds the database tables
+exports.build = function(){
+   return new Promise((resolve, reject) => {
+       pool.connect()
+       .then(client => {
+           client.query(`
+                CREATE TABLE IF NOT EXISTS volunteers(
+                    vol_id serial PRIMARY KEY,
+                    first_name VARCHAR(255) NOT NULL,
+                    last_name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    phone VARCHAR(255) NOT NULL,
+                    team integer NOT NULL,
+                    campus VARCHAR(255) NOT NULL
+                );  
+           `)
+            .then(res => {
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+            })
+       })
+       pool.connect()
+       .then(client => {
+           client.query(`
+                CREATE TABLE logs(
+                    date DATE NOT NULL,
+                    vol_id integer NOT NULL,
+                    team_id integer NOT NULL,
+                    hours integer NOT NULL
+                );
+           `)
+            .then(res => {
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+            })
+       })
+       pool.connect()
+       .then(client => {
+           client.query(`
+                CREATE TABLE teams(
+                    team_id integer UNIQUE NOT NULL,
+                    name VARCHAR(255) NOT NULL
+                );
+           `)
+            .then(res => {
+                client.query(`
+                    INSERT INTO teams(team_id, name)
+                    VALUES(1, 'Hardware'),
+                            (2, 'Software'),
+                            (3, 'Database'),
+                            (4, 'Project'),
+                            (5, 'Communication');
+                `)
+                .then(res => {
+                    client.release();
+                })
+                .catch(err => {
+                    console.log(err);
+                    client.release();
+                })
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+            })
+       })
+       resolve([]);   
+   }) 
+}
 
 // searches by full name and returns ID
 exports.searchByFullName = function(name){
