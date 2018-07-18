@@ -1,18 +1,19 @@
 const { Pool } = require('pg');
 
-const pool = new Pool({
-    database: process.env.PGDATABASE,
-    user: process.env.PGUSER,
-    password: process.env.PGPASSWORD,
-    port: process.env.PGPORT,
-    host: process.env.PGHOST,
-    max: 20
-});
-
 // const pool = new Pool({
-//     connectionString: process.env.DATABASE_URL,
+//     database: process.env.PGDATABASE,
+//     user: process.env.PGUSER,
+//     password: process.env.PGPASSWORD,
+//     port: process.env.PGPORT,
+//     host: process.env.PGHOST,
 //     max: 20
-// })
+// });
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+    max: 20
+})
 
 // const pool = new Pool();
 
