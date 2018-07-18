@@ -120,6 +120,7 @@ function updateQuery(id){
 window.onload = function(){
     updateQuery(1);
     submit.click();
+    // get campuses and put them into the options
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){
@@ -303,11 +304,13 @@ document.getElementById('search-results').onclick = function(element){
                 var team = rows[0].team;
                 var email = rows[0].email;
                 var phone = rows[0].phone;
+                var campus = roews[0].campus;
                 // set the information in the modal
                 document.getElementById('name').innerHTML = name;
                 document.getElementById('team').innerHTML = team;
                 document.getElementById('email').innerHTML = email;
                 document.getElementById('phone').innerHTML = phone;
+                document.getElementById('campus').innerHTML = campus;
                 // display modal with information
                 document.getElementById('volunteerInfo').style['display'] = 'block';
             }
