@@ -784,7 +784,7 @@ exports.getByID = function(id){
         pool.connect()
         .then(client => {
             client.query(`
-                SELECT volunteers.vol_id, first_name, last_name, phone, email, name team
+                SELECT volunteers.vol_id, first_name, last_name, phone, email, name team, campus
                 FROM volunteers
                 JOIN teams
                 ON team = teams.team_id
