@@ -1,11 +1,11 @@
 # Life.Church
-## IT Volunteer Application
+## IT Volunteer Tracking Application
 
-This is an application for the Information Technology team at Life.Church.
+This is an application for the Information Technology team at Life.Church. It is developed to assist with easy volunteer tracking in terms of hours, location, and engagement.
 
 ## How it Works
 
-This application is built using **Express** and **Node.js**. It is deployed through **Heroku**.
+This application is built using **Express** and **Node.js**. It is deployed through **Kubernetes**.
 
 *HTML* - Web Interface
 
@@ -13,7 +13,7 @@ This application is built using **Express** and **Node.js**. It is deployed thro
 
 *Javascript* - Form Validation, Web Events, and Database Communication
 
-*PostgreSQL* - Database
+*Google Cloud PostgreSQL* - Database
 
 ### How it Connects
 
@@ -34,25 +34,27 @@ Active volunteers only use their name along with the date, team, and number of h
 
 The new volunteer form is used to register a volunteer in the database. A volunteer must exist in the database before having hours logged by the volunteering form.
 
-New volunteers must accurately give their first name, last name, phone number, and email. They must also give a designated team, but this team does not bind them to where they must volunteer at.
+New volunteers must accurately give their first name, last name, phone number, and email. They must also give a designated team, but this team does not bind them to where they must volunteer at. They also have the option to give the their campus for easier tracking.
 
-### Database Display
+### Search Database
 
 *link here*
 
-The database display page features a search tool to search through the database of volunteers. Click on a volunteer's name to receive their designated team (chosen on registration), email, and phone number.
+The database display page features a search tool to search through the database of volunteers. Click on a volunteer's name to receive their campus, designated team (chosen on registration), email, and phone number.
 
-The leaderboard option displays the current month's leaderboard ranked by the number of hours volunteered in the respective month.
+The "leaderboard" option displays the current month's leaderboard ranked by the number of hours volunteered in the respective month.
 
-The first name option searches the database by first name.
+The "first name" option searches the database by first name.
 
-The last name option searches the database by last name.
+The "last name" option searches the database by last name.
 
-The team option searches the database by team. Volunteers will be displayed by their chosen team on registration AND the team they volunteer most often with. If these two happen to conflict, they will show up in both lists.
+The "campus" option searches the database by campus.
 
-The date option returns who volunteered on a specific day, for how long, and for what team.
+The "team" option searches the database by team. Volunteers will be displayed by their chosen team on registration AND the team they volunteer most often with. If these two happen to conflict, they will show up in both lists.
 
-The inactive option displays the inactivity list. Any volunteer who has not been active for 60 days or has never been active at all will appear on this list.
+The "date" option returns who volunteered on a specific day, for how long, and for what team.
+
+The "inactive" option displays the inactivity list. Any volunteer who has not been active for 60 days or has never been active at all will appear on this list.
 
 ### TV Display
 
@@ -62,7 +64,7 @@ The TV display page is used for the TVs in the IT room at the Life.Church Centra
 
 ## PostgreSQL Documentation
 
-This application's PostgreSQL database is found within **Heroku**.
+This application's PostgreSQL database is found within Google Cloud SQL.
 
 ### Tables
 #### volunteers
@@ -81,6 +83,16 @@ date, vol_id, team_id, hours
 
 These queries are not featured within the application; they are for the use of staff members who need to alter information within the database.
 
+#### Update Campus
+
+```
+UPDATE volunteers
+SET campus = 'OKC'
+WHERE first_name = 'First'
+AND last_name = 'Last'
+AND email = 'my@email.com'
+RETURNING campus, email, first_name, last_name;
+```
 #### Update Email
 
 ```
