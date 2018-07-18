@@ -304,7 +304,7 @@ document.getElementById('search-results').onclick = function(element){
                 var team = rows[0].team;
                 var email = rows[0].email;
                 var phone = rows[0].phone;
-                var campus = roews[0].campus;
+                var campus = rows[0].campus;
                 // set the information in the modal
                 document.getElementById('name').innerHTML = name;
                 document.getElementById('team').innerHTML = team;
