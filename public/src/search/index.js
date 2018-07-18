@@ -187,7 +187,7 @@ function updateHeader(category, query){
 submit.addEventListener('click', function(event){
     enter = false;
     // check if there is a query if we need one
-    if(select.value != 1 && select.value != 6){
+    if(select.value != 1 && select.value != 6 && select.value != 7){
         if(query.value == ''){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
@@ -230,11 +230,11 @@ submit.addEventListener('click', function(event){
     if(select.value == 7){
         query.value = campusSelect.value;
     }
-    // clear search results
+    // take away the red error background on query
     if(select.value != 1 && select.value != 6){
         query.style['background-color'] = 'white';
     }
-    // clear the last results
+    // clear search results
     document.getElementById('search-results').innerHTML = '';
     // send our request
     $.ajax({
