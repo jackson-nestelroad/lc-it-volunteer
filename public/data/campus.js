@@ -6,9 +6,9 @@ const config = {
     server: 'mssql01.unity.com',
     database: 'LCDW',
     port: 1433,
+    debug: true,
     options: {
-        encrypt: true,
-        debug: true
+        encrypt: true
     }
 }
 
