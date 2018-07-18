@@ -10,7 +10,7 @@ const close4 = document.getElementById('closeBtn4');
 const back = document.getElementById('backBtn');
 const select = document.getElementById('team-input');
 const campusSelect = document.getElementById('campus-input');
-// change arrow on dropdown
+// change arrow on dropdowns
 document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
 	if(clicked == 'team-input'){
@@ -50,15 +50,6 @@ document.onkeydown = function(evt){
     {
         submit.click();
     }
-    // test keys (Z and X) for modal display
-    // if(keyCode == 90){
-    //     enter = false;
-    //     document.getElementById('warning').style['display'] = 'block';
-    // }
-    // if(keyCode == 88){
-    //     enter = false;
-    //     document.getElementById('confirmation').style['display'] = 'block';
-    // }
 }
 // display error at top of form
 function displayError(){
@@ -127,6 +118,7 @@ window.onload = function(){
                     // skip
                 }
                 else{
+                    // create the option in the dropdown
                     var value = element.CampusCode;
                     var campusName = element.Name + ', ' + element.State;
                     var option = document.createElement('option');
@@ -144,12 +136,14 @@ window.onload = function(){
 
 // form tries to submit
 submit.addEventListener('click', function(event){
+    // get all the values
     var first = document.getElementById('first-input').value.trim();
     var last = document.getElementById('last-input').value.trim();
     var team = document.getElementById('team-input').value;
     var campus = document.getElementById('campus-input').value;
     var email = document.getElementById('email-input').value.trim();
     var phone = document.getElementById('phone-input').value.trim();
+    // validate all the values
     first = validate('name', first);
     last = validate('name', last);
     team = validate('team', team);
@@ -163,7 +157,7 @@ submit.addEventListener('click', function(event){
         'email': emailTrue,
         'phone': phoneTrue
     }
-// info not given correctly, tell them why
+    // info not given correctly, tell them why
     if(first == '' || last == '' || !emailTrue || !phoneTrue || !team || campus == ''){
         displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
@@ -176,7 +170,7 @@ submit.addEventListener('click', function(event){
             }
         }
     }
-// info given correctly, so submit the form
+    // info given correctly, so submit the form
     else{
         // put phone number in a constant format (123) 456-7890
         var phoneNumber = phone.match(/\d/g);

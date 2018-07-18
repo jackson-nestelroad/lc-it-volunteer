@@ -13,7 +13,6 @@ const months = [
     'November',
     'December'
 ]
-
 // possible categories to search for
 const searchCategories = [
     'Leaderboard',
@@ -44,7 +43,7 @@ const campusSelect = document.getElementById('campus-search');
 const query = document.getElementById('search-query');
 const campusSearch = document.getElementsByClassName('mobile-query')[0];
 const normalSearch = document.getElementsByClassName('mobile-query')[1];
-// change arrow on dropdown
+// change arrow on dropdowns
 document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
 	if(clicked == 'category-select'){
@@ -81,16 +80,6 @@ document.onkeydown = function(evt){
     if(keyCode == 13 && enter){
         submit.click();
     }
-    // if(keyCode == 88){
-    //     if(campusSearch.className == 'mobile-query invisible'){
-    //         campusSearch.className = 'mobile-query';
-    //         normalSearch.className = 'mobile-query invisible';
-    //     }
-    //     else if(normalSearch.className == 'mobile-query invisible'){
-    //         campusSearch.className = 'mobile-query invisible';
-    //         normalSearch.className = 'mobile-query';
-    //     }
-    // }
 }
 function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();
@@ -127,7 +116,6 @@ function updateQuery(id){
     }
 }
 
-// retain old search information in URL paramters
 window.onload = function(){
     updateQuery(1);
     submit.click();
@@ -153,6 +141,7 @@ window.onload = function(){
                     // skip
                 }
                 else{
+                    // create the option in the dropdown
                     var value = element.CampusCode;
                     var campusName = element.Name + ', ' + element.State;
                     var option = document.createElement('option');
@@ -191,7 +180,10 @@ function updateHeader(category, query){
     }
     document.getElementsByClassName('search-header')[0].innerHTML = string;
 }
-// search submitted -- GET request
+// search submitted -- POST request
+// this sounds backwards, but we are not an API, we are an interactive search page
+// POST requests will allow us to update the search page AFTER the request is completed
+// so we will get data in our POST request, send it back here, and display them
 submit.addEventListener('click', function(event){
     enter = false;
     // check if there is a query if we need one
@@ -239,7 +231,9 @@ submit.addEventListener('click', function(event){
     if(select.value != 1 && select.value != 6){
         query.style['background-color'] = 'white';
     }
+    // clear the last results
     document.getElementById('search-results').innerHTML = '';
+    // send our request
     $.ajax({
         method: 'POST',
         context: document.body,
@@ -269,7 +263,7 @@ submit.addEventListener('click', function(event){
                 enter = true;
                 return;
             }
-            // results were found
+            // results were found -> display each element in rows array
             rows.forEach(element => {
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
@@ -325,7 +319,7 @@ submit.addEventListener('click', function(event){
         document.getElementById('httpsqlerror').style['display'] = 'block';
     })
 })
-// pops up info
+// pops up info modal
 document.getElementById('search-results').onclick = function(element){
 	if(element.target.className == 'clickForInfo'){
         enter = false;

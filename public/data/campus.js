@@ -1,3 +1,5 @@
+// get campus data from Life.Church Data Warehouse
+
 const mssql = require('mssql');
 
 const config = {
@@ -7,15 +9,6 @@ const config = {
     database: 'LCDW',
     port: '1433'
 }
-
-// const pool = new mssql.ConnectionPool(config, err => {
-//     if(err){
-//         console.log(err);
-//     }
-// });
-// pool.on('error', err => {
-//     console.log(err);
-// })
 
 var exports = module.exports = {};
 
@@ -49,36 +42,5 @@ exports.get = function(){
             console.log(err);
             reject('error');
         })
-        // mssql.connect(config, err => {
-        //     if(err){
-        //         console.log(err);
-        //         reject('error');
-        //     }
-        //     else{
-        //         new mssql.Request().query(`
-        //             SELECT [CampusKey]
-        //                 ,[CampusDurableKey]
-        //                 ,[CampusCode]
-        //                 ,[Name]
-        //                 ,[State]
-        //             FROM [LCDW].[Dimension].[Campus]
-        //             WHERE [LCDW].[Dimension].[Campus].[RowIsCurrent] = 'Y'
-        //             ORDER BY [LCDW].[Dimension].[Campus].[Name];
-        //         `, (err, res) => {
-        //             if(err){
-        //                 console.log(err);
-        //                 reject('error');   
-        //             }
-        //             else{
-        //                 console.log(res);
-        //                 reject('error');
-        //             }
-        //         })
-        //     }
-        // })
-        // mssql.on('error', err => {
-        //     console.log('err');
-        //     reject('error');
-        // })
     })
 }

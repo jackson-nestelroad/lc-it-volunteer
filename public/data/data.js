@@ -1,3 +1,5 @@
+// communicates with the volunteer database
+
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -9,15 +11,13 @@ const pool = new Pool({
     max: 20
 })
 
-// const pool = new Pool();
+// connection string used with Heroku
 
 // const pool = new Pool({
 //     connectionString: process.env.DATABASE_URL,
 //     ssl: true,
 //     max: 20
 // })
-
-// const pool = new Pool();
 
 var exports = module.exports = {};
 
