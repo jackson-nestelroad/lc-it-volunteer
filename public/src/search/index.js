@@ -227,6 +227,9 @@ submit.addEventListener('click', function(event){
             return;
         }
     }
+    if(select.value == 7){
+        query.value = campusSelect.value;
+    }
     // clear search results
     if(select.value != 1 && select.value != 6){
         query.style['background-color'] = 'white';
