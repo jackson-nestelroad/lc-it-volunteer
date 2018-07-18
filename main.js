@@ -85,6 +85,13 @@ app.route('/new')
         // page loaded and sent this request to get the campus data
         if(req.body.load){
             campusDatabase.get()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            });
         }
         // form was submitted
         else{
