@@ -124,8 +124,11 @@ Updated Roadmap
         Get campus data from Life.Church database.
         Added campus attribute to volunteers.
     7/19/19
-        Added search by campus.
-        Database is finalized.
+        Moved database to Google Cloud (Postgres Instance).
+        Connected to new database by creating a service account.
+            https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine -- this process exactly
+        
+        
 
     Next steps 
     

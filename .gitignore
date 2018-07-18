@@ -1,4 +1,7 @@
 node_modules
 Dockerfile
-docker-compose.yaml
 pgdata
+*.yaml
+deployment-disk
+disks
+cloudsql
