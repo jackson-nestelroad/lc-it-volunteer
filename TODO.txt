@@ -1,10 +1,12 @@
 
 Create a URL? Is this needed?
 
+Ask Brandon what is the best option.
 Postgres Container --> Google Disk
 OR
 Google PostgreSQL Instance
 
+Ask Brandon if he wants a Development team.
 Teams 
 Hardware
 Software
@@ -13,6 +15,7 @@ Project
 Communication
 Development?
 
+Ask Tanner if it is possible to get campuses from a Life.Church database.
 Campus Option
     optional in registration
     can be edited in the search page
@@ -27,6 +30,8 @@ Campus Option
             three-letter code will be stored to the volunteer -- appears on their info modal
             search page (search by campus)
                 gives options just like registration page does
+
+Ask Alex for what other functionality might be of use.
 
 
 

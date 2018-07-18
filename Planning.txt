@@ -117,8 +117,15 @@ Updated Roadmap
         Created postgreSQL container.
         Deployed locally with database.
     7/17/18
-        Kubernetes deployment.
-        Database hopefully saves? How can we test this further?
+        Deployed to Internet with Kubernetes.
+        Database saves to a Google Disk.
+    7/18/18
+        What is the best database option?
+        Get campus data from Life.Church database.
+        Added campus attribute to volunteers.
+    7/19/19
+        Added search by campus.
+        Database is finalized.
 
     Next steps 
     
