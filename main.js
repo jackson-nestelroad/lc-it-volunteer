@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
 const database = require(__dirname + '/public/data/data.js');
+const campusDatabase = require(__dirname + '/public/data/campus.js');
 
 const app = new express();
 
 // let Heroku define the port
-var port = 3000;
+var port = process.env.PORT || 3000;
 
 // need these for receiving POST requests
 app.use(express.urlencoded({ extended: false }));
@@ -81,28 +82,42 @@ app.route('/new')
     })
     // registration form is successfully submitted
     .post(function(req, res){
-        // req.body contains all of the information we submitted
-        database.checkIfRegistered(req.body.first + ' ' + req.body.last, req.body.email)
-        .then(id => {
-            // checkIfRegistered came back with an ID -- volunteer already registered
-            if(id){
-                res.send('exists');
-            }
-            else{
-                // create the volunteer
-                database.add(req.body.first, req.body.last, req.body.email, req.body.phone, req.body.team, req.body.campus)
-                .then(code => {
-                    res.send('success');
-                })
-                .catch(err => {
-                    res.send('error');
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.send('error');
-        });
+        // page loaded and sent this request to get the campus data
+        if(req.body.load){
+            campusDatabase.get()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            });
+        }
+        // form was submitted
+        else{
+            database.checkIfRegistered(req.body.first + ' ' + req.body.last, req.body.email)
+            .then(id => {
+                // checkIfRegistered came back with an ID -- volunteer already registered
+                if(id){
+                    res.send('exists');
+                }
+                else{
+                    // create the volunteer
+                    database.add(req.body.first, req.body.last, req.body.email, req.body.phone, req.body.team, req.body.campus)
+                    .then(code => {
+                        res.send('success');
+                    })
+                    .catch(err => {
+                        res.send('error');
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            });
+        }
+        
     })
 // /search is database page with leaderboard, search, and inactive list
 app.route('/search')
@@ -111,15 +126,12 @@ app.route('/search')
     })
     // this is where we will handle what was searched for
     .post(function(req, res){
-        // database.build()
-        // .then(res => {
-        //     res.send([]);
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // })
         var category = req.body.category;
         var query = req.body.query;
+        // return initial campus data
+        if(req.body.category == -1){
+            campusDatabase.get()
+        }
         // popup with email and phone number
         if(category == 0){
             database.getByID(query)
@@ -189,6 +201,17 @@ app.route('/search')
         // inactivity list, no query
         if(category == 6){
             database.getInactive()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        // search by campus
+        if(category == 7){
+            database.searchByCampus(query)
             .then(rows => {
                 res.send(rows);
             })
