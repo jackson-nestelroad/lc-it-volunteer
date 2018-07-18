@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const database = require(__dirname + '/public/data/data.js');
+const campusDatabase = require(__dirname + '/public/data/campus.js');
 
 const app = new express();
 
@@ -113,6 +114,10 @@ app.route('/search')
     .post(function(req, res){
         var category = req.body.category;
         var query = req.body.query;
+        // return initial campus data
+        if(req.body.category == -1){
+            campusDatabase.get()
+        }
         // popup with email and phone number
         if(category == 0){
             database.getByID(query)
@@ -182,6 +187,17 @@ app.route('/search')
         // inactivity list, no query
         if(category == 6){
             database.getInactive()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        // search by campus
+        if(category == 7){
+            database.searchByCampus(query)
             .then(rows => {
                 res.send(rows);
             })
