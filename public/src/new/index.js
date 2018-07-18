@@ -9,13 +9,21 @@ const close2 = document.getElementById('closeBtn2');
 const close4 = document.getElementById('closeBtn4');
 const back = document.getElementById('backBtn');
 const select = document.getElementById('team-input');
+const campusSelect = document.getElementById('campus-input');
 // change arrow on dropdown
-document.getElementsByTagName('body')[0].addEventListener('click', function(event){
-	if(event.target.id == 'team-input'){
-		select.className == 'closed new-width' ? select.className = 'open new-width' : select.className = 'closed new-width';	
+document.getElementsByTagName('html')[0].addEventListener('click', function(event){
+    var clicked = event.target.id;
+	if(clicked == 'team-input'){
+		select.className == 'closed mobile-category' ? select.className = 'open mobile-category' : select.className = 'closed mobile-category';	
+        campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
     }
-	else{
-		select.className == 'open new-width' ? select.className = 'closed new-width' : select.className = 'closed new-width';
+    else if(clicked == 'campus-input'){
+        select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
+        campusSelect.className == 'closed' ? campusSelect.className = 'open' : campusSelect.className = 'closed';
+    }
+    else{
+        select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
+        campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
     }
 })
 // back button at top sends back to base volunteer form
@@ -94,7 +102,6 @@ function validate(type, string){
 
 // we need to call a POST request to get the campus data to create the options for the campus dropdown
 window.onload = function(){
-    // get graph data
     $.ajax({
         method: 'POST',
         context: document.body,

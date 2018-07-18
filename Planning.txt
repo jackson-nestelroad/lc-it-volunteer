@@ -123,11 +123,12 @@ Updated Roadmap
         What is the best database option?
         Get campus data from Life.Church database.
         Added campus attribute to volunteers.
-    7/19/19
+    7/19/18
         Moved database to Google Cloud (Postgres Instance).
         Connected to new database by creating a service account.
             https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine -- this process exactly
-        
+    7/20/18
+        Moved deployment to Life.Church Kubernetes.
         
 
     Next steps 

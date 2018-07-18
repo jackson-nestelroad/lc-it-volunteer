@@ -21,7 +21,8 @@ const searchCategories = [
     'Last Name',
     'Team',
     'Date',
-    'Inactivity List'
+    'Inactivity List',
+    'Campus'
 ]
 // teams to search for
 const teams = [
@@ -44,7 +45,7 @@ const query = document.getElementById('search-query');
 const campusSearch = document.getElementsByClassName('mobile-query')[0];
 const normalSearch = document.getElementsByClassName('mobile-query')[1];
 // change arrow on dropdown
-document.getElementsByTagName('body')[0].addEventListener('click', function(event){
+document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
 	if(clicked == 'category-select'){
 		select.className == 'closed mobile-category' ? select.className = 'open mobile-category' : select.className = 'closed mobile-category';	
@@ -80,16 +81,16 @@ document.onkeydown = function(evt){
     if(keyCode == 13 && enter){
         submit.click();
     }
-    if(keyCode == 88){
-        if(campusSearch.className == 'mobile-query invisible'){
-            campusSearch.className = 'mobile-query';
-            normalSearch.className = 'mobile-query invisible';
-        }
-        else if(normalSearch.className == 'mobile-query invisible'){
-            campusSearch.className = 'mobile-query invisible';
-            normalSearch.className = 'mobile-query';
-        }
-    }
+    // if(keyCode == 88){
+    //     if(campusSearch.className == 'mobile-query invisible'){
+    //         campusSearch.className = 'mobile-query';
+    //         normalSearch.className = 'mobile-query invisible';
+    //     }
+    //     else if(normalSearch.className == 'mobile-query invisible'){
+    //         campusSearch.className = 'mobile-query invisible';
+    //         normalSearch.className = 'mobile-query';
+    //     }
+    // }
 }
 function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();
@@ -101,18 +102,28 @@ function updateQuery(id){
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075)';
         setTimeout(destroyDate, 10);
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query';
     }
     else if(id == 5){
         query.value = '';
         $('#search-query').datepicker().data('datepicker');
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'white';
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query';
+    }
+    else if(id == 7){
+        campusSearch.className = 'mobile-query';
+        normalSearch.className = 'mobile-query invisible';
     }
     else{
         query.value = '';
         query.removeAttribute('readonly');
         query.style['background-color'] = 'white';
         setTimeout(destroyDate, 10);
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query';
     }
 }
 
@@ -121,6 +132,40 @@ window.onload = function(){
     updateQuery(1);
     submit.click();
     // get campuses and put them into the options
+    $.ajax({
+        method: 'POST',
+        context: document.body,
+        data: {
+            category: -1
+        }
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            rows.forEach(element => {
+                if(element.Name == 'Unknown'){
+                    // skip
+                }
+                else{
+                    var value = element.CampusCode;
+                    var campusName = element.Name + ', ' + element.State;
+                    var option = document.createElement('option');
+                    option.setAttribute('value', value);
+                    option.innerHTML = campusName;
+                    document.getElementById('campus-search').appendChild(option); 
+                }
+            })
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){
@@ -138,7 +183,7 @@ function updateHeader(category, query){
     else if(category == 4){
         string = `${searchCategories[category-1]}: ${teams[query-1]}`;
     }
-    else if(category == 5){
+    else if(category == 5 || category == 7){
         string = `${searchCategories[category-1]}: ${query}`;
     }
     else if(category == 6){
