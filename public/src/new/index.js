@@ -92,6 +92,49 @@ function validate(type, string){
     }
 }
 
+// we need to call a POST request to get the campus data to create the options for the campus dropdown
+window.onload = function(){
+    // get graph data
+    $.ajax({
+        method: 'POST',
+        context: document.body,
+        data: {
+            load: true
+        }
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+            error = ['ERROR fetching campus data from MSSQL LCDW.Dimension.Campus.']; 
+            displayError();
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+            error = ['ERROR fetching campus data from MSSQL LCDW.Dimension.Campus.'];
+            displayError();
+        }
+        else{
+            rows.forEach(element => {
+                if(element.Name == 'Unknown'){
+                    // skip
+                }
+                else{
+                    var value = element.CampusCode;
+                    var campusName = element.Name + ', ' + element.State;
+                    var option = document.createElement('option');
+                    option.setAttribute('value', value);
+                    option.innerHTML = campusName;
+                    document.getElementById('campus-input').appendChild(option); 
+                }
+            })
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
+}
+
 // form tries to submit
 submit.addEventListener('click', function(event){
     var first = document.getElementById('first-input').value.trim();
@@ -109,11 +152,12 @@ submit.addEventListener('click', function(event){
         'first': first,
         'last': last,
         'team': team,
+        'campus': campus,
         'email': emailTrue,
         'phone': phoneTrue
     }
 // info not given correctly, tell them why
-    if(first == '' || last == '' || !emailTrue || !phoneTrue || !team){
+    if(first == '' || last == '' || !emailTrue || !phoneTrue || !team || campus == ''){
         displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
             var element = values[Object.keys(values)[i]];
