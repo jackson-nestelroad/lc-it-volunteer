@@ -3,9 +3,12 @@ const mssql = require('mssql');
 const config = {
     user: 'volunteer_tracking',
     password: process.env.CAMPUS_DATA_PASS,
-    server: 'mssql01.unity.com',
+    server: '10.5.1.235',
     database: 'LCDW',
-    port: '1433'
+    port: '1433',
+    options: {
+        encrypt: true
+    }
 }
 
 // const pool = new mssql.ConnectionPool(config, err => {
