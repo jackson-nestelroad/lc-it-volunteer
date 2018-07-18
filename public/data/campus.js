@@ -8,13 +8,7 @@ const config = {
     port: 1433,
     options: {
         encrypt: true,
-        debug: {
-            packet: true,
-            data: true,
-            payload: true,
-            token: true,
-            log: true
-        }
+        debug: true
     }
 }
 
@@ -33,6 +27,9 @@ var exports = module.exports = {};
 exports.get = function(){
     return new Promise((resolve, reject) => {
         var conn = new mssql.ConnectionPool(config);
+        conn.on('debug', (connection, message) => {
+            console.log(message);
+        })
         conn.connect().then(function(){
             var request = new mssql.Request(conn);
             request.query(`
@@ -59,36 +56,5 @@ exports.get = function(){
             console.log(err);
             reject('error');
         })
-        // mssql.connect(config, err => {
-        //     if(err){
-        //         console.log(err);
-        //         reject('error');
-        //     }
-        //     else{
-        //         new mssql.Request().query(`
-        //             SELECT [CampusKey]
-        //                 ,[CampusDurableKey]
-        //                 ,[CampusCode]
-        //                 ,[Name]
-        //                 ,[State]
-        //             FROM [LCDW].[Dimension].[Campus]
-        //             WHERE [LCDW].[Dimension].[Campus].[RowIsCurrent] = 'Y'
-        //             ORDER BY [LCDW].[Dimension].[Campus].[Name];
-        //         `, (err, res) => {
-        //             if(err){
-        //                 console.log(err);
-        //                 reject('error');   
-        //             }
-        //             else{
-        //                 console.log(res);
-        //                 reject('error');
-        //             }
-        //         })
-        //     }
-        // })
-        // mssql.on('error', err => {
-        //     console.log('err');
-        //     reject('error');
-        // })
     })
 }
