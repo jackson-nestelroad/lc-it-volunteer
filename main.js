@@ -82,28 +82,35 @@ app.route('/new')
     })
     // registration form is successfully submitted
     .post(function(req, res){
-        // req.body contains all of the information we submitted
-        database.checkIfRegistered(req.body.first + ' ' + req.body.last, req.body.email)
-        .then(id => {
-            // checkIfRegistered came back with an ID -- volunteer already registered
-            if(id){
-                res.send('exists');
-            }
-            else{
-                // create the volunteer
-                database.add(req.body.first, req.body.last, req.body.email, req.body.phone, req.body.team)
-                .then(code => {
-                    res.send('success');
-                })
-                .catch(err => {
-                    res.send('error');
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.send('error');
-        });
+        // page loaded and sent this request to get the campus data
+        if(req.body.load){
+            campusDatabase.get()
+        }
+        // form was submitted
+        else{
+            database.checkIfRegistered(req.body.first + ' ' + req.body.last, req.body.email)
+            .then(id => {
+                // checkIfRegistered came back with an ID -- volunteer already registered
+                if(id){
+                    res.send('exists');
+                }
+                else{
+                    // create the volunteer
+                    database.add(req.body.first, req.body.last, req.body.email, req.body.phone, req.body.team, req.body.campus)
+                    .then(code => {
+                        res.send('success');
+                    })
+                    .catch(err => {
+                        res.send('error');
+                    })
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            });
+        }
+        
     })
 // /search is database page with leaderboard, search, and inactive list
 app.route('/search')

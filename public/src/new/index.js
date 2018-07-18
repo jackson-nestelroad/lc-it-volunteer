@@ -97,6 +97,7 @@ submit.addEventListener('click', function(event){
     var first = document.getElementById('first-input').value.trim();
     var last = document.getElementById('last-input').value.trim();
     var team = document.getElementById('team-input').value;
+    var campus = document.getElementById('campus-input').value;
     var email = document.getElementById('email-input').value.trim();
     var phone = document.getElementById('phone-input').value.trim();
     first = validate('name', first);
@@ -108,6 +109,7 @@ submit.addEventListener('click', function(event){
         'first': first,
         'last': last,
         'team': team,
+        'campus': campus,
         'email': emailTrue,
         'phone': phoneTrue
     }
@@ -141,6 +143,7 @@ submit.addEventListener('click', function(event){
                 'first': first,
                 'last': last,
                 'team': team,
+                'campus': campus,
                 'email': email,
                 'phone': phoneNumber
             }

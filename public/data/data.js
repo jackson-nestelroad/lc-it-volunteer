@@ -170,13 +170,13 @@ exports.checkIfRegistered = function(name, email){
 
 
 // adds a new volunteer
-exports.add = function(first, last, email, phone, team){
+exports.add = function(first, last, email, phone, team, campus){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
             client.query(`
-                INSERT INTO volunteers(first_name, last_name, email, phone, team)
-                VALUES('${first}', '${last}', '${email}', '${phone}', '${team}');
+                INSERT INTO volunteers(first_name, last_name, email, phone, team, campus)
+                VALUES('${first}', '${last}', '${email}', '${phone}', '${team}', '${campus}');
             `)
             .then(res => {
                 resolve('success');

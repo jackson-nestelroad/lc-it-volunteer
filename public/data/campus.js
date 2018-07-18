@@ -33,7 +33,14 @@ exports.get = function(){
             }
             else{
                 new mssql.Request().query(`
-                
+                    SELECT [CampusKey]
+                        ,[CampusDurableKey]
+                        ,[CampusCode]
+                        ,[Name]
+                        ,[State]
+                    FROM [LCDW].[Dimension].[Campus]
+                    WHERE [LCDW].[Dimension].[Campus].[RowIsCurrent] = 'Y'
+                    ORDER BY [LCDW].[Dimension].[Campus].[Name];
                 `, (err, res) => {
                     if(err){
                         console.log(err);
