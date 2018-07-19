@@ -111,6 +111,7 @@ Updated Roadmap
         Start transition to Google Kubernetes/Cloud.
     7/11/18
         Finished display page.
+        Heroku deployment finished.
     7/12/18
         Learned a lot about Docker containers.
         Created docker-compile.yaml.
@@ -120,31 +121,19 @@ Updated Roadmap
         Deployed to Internet with Kubernetes.
         Database saves to a Google Disk.
     7/18/18
-        What is the best database option?
-        Get campus data from Life.Church database.
-        Added campus attribute to volunteers.
-    7/19/18
         Moved database to Google Cloud (Postgres Instance).
         Connected to new database by creating a service account.
             https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine -- this process exactly
-    7/20/18
-        Moved deployment to Life.Church Kubernetes.
-        
+        Connected to Life.Church data warehouse for campus data locally.
+        Added campus attribute to volunteers and search engine.
+    7/24/18
 
-    Next steps 
-    
-    Docker-Compose --> Kubernetes w/ Google Cloud
         
-    7/19/18
-        Database saves and persists. -- probably need to create an external volume in Google then call to it in docker-compose.yaml
-        Talked to Alex --> other features to add?
-        Deployed in Kubernetes.
-        Exposed to the Internet.
-    7/26/18
-        Replicate old database data.
-        Database backup?
-    8/2/18
-        Finished.
+    TO DO:
+        Moved deployment to Life.Church Kubernetes.
+        Connected to Life.Church data warehouse for campus data remotely.
+        Asked Alex for design/usability input.
+        Replicated old volunteer data from spreadsheet.
 
 
 As of 7/11/2018, the project has been completed and hosted on Heroku.
