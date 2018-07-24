@@ -13,7 +13,6 @@ const months = [
     'November',
     'December'
 ]
-
 // possible categories to search for
 const searchCategories = [
     'Leaderboard',
@@ -21,7 +20,8 @@ const searchCategories = [
     'Last Name',
     'Team',
     'Date',
-    'Inactivity List'
+    'Inactivity List',
+    'Campus'
 ]
 // teams to search for
 const teams = [
@@ -43,8 +43,8 @@ const campusSelect = document.getElementById('campus-search');
 const query = document.getElementById('search-query');
 const campusSearch = document.getElementsByClassName('mobile-query')[0];
 const normalSearch = document.getElementsByClassName('mobile-query')[1];
-// change arrow on dropdown
-document.getElementsByTagName('body')[0].addEventListener('click', function(event){
+// change arrow on dropdowns
+document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
 	if(clicked == 'category-select'){
 		select.className == 'closed mobile-category' ? select.className = 'open mobile-category' : select.className = 'closed mobile-category';	
@@ -80,16 +80,6 @@ document.onkeydown = function(evt){
     if(keyCode == 13 && enter){
         submit.click();
     }
-    if(keyCode == 88){
-        if(campusSearch.className == 'mobile-query invisible'){
-            campusSearch.className = 'mobile-query';
-            normalSearch.className = 'mobile-query invisible';
-        }
-        else if(normalSearch.className == 'mobile-query invisible'){
-            campusSearch.className = 'mobile-query invisible';
-            normalSearch.className = 'mobile-query';
-        }
-    }
 }
 function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();
@@ -101,26 +91,70 @@ function updateQuery(id){
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075)';
         setTimeout(destroyDate, 10);
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query';
     }
     else if(id == 5){
         query.value = '';
         $('#search-query').datepicker().data('datepicker');
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'white';
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query';
+    }
+    else if(id == 7){
+        campusSearch.className = 'mobile-query';
+        normalSearch.className = 'mobile-query invisible';
     }
     else{
         query.value = '';
         query.removeAttribute('readonly');
         query.style['background-color'] = 'white';
         setTimeout(destroyDate, 10);
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query';
     }
 }
 
-// retain old search information in URL paramters
 window.onload = function(){
     updateQuery(1);
     submit.click();
     // get campuses and put them into the options
+    $.ajax({
+        method: 'POST',
+        context: document.body,
+        data: {
+            category: -1
+        }
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            rows.forEach(element => {
+                if(element.Name == 'Unknown'){
+                    // skip
+                }
+                else{
+                    // create the option in the dropdown
+                    var value = element.CampusCode;
+                    var campusName = element.Name + ', ' + element.State;
+                    var option = document.createElement('option');
+                    option.setAttribute('value', value);
+                    option.innerHTML = campusName;
+                    document.getElementById('campus-search').appendChild(option); 
+                }
+            })
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){
@@ -138,7 +172,7 @@ function updateHeader(category, query){
     else if(category == 4){
         string = `${searchCategories[category-1]}: ${teams[query-1]}`;
     }
-    else if(category == 5){
+    else if(category == 5 || category == 7){
         string = `${searchCategories[category-1]}: ${query}`;
     }
     else if(category == 6){
@@ -146,11 +180,14 @@ function updateHeader(category, query){
     }
     document.getElementsByClassName('search-header')[0].innerHTML = string;
 }
-// search submitted -- GET request
+// search submitted -- POST request
+// this sounds backwards, but we are not an API, we are an interactive search page
+// POST requests will allow us to update the search page AFTER the request is completed
+// so we will get data in our POST request, send it back here, and display them
 submit.addEventListener('click', function(event){
     enter = false;
     // check if there is a query if we need one
-    if(select.value != 1 && select.value != 6){
+    if(select.value != 1 && select.value != 6 && select.value != 7){
         if(query.value == ''){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
@@ -190,11 +227,16 @@ submit.addEventListener('click', function(event){
             return;
         }
     }
-    // clear search results
+    if(select.value == 7){
+        query.value = campusSelect.value;
+    }
+    // take away the red error background on query
     if(select.value != 1 && select.value != 6){
         query.style['background-color'] = 'white';
     }
+    // clear search results
     document.getElementById('search-results').innerHTML = '';
+    // send our request
     $.ajax({
         method: 'POST',
         context: document.body,
@@ -224,7 +266,7 @@ submit.addEventListener('click', function(event){
                 enter = true;
                 return;
             }
-            // results were found
+            // results were found -> display each element in rows array
             rows.forEach(element => {
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
@@ -280,7 +322,7 @@ submit.addEventListener('click', function(event){
         document.getElementById('httpsqlerror').style['display'] = 'block';
     })
 })
-// pops up info
+// pops up info modal
 document.getElementById('search-results').onclick = function(element){
 	if(element.target.className == 'clickForInfo'){
         enter = false;

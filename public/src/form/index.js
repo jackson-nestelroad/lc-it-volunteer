@@ -72,15 +72,6 @@ document.onkeydown = function(evt){
             submit.click();
         }
     }
-    // test keys (Z and X) for modal display
-    // if(keyCode == 90){
-    //     emailOn = true;
-    //     document.getElementById('validate').style['display'] = 'block';
-    // }
-    // if(keyCode == 88){
-    //     enter = false;
-    //     document.getElementById('httpsqlerror').style['display'] = 'block';
-    // }
 }
 // display error at top of form
 function displayError(){
@@ -112,9 +103,11 @@ function checkDate(date){
 
 // form tries to submit
 submit.addEventListener('click', function(event){
+    // get the values
     var name = document.getElementById('name-input').value.trim();
     var team = document.getElementById('team-input').value;
     var date = document.getElementById('date-input').value;
+    // check some of the values logically
     var datePossible = checkDate(date);
     var hours = parseInt(document.getElementById('hours-input').value);
     // make sure the number of hours is positive and less than 24
@@ -128,7 +121,7 @@ submit.addEventListener('click', function(event){
         'date': datePossible,
         'hours': hours
     }
-// info not given correctly, tell them why
+    // info not given correctly, tell them why
     if(name == '' || !datePossible || team == '' || !team || !hours){
         displayError();
         for(var i = 0; i < Object.keys(values).length; i++){
@@ -141,11 +134,10 @@ submit.addEventListener('click', function(event){
             }
         }
     }
-// info given correctly, so submit the form
+    // info given correctly, so submit the form
     else{
         // disable form submission multiple times
         enter = false;
-        // can use now.getDay() to get the day of week to reset the engagement statistics per week for team
         // send a POST request
         $.ajax({
             method: 'POST',
@@ -159,7 +151,7 @@ submit.addEventListener('click', function(event){
         })
         .done(function(code){
             if(code == 'error'){
-                // error occurred in SQL
+                // error occurred in PostgreSQL
                 document.getElementById('httpsqlerror').style['display'] = 'block';
             }
             else{
@@ -190,6 +182,7 @@ emailSubmit.addEventListener('click', function(event){
     // disable form submission multiple times
     enter = false;
     var email = document.getElementById('email-input').value.trim();
+    // see if email is any valid email
     var emailTest = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     emailTest = emailTest.test(email);
     // invalid email
@@ -213,7 +206,7 @@ emailSubmit.addEventListener('click', function(event){
         })
         .done(function(code){
             if(code == 'error'){
-                // error occurred in SQL
+                // error occurred in PostgreSQL
                 document.getElementById('httpsqlerror').style['display'] = 'block';
             }
             else{

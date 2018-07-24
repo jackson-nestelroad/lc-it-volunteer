@@ -1,3 +1,5 @@
+// get campus data from Life.Church Data Warehouse
+
 const mssql = require('mssql');
 
 const config = {
@@ -5,21 +7,8 @@ const config = {
     password: process.env.CAMPUS_DATA_PASS,
     server: 'mssql01.unity.com',
     database: 'LCDW',
-    port: 1433,
-    debug: true,
-    options: {
-        encrypt: true
-    }
+    port: 1433
 }
-
-// const pool = new mssql.ConnectionPool(config, err => {
-//     if(err){
-//         console.log(err);
-//     }
-// });
-// pool.on('error', err => {
-//     console.log(err);
-// })
 
 var exports = module.exports = {};
 
@@ -27,9 +16,6 @@ var exports = module.exports = {};
 exports.get = function(){
     return new Promise((resolve, reject) => {
         var conn = new mssql.ConnectionPool(config);
-        conn.on('debug', (connection, message) => {
-            console.log(message);
-        })
         conn.connect().then(function(){
             var request = new mssql.Request(conn);
             request.query(`
