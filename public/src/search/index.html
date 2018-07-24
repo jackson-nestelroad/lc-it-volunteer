@@ -41,7 +41,7 @@
             <p class="logo-row2">IT Volunteer Database</p>
         </div>
         <div id="container" class="search">
-            <div class="tool  grid-container-tool">
+            <div class="tool grid-container-tool">
                 <img src="../assets/images/search_icon.svg" class="icon" />
                 <p>Search:</p>
                 <select name="Category" id="category-select" class="closed mobile-category">
@@ -54,7 +54,7 @@
                     <option value=6>Inactive</option>
                 </select>
                 <div class="mobile-query invisible">
-                    <select name="Campus" id="campus-search" class="campus">
+                    <select name="Campus" id="campus-search" class="closed">
                         <option value='CEN'>Central, OK</option>
                         <option value='INT'>Church Online, OK</option>
                         <optoin value='EDM'>Edmond, OK</optoin>
@@ -65,6 +65,16 @@
                         <option value='OKC'>Oklahoma City, OK</option>
                         <option value='TUL'>Tulsa, OK</option>
                         <option value='WCH'>Wichita, KS</option>
+                    </select>
+                </div>
+                <div class="mobile-query invisible">
+                    <select name="Team" id="team-search" class="closed">
+                        <option value=1>Hardware and Infrastructure Support</option>
+                        <option value=2>Software and User Support</option>
+                        <option value=6>Development Operations</option>
+                        <option value=3>Database Operations</option>
+                        <option value=4>Project Management</option>
+                        <option value=5>Communication</option>
                     </select>
                 </div>
                 <div class="mobile-query">

@@ -183,7 +183,7 @@ app.route('/search')
                 res.send('error');
             })
         }
-        // search by favorite team
+        // search by favorite/preferred team
         if(category == 4){
             database.searchByTeam(query.toLowerCase())
             .then(rows => {

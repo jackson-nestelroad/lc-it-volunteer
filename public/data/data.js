@@ -76,7 +76,8 @@ exports.build = function(){
                             (2, 'Software'),
                             (3, 'Database'),
                             (4, 'Project'),
-                            (5, 'Communication');
+                            (5, 'Communication')
+                            (6, 'Development');
                 `)
                 .then(res => {
                     client.release();

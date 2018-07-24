@@ -29,7 +29,8 @@ const teams = [
     'Software',
     'Database',
     'Project',
-    'Communication'
+    'Communication',
+    'Development'
 ]
 // can we press enter to submit search?
 var enter = true;
@@ -38,25 +39,37 @@ const back = document.getElementById('backBtn');
 const submit = document.getElementById('searchBtn');
 const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
+
 const select = document.getElementById('category-select');
 const campusSelect = document.getElementById('campus-search');
+const teamSelect = document.getElementById('team-search');
+
 const query = document.getElementById('search-query');
 const campusSearch = document.getElementsByClassName('mobile-query')[0];
-const normalSearch = document.getElementsByClassName('mobile-query')[1];
+const teamSearch = document.getElementsByClassName('mobile-query')[1];
+const normalSearch = document.getElementsByClassName('mobile-query')[2];
 // change arrow on dropdowns
 document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
 	if(clicked == 'category-select'){
 		select.className == 'closed mobile-category' ? select.className = 'open mobile-category' : select.className = 'closed mobile-category';	
         campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
+        teamSelect.className == 'open' ? teamSelect.className = 'closed' : teamSelect.className = 'closed';
     }
     else if(clicked == 'campus-search'){
         select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
         campusSelect.className == 'closed' ? campusSelect.className = 'open' : campusSelect.className = 'closed';
+        teamSelect.className == 'open' ? teamSelect.className = 'closed' : teamSelect.className = 'closed';
+    }
+    else if(clicked == 'team-search'){
+        select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
+        campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
+        teamSelect.className == 'closed' ? teamSelect.className = 'open' : teamSelect.className = 'closed';
     }
     else{
         select.className == 'open mobile-category' ? select.className = 'closed mobile-category' : select.className = 'closed mobile-category';
         campusSelect.className == 'open' ? campusSelect.className = 'closed' : campusSelect.className = 'closed';
+        teamSelect.className == 'open' ? teamSelect.className = 'closed' : teamSelect.className = 'closed';
     }
 })
 // close button in info modal
@@ -93,6 +106,12 @@ function updateQuery(id){
         setTimeout(destroyDate, 10);
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
+        teamSearch.className = 'mobile-query invisible';
+    }
+    else if(id == 4){
+        campusSearch.className = 'mobile-query invisible';
+        normalSearch.className = 'mobile-query invisible';
+        teamSearch.className = 'mobile-query';
     }
     else if(id == 5){
         query.value = '';
@@ -101,10 +120,12 @@ function updateQuery(id){
         query.style['background-color'] = 'white';
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
+        teamSearch.className = 'mobile-query invisible';
     }
     else if(id == 7){
         campusSearch.className = 'mobile-query';
         normalSearch.className = 'mobile-query invisible';
+        teamSearch.className = 'mobile-query invisible';
     }
     else{
         query.value = '';
@@ -113,6 +134,7 @@ function updateQuery(id){
         setTimeout(destroyDate, 10);
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
+        teamSearch.className = 'mobile-query invisible';
     }
 }
 
@@ -200,34 +222,35 @@ submit.addEventListener('click', function(event){
     // handle team searches
     if(select.value == 4){
         // hardware
-        if(query.value.toLowerCase().startsWith('h')){
-            query.value = 1;
-        }
-        // software
-        else if(query.value.toLowerCase().startsWith('s')){
-            query.value = 2;
-        }
-        // database
-        else if(query.value.toLowerCase().startsWith('d')){
-            query.value = 3;
-        }
-        // project
-        else if(query.value.toLowerCase().startsWith('p')){
-            query.value = 4;
-        }
-        // communication
-        else if(query.value.toLowerCase().startsWith('c')){
-            query.value = 5;
-        }
-        // number codes already searched
-        else if([1,2,3,4,5].includes(parseInt(query.value))){
-            query.value;
-        }
+        // if(query.value.toLowerCase().startsWith('h')){
+        //     query.value = 1;
+        // }
+        // // software
+        // else if(query.value.toLowerCase().startsWith('s')){
+        //     query.value = 2;
+        // }
+        // // database
+        // else if(query.value.toLowerCase().startsWith('d')){
+        //     query.value = 3;
+        // }
+        // // project
+        // else if(query.value.toLowerCase().startsWith('p')){
+        //     query.value = 4;
+        // }
+        // // communication
+        // else if(query.value.toLowerCase().startsWith('c')){
+        //     query.value = 5;
+        // }
+        // // number codes already searched
+        // else if([1,2,3,4,5].includes(parseInt(query.value))){
+        //     query.value;
+        // }
         // invalid team
-        else{
+        query.value = teamSelect.value;
+        if(![1,2,3,4,5,6].includes(parseInt(query.value))){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
-            return;
+            return;  
         }
     }
     if(select.value == 7){
