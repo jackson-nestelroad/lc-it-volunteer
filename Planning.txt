@@ -75,24 +75,24 @@ Initial Roadmap
 
 Updated Roadmap
     6/8/18
-        Finish basic HTML.
-        Finish basic CSS.
-        Finish basic Javascript.
+        Finished basic HTML.
+        Finished basic CSS.
+        Finished basic Javascript.
     6/11/18
-        Replace Electron support with Express support.
+        Replaced Electron support with Express support.
     6/13/18
-        Create Volunteer Registration Form.
-        Interlink the two forms.
+        Created Volunteer Registration Form.
+        Interlinked the two forms.
     6/14/18
-        Take PostgreSQL class.
-        Create database structure.
-        Write all SQL queries.
+        Took PostgreSQL class.
+        Created database structure.
+        Wrote all SQL queries.
     6/20/18
         App deployed with Heroku.
         Database created in Heroku.
         Log form and Registration Form connected to database.
     6/21/18
-        Email validation for duplicate names.
+        Added email validation for duplicate names.
         Log form and Registration Form finished.
     7/2/2018
         Added mobile support for both forms.
@@ -102,7 +102,7 @@ Updated Roadmap
         Information on click finished.
         Base for search engine finished.
     7/5/18
-        First name, last name, team, and date search finished
+        First name, last name, team, and date search finished.
         Added preferred team on registration.
         Added inactivity list.
         Search page finished.
@@ -133,7 +133,7 @@ Updated Roadmap
         Moved deployment to Life.Church Kubernetes.
         Connected to Life.Church data warehouse for campus data remotely.
         Asked Alex for design/usability input.
-        Replicated old volunteer data from spreadsheet.
+        Replicated old volunteer data from spreadsheet?
 
 
 As of 7/11/2018, the project has been completed and hosted on Heroku.

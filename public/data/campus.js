@@ -7,7 +7,7 @@ const config = {
     password: process.env.CAMPUS_DATA_PASS,
     server: 'mssql01.unity.com',
     database: 'LCDW',
-    port: '1433'
+    port: 1433
 }
 
 var exports = module.exports = {};
