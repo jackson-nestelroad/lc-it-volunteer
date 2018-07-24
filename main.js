@@ -131,6 +131,13 @@ app.route('/search')
         // return initial campus data
         if(req.body.category == -1){
             campusDatabase.get()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            });
         }
         // popup with email and phone number
         if(category == 0){
