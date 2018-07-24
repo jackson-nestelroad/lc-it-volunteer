@@ -1,13 +1,5 @@
+Date Range on Search
+    Air Datepicker ??
 
-Configure PostgreSQL in Google Cloud
-Move database over
-Connect to database with data.js
-
-Create a URL? Is this needed?
-
-
-
-
-Deployment Notes
-    https://medium.freecodecamp.org/how-to-host-lightweight-apps-for-free-a29773e5f39e !!!!
-    http://blog.teamtreehouse.com/deploy-static-site-heroku
+Start and End Time on Volunteer Form
+    Air Datepicker ??
