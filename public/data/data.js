@@ -230,6 +230,7 @@ function getWeek(){
     var week = [];
     week.push(`${start.getMonth()+1}/${start.getDate()}/${start.getFullYear()}`);
     week.push(`${end.getMonth()+1}/${end.getDate()}/${end.getFullYear()}`);
+    return week;
 }
 
 // searches by first name
