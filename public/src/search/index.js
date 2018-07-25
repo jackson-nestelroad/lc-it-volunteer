@@ -292,6 +292,7 @@ submit.addEventListener('click', function(event){
             rows.forEach(element => {
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
+                var campus = element.campus;
                 var week = element.week;
                 var total = element.total;
                 var team = element.favorite;
@@ -318,6 +319,10 @@ submit.addEventListener('click', function(event){
                         <tr>
                             <td class="small">#${id}</td>
                             <td class="clickForInfo">${name}</td>
+                            <td class="center">
+                                <i>Campus</i>
+                                <br>
+                                <span>${campus}</span>
                             <td class="center">
                                 <i>Week</i>
                                 <br>
