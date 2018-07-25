@@ -226,7 +226,7 @@ exports.log = function(date, id, team, hours){
 function getWeek(){
     var now = new Date();
     var start = new Date(now.setTime(now.getTime() - now.getDay() * 86400000));
-    var end = new Date((startDate.getTime() + 6 * 86400000));
+    var end = new Date((start.getTime() + 6 * 86400000));
     var week = [];
     week.push(`${start.getMonth()+1}/${start.getDate()}/${start.getFullYear()}`);
     week.push(`${end.getMonth()+1}/${end.getDate()}/${end.getFullYear()}`);
