@@ -127,12 +127,18 @@ Updated Roadmap
         Connected to Life.Church data warehouse for campus data locally.
         Added campus attribute to volunteers and search engine.
     7/24/18
-
+        Talked with Alex about feedback and additional features.
+        Heroku deployment fixed for testing purposes; it is easy to develop and test on.
+        Added Development Team on all pages.
+    7/25/18
+        
         
     TO DO:
+        Added date range to search page.
+        Added time range to volunteering form.
+        Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
         Connected to Life.Church data warehouse for campus data remotely.
-        Asked Alex for design/usability input.
         Replicated old volunteer data from spreadsheet?
 
 
