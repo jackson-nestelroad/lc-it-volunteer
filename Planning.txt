@@ -131,11 +131,16 @@ Updated Roadmap
         Heroku deployment fixed for testing purposes; it is easy to develop and test on.
         Added Development Team on all pages.
     7/25/18
+        Added date range to search page.
+        Added time range to volunteering form.
+        Cleaned up PostgreSQL queries.
+        Added weekly hours to search results.
+        Added campus to search results.
+        Added All Volunteers list to search page.
         
         
     TO DO:
-        Added date range to search page.
-        Added time range to volunteering form.
+        Make History popup on search page.
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
         Connected to Life.Church data warehouse for campus data remotely.
