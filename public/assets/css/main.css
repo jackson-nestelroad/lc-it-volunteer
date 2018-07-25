@@ -107,7 +107,7 @@ body *:focus{
     width: 40% !important;
 }
 
-.check.time.checkbox{
+.check.time .checkbox{
     display: grid;
 }
 
@@ -123,6 +123,7 @@ body *:focus{
 }
 
 .checkmark{
+    display: block;
     height: 25px;
     width: 25px;
     border-radius: 50%;
