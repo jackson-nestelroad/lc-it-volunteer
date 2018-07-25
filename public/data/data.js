@@ -575,7 +575,7 @@ exports.searchByDates = function(dates){
                             FROM volunteers
                             JOIN logs
                             ON logs.vol_id = volunteers.vol_id
-                            WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                            WHERE date BETWEEN '${dates[0]}' AND '${dates[1]}'
                             GROUP BY volunteers.vol_id) a
                         JOIN
                             (SELECT volunteers.vol_id, first_name, last_name
@@ -585,7 +585,7 @@ exports.searchByDates = function(dates){
                                 FROM volunteers
                                 JOIN logs
                                 ON logs.vol_id = volunteers.vol_id
-                                WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                                WHERE date BETWEEN '${dates[0]}' AND '${dates[1]}'
                                 GROUP BY volunteers.vol_id)
                             ) e
                         ON e.vol_id = a.vol_id
@@ -598,7 +598,7 @@ exports.searchByDates = function(dates){
                             FROM volunteers
                             JOIN logs
                             ON logs.vol_id = volunteers.vol_id
-                            WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                            WHERE date BETWEEN '${dates[0]}' AND '${dates[1]}'
                             GROUP BY volunteers.vol_id) h
                             ON 
                             h.team = teams.team_id
@@ -614,7 +614,7 @@ exports.searchByDates = function(dates){
                         FROM volunteers
                         JOIN logs
                         ON logs.vol_id = volunteers.vol_id
-                        WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                        WHERE date BETWEEN '${dates[0]}' AND '${dates[1]}'
                         GROUP BY volunteers.vol_id)
                     GROUP BY volunteers.vol_id) d
                 ON d.vol_id = c.vol_id;
