@@ -100,13 +100,13 @@ function destroyDate(){
 // retain old search information in URL paramters
 function updateQuery(id){
     if(id == 1 || id == 6){
-        query.value = '';
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075)';
         setTimeout(destroyDate, 10);
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
+        query = '';
     }
     else if(id == 4){
         campusSearch.className = 'mobile-query invisible';
@@ -114,13 +114,13 @@ function updateQuery(id){
         teamSearch.className = 'mobile-query';
     }
     else if(id == 5){
-        query.value = '';
         $('#search-query').datepicker().data('datepicker');
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'white';
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
+        query.value = '';
     }
     else if(id == 7){
         campusSearch.className = 'mobile-query';
@@ -128,13 +128,13 @@ function updateQuery(id){
         teamSearch.className = 'mobile-query invisible';
     }
     else{
-        query.value = '';
         query.removeAttribute('readonly');
         query.style['background-color'] = 'white';
         setTimeout(destroyDate, 10);
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
+        query.value = '';
     }
 }
 
