@@ -97,6 +97,9 @@ document.onkeydown = function(evt){
 function destroyDate(){
     $('#search-query').datepicker().data('datepicker').destroy();
 }
+function resetQuery(){
+    query.value = '';
+}
 // retain old search information in URL paramters
 function updateQuery(id){
     if(id == 1 || id == 6){
@@ -106,7 +109,7 @@ function updateQuery(id){
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
-        query.value = '';
+        setTimeout(resetQuery, 20);
     }
     else if(id == 4){
         campusSearch.className = 'mobile-query invisible';
@@ -120,7 +123,7 @@ function updateQuery(id){
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
-        query.value = '';
+        setTimeout(resetQuery, 20);
     }
     else if(id == 7){
         campusSearch.className = 'mobile-query';
@@ -134,7 +137,7 @@ function updateQuery(id){
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
-        query.value = '';
+        setTimeout(resetQuery, 20);
     }
 }
 
