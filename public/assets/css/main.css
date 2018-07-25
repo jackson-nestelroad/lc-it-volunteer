@@ -50,6 +50,7 @@ body *:focus{
 
 #container{
     width: 80%;
+    height: auto;
     min-width: 625px;
     margin: 24px;
     padding: 24px;
@@ -81,7 +82,7 @@ body *:focus{
 
 .grid-container-form.log-hours{
     grid-template-columns: repeat(2, minmax(200px, 1fr));
-    grid-template-rows: repeat(3, minmax(50px, 1fr));
+    grid-template-rows: 1fr 1fr 0.25fr 1fr 1fr;
 }
 
 .grid-container-form.new-form{
@@ -102,6 +103,10 @@ body *:focus{
     background-color: white;
 }
 
+.input-box.small, select.small{
+    width: 40% !important;
+}
+
 select{
     -webkit-appearance: none; 
     -moz-appearance: none;
@@ -118,15 +123,9 @@ select{
     background-position: right 5px bottom 11px;
 }
 
-
 .input.name{
     grid-column: 1 / 2;
     grid-row: 1 / 2;
-}
-
-.input.team.hours{
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
 }
 
 .input.date{
@@ -134,9 +133,31 @@ select{
     grid-row: 1 / 2;
 }
 
-.input.hours{
-    grid-column: 2 / 3;
+.input.team.hours{
+    grid-column: 1 / 3;
     grid-row: 2 / 3;
+}
+
+.check.time{
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+}
+
+.input.hours{
+    grid-column: 1 / 3;
+    grid-row: 4 / 5;
+}
+
+.input.start.time{
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+    display: none;
+}
+
+.input.end.time{
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+    display: none;
 }
 
 .input.first{
@@ -171,7 +192,6 @@ select{
 
 .submit{
     grid-column: 1 / 3;
-    grid-row: 4 / 5;
 }
 
 button{

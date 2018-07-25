@@ -81,7 +81,7 @@ body *:focus{
 
 .grid-container-form.log-hours{
     grid-template-columns: repeat(1, minmax(200px, 1fr));
-    grid-template-rows: repeat(5, minmax(50px, 1fr));
+    grid-template-rows: 1fr 1fr 1fr 0.25fr 0.25fr 0.25fr 1fr;
 }
 
 .grid-container-form.new-form{
@@ -100,6 +100,10 @@ body *:focus{
     border: solid 1px #dad8d6 !important;
     border-radius: 6px !important;
     background-color: white;
+}
+
+.input-box.small, select.small{
+    width: 70% !important;
 }
 
 select{
@@ -133,9 +137,26 @@ select{
     grid-row: 3 / 4;
 }
 
-.input.hours{
+.check.time{
     grid-column: 1 / 2;
     grid-row: 4 / 5;
+}
+
+.input.hours{
+    grid-column: 1 / 2;
+    grid-row: 5 / 7;
+}
+
+.input.start.time{
+    grid-column: 1 / 2;
+    grid-row: 5 / 6;
+    display: none;
+}
+
+.input.end.time{
+    grid-column: 1 / 2;
+    grid-row: 6 / 7;
+    display: none;
 }
 
 .input.first{
@@ -170,7 +191,6 @@ select{
 
 .submit{
     grid-column: 1 / 2;
-    grid-row: 7 / 8;
 }
 
 button{

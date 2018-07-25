@@ -1,3 +1,20 @@
+// date and time picker initializations
+var datePicker = $('.datepicker-here').datepicker({
+    position: 'top left',
+    language: 'en',
+    minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
+    maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
+})
+
+var startPicker = $('.only-time').datepicker({
+    dateFormat: ' ',
+    timepicker: true,
+    onlyTimepicker: true,
+    position: 'top left',
+    language: 'en',
+    timeFormat: 'hh:ii AA'
+});
+
 // variable for if we are checking an email address
 var emailOn = false;
 // variable for allowing enter to be used to submit form
@@ -16,13 +33,31 @@ const register2 = document.getElementById('registerBtn2');
 const data = document.getElementById('dataBtn');
 const emailSubmit = document.getElementById('emailBtn');
 const select = document.getElementById('team-input');
+
+const check = document.getElementById('time-check');
+const hours = document.getElementsByClassName('input hours')[1];
+const start = document.getElementsByClassName('input start time')[0];
+const end = document.getElementsByClassName('input end time')[0];
+// detect checkbox changes and add or remove fields
+check.addEventListener('change', function(event){
+    if(check.checked){
+        hours.style['display'] = 'none';
+        start.style['display'] = 'block';
+        end.style['display'] = 'block';
+    }
+    else{
+        hours.style['display'] = 'block';
+        start.style['display'] = 'none';
+        end.style['display'] = 'none';
+    }
+})
 // change arrow on dropdown
 document.getElementsByTagName('body')[0].addEventListener('click', function(event){
 	if(event.target.id == 'team-input'){
-		select.className == 'closed' ? select.className = 'open' : select.className = 'closed';	
+		select.className == 'closed small' ? select.className = 'open small' : select.className = 'closed small';	
     }
 	else{
-		select.className == 'open' ? select.className = 'closed' : select.className = 'closed';
+		select.className == 'open small' ? select.className = 'closed small' : select.className = 'closed small';
     }
 })
 // database button at top sends to database page
@@ -90,7 +125,7 @@ function checkDate(date){
         // max is next month
         var max = new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`);
         date = new Date(date);
-        if(date <= min || date >= max){
+        if(date < min || date > max){
             error.push('Please enter a date within the last year.');
             error.push('You may not enter a future month\'s volunteers.');
             return false;
@@ -98,6 +133,48 @@ function checkDate(date){
         else{
             return true;
         }
+    }
+}
+// get hours volunteered for
+function getHours(){
+    // start and end time given
+    if(check.checked){
+        var start = document.getElementById('start-input').value;
+        var end = document.getElementById('end-input').value;
+        if(start == '' || end == ''){
+            return false;
+        }
+        start = new Date('1/1/2000 ' + start);
+        end = new Date('1/1/2000 ' + end);
+        var diff = end - start;
+        diff = diff/60000/60;
+        // negative or zero hours
+        if(diff <= 0){
+            error.push('End time cannot be before start time!');
+            return false;
+        }
+        // less than one hour
+        if(diff < 1){
+            return Math.ceil(diff);
+        }
+        // more than one hour
+        if(diff > 1){
+            return Math.round(diff);
+        }
+        // more than 24 hours
+        if(diff >= 24){
+            return false;
+        }
+    }
+    // hours given as number
+    else{
+        if(document.getElementById('hours-input').value == ''){
+            return false;
+        }
+        var num = parseInt(document.getElementById('hours-input').value);
+        num = (hours > 0) ? hours : false;
+        num = (hours > 24) ? false : hours;
+        return num;
     }
 }
 
@@ -109,17 +186,18 @@ submit.addEventListener('click', function(event){
     var date = document.getElementById('date-input').value;
     // check some of the values logically
     var datePossible = checkDate(date);
-    var hours = parseInt(document.getElementById('hours-input').value);
+    var hours = getHours();
+    console.log(hours);
     // make sure the number of hours is positive and less than 24
-    hours = (hours > 0) ? hours : false;
-    hours = (hours > 24) ? false : hours;
     // make sure they didn't enter a fake team
     team = ([1,2,3,4,5,6].includes(parseInt(team))) ? team : false;
     var values = {
         'name': name,
         'team': team,
         'date': datePossible,
-        'hours': hours
+        'hours': hours,
+        'start': hours,
+        'end': hours
     }
     // info not given correctly, tell them why
     if(name == '' || !datePossible || team == '' || !team || !hours){
