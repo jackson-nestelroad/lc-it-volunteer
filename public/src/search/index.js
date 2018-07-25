@@ -228,6 +228,7 @@ submit.addEventListener('click', function(event){
             return;  
         }
     }
+    // handle date searches -- array so we can use range of dates
     if(select.value == 5){
         var search = query.value.split(' - ');
         query.style['background-color'] = 'white';
@@ -241,6 +242,7 @@ submit.addEventListener('click', function(event){
         var search = query.value;
         query.style['background-color'] = 'white';
     }
+    // no query needed -- use none for logging purposes
     if(select.value == 1 || select.value == 6){
         var search = 'none';
     }

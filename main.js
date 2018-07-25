@@ -198,6 +198,7 @@ app.route('/search')
         if(category == 5){
             // one date
             if(query.length == 1){
+                query = query[0];
                 database.searchByDate(query)
                 .then(rows => {
                     res.send(rows);
