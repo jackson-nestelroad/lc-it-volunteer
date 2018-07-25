@@ -196,14 +196,32 @@ app.route('/search')
         }
         // search by date
         if(category == 5){
-            database.searchByDate(query)
-            .then(rows => {
-                res.send(rows);
-            })
-            .catch(err => {
-                console.log(err);
+            // one date
+            if(query.length == 1){
+                database.searchByDate(query)
+                .then(rows => {
+                    res.send(rows);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.send('error');
+                })
+            }
+            // range of dates
+            else if(query.length == 2){
+                database.searchByDates(query)
+                .then(rows => {
+                    res.send(rows);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.send('error');
+                })
+            }
+            // invalid
+            else{
                 res.send('error');
-            })
+            }
         }
         // inactivity list, no query
         if(category == 6){

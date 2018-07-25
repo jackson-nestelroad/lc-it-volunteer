@@ -559,6 +559,83 @@ exports.searchByDate = function(date){
     })
 }
 
+// searches by range of dates
+exports.searchByDate = function(dates){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT c.vol_id, c.first_name, c.last_name, c.hours, c.team, d.last_active
+                FROM
+                    (SELECT g.vol_id, g.first_name, g.last_name, g.hours, b.team
+                    FROM
+                        (SELECT a.vol_id, a.hours, e.first_name, e.last_name
+                        FROM 
+                            (SELECT volunteers.vol_id, SUM(hours) hours
+                            FROM volunteers
+                            JOIN logs
+                            ON logs.vol_id = volunteers.vol_id
+                            WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                            GROUP BY volunteers.vol_id) a
+                        JOIN
+                            (SELECT volunteers.vol_id, first_name, last_name
+                            FROM volunteers
+                            WHERE volunteers.vol_id IN
+                                (SELECT volunteers.vol_id, SUM(hours) hours
+                                FROM volunteers
+                                JOIN logs
+                                ON logs.vol_id = volunteers.vol_id
+                                WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                                GROUP BY volunteers.vol_id)
+                            ) e
+                        ON e.vol_id = a.vol_id
+                        ) g
+                    JOIN
+                        (SELECT h.vol_id, teams.name team
+                        FROM teams
+                        JOIN 
+                            (SELECT volunteers.vol_id, SUM(hours) hours
+                            FROM volunteers
+                            JOIN logs
+                            ON logs.vol_id = volunteers.vol_id
+                            WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                            GROUP BY volunteers.vol_id) h
+                            ON 
+                            h.team = teams.team_id
+                        ) b
+                    ON g.vol_id = b.vol_id) c
+                JOIN 
+                    (SELECT volunteers.vol_id, MAX(logs.date) last_active
+                    FROM volunteers
+                    JOIN logs
+                    ON volunteers.vol_id = logs.vol_id
+                    WHERE volunteers.vol_id IN
+                        (SELECT volunteers.vol_id, SUM(hours) hours
+                        FROM volunteers
+                        JOIN logs
+                        ON logs.vol_id = volunteers.vol_id
+                        WHERE date BETWEEN '${date[0]}' AND '${date[1]}'
+                        GROUP BY volunteers.vol_id)
+                    GROUP BY volunteers.vol_id) d
+                ON d.vol_id = c.vol_id;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
 // searches by campus
 exports.searchByCampus = function(campus){
     return new Promise((resolve, reject) => {

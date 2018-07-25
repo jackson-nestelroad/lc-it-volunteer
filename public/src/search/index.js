@@ -198,7 +198,7 @@ function updateHeader(category, query){
         string = `${searchCategories[category-1]}: ${teams[query-1]}`;
     }
     else if(category == 5 || category == 7){
-        string = `${searchCategories[category-1]}: ${query}`;
+        string = `${searchCategories[category-1]}: ${query.join(' - ')}`;
     }
     else if(category == 6){
         string = `${searchCategories[category-1]}`;
@@ -221,45 +221,30 @@ submit.addEventListener('click', function(event){
     }
     // handle team searches
     if(select.value == 4){
-        // hardware
-        // if(query.value.toLowerCase().startsWith('h')){
-        //     query.value = 1;
-        // }
-        // // software
-        // else if(query.value.toLowerCase().startsWith('s')){
-        //     query.value = 2;
-        // }
-        // // database
-        // else if(query.value.toLowerCase().startsWith('d')){
-        //     query.value = 3;
-        // }
-        // // project
-        // else if(query.value.toLowerCase().startsWith('p')){
-        //     query.value = 4;
-        // }
-        // // communication
-        // else if(query.value.toLowerCase().startsWith('c')){
-        //     query.value = 5;
-        // }
-        // // number codes already searched
-        // else if([1,2,3,4,5].includes(parseInt(query.value))){
-        //     query.value;
-        // }
-        // invalid team
-        query.value = teamSelect.value;
-        if(![1,2,3,4,5,6].includes(parseInt(query.value))){
+        var search = teamSelect.value;
+        if(![1,2,3,4,5,6].includes(parseInt(search))){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
             return;  
         }
     }
-    if(select.value == 7){
-        query.value = campusSelect.value;
-    }
-    // take away the red error background on query
-    if(select.value != 1 && select.value != 6){
+    if(select.value == 5){
+        var search = query.value.split(' - ');
         query.style['background-color'] = 'white';
     }
+    // campus search -- make it the query
+    if(select.value == 7){
+        var search = campusSelect.value;
+    }
+    // take away the red error background on submission
+    if(select.value == 2 || select.value == 3){
+        var search = query.value;
+        query.style['background-color'] = 'white';
+    }
+    if(select.value == 1 || select.value == 6){
+        var search = 'none';
+    }
+    console.log(search);
     // clear search results
     document.getElementById('search-results').innerHTML = '';
     // send our request
@@ -268,7 +253,7 @@ submit.addEventListener('click', function(event){
         context: document.body,
         data: {
             category: select.value,
-            query: query.value
+            query: search
         }
     })
     .done(function(rows){
@@ -279,7 +264,7 @@ submit.addEventListener('click', function(event){
         else{
             // rows is an array in order of returned rows
             // change header at top of page
-            updateHeader(select.value, query.value);
+            updateHeader(select.value, search);
             // no results found
             if(rows.length == 0){
                 var add = document.createElement('div');
