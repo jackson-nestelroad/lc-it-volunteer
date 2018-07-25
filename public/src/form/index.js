@@ -12,7 +12,8 @@ var startPicker = $('.only-time').datepicker({
     onlyTimepicker: true,
     position: 'top left',
     language: 'en',
-    timeFormat: 'hh:ii AA'
+    timeFormat: 'hh:ii AA',
+    startDate: new Date('1/1/2000 08:00')
 });
 
 // variable for if we are checking an email address
