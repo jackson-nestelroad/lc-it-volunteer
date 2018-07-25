@@ -113,7 +113,6 @@ body *:focus{
 
 .check.time input{
     z-index: 1;
-    position: absolute;
     height: 22px;
     width: 20px;
     opacity: 0;
@@ -124,7 +123,6 @@ body *:focus{
 }
 
 .checkmark{
-    position: absolute;
     height: 25px;
     width: 25px;
     border-radius: 50%;
@@ -135,10 +133,10 @@ body *:focus{
 }
 
 .check.time input:hover ~ .checkmark {
-    height: 23px;
-    width: 23px;
+    height: 25px;
+    width: 25px;
     border-radius: 50%;
-    border: 2px solid #0094bd;
+    border: 1px solid #0094bd;
 }
 
 .check.time input:checked ~ .checkmark {
@@ -147,10 +145,10 @@ body *:focus{
 }
 
 .check.time input:checked:hover ~ .checkmark {
-    height: 23px;
-    width: 23px;
+    height: 25px;
+    width: 25px;
     border-radius: 50%;
-    border: 2px solid #0094bd;
+    border: 1px solid #0094bd;
 }
 
 select{
