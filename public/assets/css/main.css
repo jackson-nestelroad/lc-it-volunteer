@@ -107,6 +107,10 @@ body *:focus{
     width: 40% !important;
 }
 
+.check.time.checkbox{
+    display: grid;
+}
+
 .check.time input{
     z-index: 1;
     position: absolute;
@@ -114,6 +118,9 @@ body *:focus{
     width: 20px;
     opacity: 0;
     cursor: pointer;
+    margin: 0 auto;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
 }
 
 .checkmark{
@@ -122,6 +129,9 @@ body *:focus{
     width: 25px;
     border-radius: 50%;
     border: 1px solid #dad8d6;
+    margin: 0 auto;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
 }
 
 .check.time input:hover ~ .checkmark {
