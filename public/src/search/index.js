@@ -318,7 +318,7 @@ submit.addEventListener('click', function(event){
                             <td class="center">
                                 <i>Weekly Hours</i>
                                 <br>
-                                <span></span>
+                                <span>100</span>
                             <td class="center no-mobile">
                                 <i>Hours</i>
                                 <br>

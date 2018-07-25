@@ -394,7 +394,7 @@ hr{
 
 .result td.center{
     text-align: center;
-    width: 20%;
+    width: 15%;
 }
 
 .result td i{
@@ -405,7 +405,7 @@ hr{
     cursor: pointer;
     text-decoration: underline;
     text-decoration-color: rgba(0,0,0,0.3);
-    width: 45%;
+    width: 35%;
 }
 
 #volunteerInfo p.title{
