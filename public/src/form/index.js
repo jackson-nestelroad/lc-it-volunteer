@@ -1,12 +1,12 @@
 // date and time picker initializations
-// var datePicker = $('.datepicker-here').datepicker({
-//     position: 'top left',
-//     language: 'en',
-//     minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
-//     maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
-// })
+var datePicker = $('.datepicker-here').datepicker({
+    position: 'top left',
+    language: 'en',
+    minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
+    maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
+})
 
-var startPicker = $('.only-time').datepicker({
+var startPicker = $('.only-time-start').datepicker({
     dateFormat: ' ',
     timepicker: true,
     onlyTimepicker: true,
@@ -15,6 +15,19 @@ var startPicker = $('.only-time').datepicker({
     timeFormat: 'hh:ii AA',
     startDate: new Date('1/1/2000 08:00')
 });
+
+var endPicker = $('.only-time-end').datepicker({
+    dateFormat: ' ',
+    timepicker: true,
+    onlyTimepicker: true,
+    position: 'top left',
+    language: 'en',
+    timeFormat: 'hh:ii AA',
+    startDate: new Date('1/1/2000 09:00')
+});
+
+startPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
+endPicker.data('datepicker').selectDate(new Date('1/1/2000 09:00'));
 
 // variable for if we are checking an email address
 var emailOn = false;
@@ -140,14 +153,14 @@ function checkDate(date){
 function getHours(){
     // start and end time given
     if(check.checked){
-        var start = document.getElementById('start-input').value;
-        var end = document.getElementById('end-input').value;
-        if(start == '' || end == ''){
+        var startTime = document.getElementById('start-input').value;
+        var endTime = document.getElementById('end-input').value;
+        if(startTime == '' || endTime == ''){
             return false;
         }
-        start = new Date('1/1/2000 ' + start);
-        end = new Date('1/1/2000 ' + end);
-        var diff = end - start;
+        startTime = new Date('1/1/2000 ' + startTime);
+        endTime = new Date('1/1/2000 ' + endTime);
+        var diff = endTime - startTime;
         diff = diff/60000/60;
         // negative or zero hours
         if(diff <= 0){
@@ -159,7 +172,7 @@ function getHours(){
             return Math.ceil(diff);
         }
         // more than one hour
-        if(diff > 1){
+        if(diff >= 1){
             return Math.round(diff);
         }
         // more than 24 hours
@@ -188,7 +201,6 @@ submit.addEventListener('click', function(event){
     // check some of the values logically
     var datePossible = checkDate(date);
     var hours = getHours();
-    console.log(hours);
     // make sure the number of hours is positive and less than 24
     // make sure they didn't enter a fake team
     team = ([1,2,3,4,5,6,7].includes(parseInt(team))) ? team : false;
