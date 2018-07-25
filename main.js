@@ -196,6 +196,7 @@ app.route('/search')
         }
         // search by date
         if(category == 5){
+            query = JSON.parse(query);
             // one date
             if(query.length == 1){
                 query = query[0];
