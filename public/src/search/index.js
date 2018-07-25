@@ -338,7 +338,7 @@ submit.addEventListener('click', function(event){
                                 <span>${team}</span>
                             </td>
                             <td class="center">
-                                <i>Last Active</i>
+                                <i>Last</i>
                                 <br>
                                 <span>${active}</span>
                             </td>
