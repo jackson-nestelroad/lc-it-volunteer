@@ -417,7 +417,7 @@ hr{
 }
 
 result td.no-mobile{
-    display: none;
+    display: none !important;
 }
 
 #volunteerInfo p.title{
