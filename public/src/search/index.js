@@ -201,7 +201,11 @@ function updateHeader(category, query){
         string = `${searchCategories[category-1]}: ${teams[query-1]}`;
     }
     else if(category == 5 || category == 7){
-        string = `${searchCategories[category-1]}: ${query.join(' - ')}`;
+        if(category == 5){
+            query = JSON.parse(query);
+            query = query.join(' - ');
+        }
+        string = `${searchCategories[category-1]}: ${query}`;
     }
     else if(category == 6){
         string = `${searchCategories[category-1]}`;
