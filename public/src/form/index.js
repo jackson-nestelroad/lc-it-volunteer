@@ -1,10 +1,10 @@
 // date and time picker initializations
-var datePicker = $('.datepicker-here').datepicker({
-    position: 'top left',
-    language: 'en',
-    minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
-    maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
-})
+// var datePicker = $('.datepicker-here').datepicker({
+//     position: 'top left',
+//     language: 'en',
+//     minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
+//     maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
+// })
 
 var startPicker = $('.only-time').datepicker({
     dateFormat: ' ',
