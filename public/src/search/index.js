@@ -315,6 +315,10 @@ submit.addEventListener('click', function(event){
                         <tr>
                             <td class="small">#${id}</td>
                             <td class="clickForInfo">${name}</td>
+                            <td class="center no-mobile">
+                                <i>Weekly Hours</i>
+                                <br>
+                                <span></span>
                             <td class="center">
                                 <i>Hours</i>
                                 <br>
