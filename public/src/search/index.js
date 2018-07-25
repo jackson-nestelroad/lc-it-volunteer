@@ -21,7 +21,8 @@ const searchCategories = [
     'Team',
     'Date',
     'Inactivity List',
-    'Campus'
+    'Campus',
+    'All Volunteers'
 ]
 // teams to search for
 const teams = [
@@ -103,7 +104,7 @@ function resetQuery(){
 }
 // retain old search information in URL paramters
 function updateQuery(id){
-    if(id == 1 || id == 6){
+    if(id == 1 || id == 6 || id == 8){
         query.setAttribute('readonly', true);
         query.style['background-color'] = 'rgba(0,0,0,0.075)';
         setTimeout(destroyDate, 10);
@@ -208,7 +209,7 @@ function updateHeader(category, query){
         }
         string = `${searchCategories[category-1]}: ${query}`;
     }
-    else if(category == 6){
+    else if(category == 6 || category == 8){
         string = `${searchCategories[category-1]}`;
     }
     document.getElementsByClassName('search-header')[0].innerHTML = string;
@@ -252,8 +253,8 @@ submit.addEventListener('click', function(event){
         query.style['background-color'] = 'white';
     }
     // no query needed -- use none for logging purposes
-    if(select.value == 1 || select.value == 6){
-        var search = 'none';
+    if(select.value == 1 || select.value == 6 || select.value == 8){
+        var search = searchCategories[select.value-1];
     }
     console.log(search);
     // clear search results

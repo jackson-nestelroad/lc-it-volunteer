@@ -851,6 +851,75 @@ exports.getInactive = function(){
     })
 }
 
+// gets all all volunteers
+exports.getAll = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            var week = getWeek();
+            client.query(`
+                WITH query AS
+                        (SELECT vol_id
+                        FROM volunteers),
+                    week AS
+                        (SELECT vol_id, SUM(hours) hours
+                        FROM logs
+                        WHERE date BETWEEN '${week[0]}' AND '${week[1]}'
+                        GROUP BY vol_id),
+                    sub AS
+                        (SELECT volunteers.vol_id, 
+                        SUM(logs.hours) total,
+                        mode() within group (order by team_id) favorite,
+                        MAX(date) last_active
+                        FROM volunteers
+                        LEFT JOIN logs ON logs.vol_id = volunteers.vol_id
+                        GROUP BY volunteers.vol_id),
+                    sub2 AS
+                        (SELECT volunteers.vol_id,
+                        volunteers.first_name,
+                        volunteers.last_name,
+                        volunteers.campus,
+                        volunteers.team preferred,
+                        sub.favorite,
+                        sub.last_active,
+                        sub.total,
+                        week.hours
+                        FROM volunteers
+                        LEFT JOIN sub ON sub.vol_id = volunteers.vol_id
+                        LEFT JOIN week on week.vol_id = volunteers.vol_id)
+                SELECT vol_id,
+                first_name,
+                last_name,
+                campus,
+                last_active,
+                total,
+                hours week,
+                team1.name preferred,
+                team2.name favorite
+                FROM sub2
+                LEFT JOIN teams AS team1 ON team1.team_id = sub2.preferred
+                LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
+                WHERE vol_id IN
+                    (SELECT vol_id FROM query)
+                ORDER BY preferred ASC NULLS LAST, week DESC, total DESC, first_name ASC, last_name ASC;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
 // gets info by ID number
 exports.getByID = function(id){
     return new Promise((resolve, reject) => {

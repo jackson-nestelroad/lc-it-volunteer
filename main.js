@@ -246,6 +246,16 @@ app.route('/search')
                 res.send('error');
             })
         }
+        if(category == 8){
+            database.getAll(query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
     })
 // /display is the display for TV
 app.route('/display')
