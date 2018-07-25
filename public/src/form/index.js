@@ -51,7 +51,7 @@ const emailSubmit = document.getElementById('emailBtn');
 const select = document.getElementById('team-input');
 
 const check = document.getElementById('time-check');
-const hours = document.getElementsByClassName('input hours')[1];
+const hoursInput = document.getElementsByClassName('input hours')[1];
 const start = document.getElementsByClassName('input start time')[0];
 const end = document.getElementsByClassName('input end time')[0];
 
@@ -62,12 +62,12 @@ const end = document.getElementsByClassName('input end time')[0];
 // detect checkbox changes and add or remove fields
 check.addEventListener('change', function(event){
     if(check.checked){
-        hours.style['display'] = 'none';
+        hoursInput.style['display'] = 'none';
         start.style['display'] = 'block';
         end.style['display'] = 'block';
     }
     else{
-        hours.style['display'] = 'block';
+        hoursInput.style['display'] = 'block';
         start.style['display'] = 'none';
         end.style['display'] = 'none';
         // setTimeout(destroyDate, 10);
@@ -202,17 +202,13 @@ function getHours(){
 
 // form tries to submit
 submit.addEventListener('click', function(event){
-    console.log('click!');
     // get the values
     var name = document.getElementById('name-input').value.trim();
     var team = document.getElementById('team-input').value;
     var date = document.getElementById('date-input').value;
-    console.log('values read');
     // check some of the values logically
     var datePossible = checkDate(date);
-    console.log(datePossible);
     var hours = getHours();
-    console.log(hours);
     // make sure the number of hours is positive and less than 24
     // make sure they didn't enter a fake team
     team = ([1,2,3,4,5,6,7].includes(parseInt(team))) ? team : false;
@@ -224,7 +220,6 @@ submit.addEventListener('click', function(event){
         'start': hours,
         'end': hours
     }
-    console.log(values);
     // info not given correctly, tell them why
     if(name == '' || !datePossible || team == '' || !team || !hours){
         displayError();
@@ -243,7 +238,6 @@ submit.addEventListener('click', function(event){
         // disable form submission multiple times
         enter = false;
         // send a POST request
-        console.log('gonna submit');
         $.ajax({
             method: 'POST',
             context: document.body,
