@@ -234,6 +234,7 @@ submit.addEventListener('click', function(event){
     // handle date searches -- array so we can use range of dates
     if(select.value == 5){
         var search = query.value.split(' - ');
+        search = JSON.stringify(search);
         query.style['background-color'] = 'white';
     }
     // campus search -- make it the query
