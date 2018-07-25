@@ -221,7 +221,7 @@ function updateHeader(category, query){
 submit.addEventListener('click', function(event){
     enter = false;
     // check if there is a query if we need one
-    if(select.value != 1 && select.value != 6 && select.value != 7 && select.value != 4){
+    if(select.value != 1 && select.value != 6 && select.value != 7 && select.value != 4 && select.value != 8){
         if(query.value == ''){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
