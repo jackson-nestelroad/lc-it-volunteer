@@ -156,7 +156,7 @@ window.onload = function(){
                         datasets: [
                             {
                                 label: 'Hours',
-                                backgroundColor: ['#ff9393', '#f7be8f', '#f2e27b', '#81db7d', '#88d0e8', '#88a0f7', '#e096f7'],
+                                backgroundColor: ['#ff9393', '#fcb77e', '#f2e27b', '#81db7d', '#88d0e8', '#88a0f7', '#e096f7'],
                                 data: data
                             }
                         ]
