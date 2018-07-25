@@ -194,8 +194,8 @@ function getHours(){
             return false;
         }
         var num = parseInt(document.getElementById('hours-input').value);
-        num = (hours > 0) ? hours : false;
-        num = (hours > 24) ? false : hours;
+        num = (num > 0) ? num : false;
+        num = (num > 24) ? false : num;
         return num;
     }
 }
