@@ -292,14 +292,16 @@ submit.addEventListener('click', function(event){
             rows.forEach(element => {
                 var id = element.vol_id;
                 var name = element.first_name + ' ' + element.last_name;
-                var hours = element.hours;
-                var team = element.team;
+                var week = element.week;
+                var total = element.total;
+                var team = element.favorite;
 
                 var date = new Date(element.last_active);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
                 var active = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
-
-                hours = hours == null ? 0 : hours;
+                
+                week = week == null ? 0 : week;
+                total = total == null ? 0 : total;
                 team = team == null ? element.preferred : team;
 
                 var add = document.createElement('div');
@@ -319,11 +321,11 @@ submit.addEventListener('click', function(event){
                             <td class="center">
                                 <i>Week</i>
                                 <br>
-                                <span>100</span>
+                                <span>${week}</span>
                             <td class="center no-mobile">
                                 <i>Total</i>
                                 <br>
-                                <span>${hours}</span>
+                                <span>${total}</span>
                             </td>
                             <td class="center">
                                 <i>Team</i>
