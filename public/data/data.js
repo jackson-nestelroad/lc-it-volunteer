@@ -581,7 +581,7 @@ exports.searchByDates = function(dates){
                             (SELECT volunteers.vol_id, first_name, last_name
                             FROM volunteers
                             WHERE volunteers.vol_id IN
-                                (SELECT volunteers.vol_id, SUM(hours) hours
+                                (SELECT volunteers.vol_id
                                 FROM volunteers
                                 JOIN logs
                                 ON logs.vol_id = volunteers.vol_id
@@ -594,7 +594,7 @@ exports.searchByDates = function(dates){
                         (SELECT h.vol_id, teams.name team
                         FROM teams
                         JOIN 
-                            (SELECT volunteers.vol_id, SUM(hours) hours
+                            (SELECT volunteers.vol_id, mode() within group (order by team_id) team
                             FROM volunteers
                             JOIN logs
                             ON logs.vol_id = volunteers.vol_id
@@ -610,7 +610,7 @@ exports.searchByDates = function(dates){
                     JOIN logs
                     ON volunteers.vol_id = logs.vol_id
                     WHERE volunteers.vol_id IN
-                        (SELECT volunteers.vol_id, SUM(hours) hours
+                        (SELECT volunteers.vol_id
                         FROM volunteers
                         JOIN logs
                         ON logs.vol_id = volunteers.vol_id
