@@ -106,7 +106,7 @@ function updateQuery(id){
         campusSearch.className = 'mobile-query invisible';
         normalSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
-        query = '';
+        query.value = '';
     }
     else if(id == 4){
         campusSearch.className = 'mobile-query invisible';
