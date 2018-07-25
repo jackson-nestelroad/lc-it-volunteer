@@ -81,7 +81,7 @@ function validate(type, string){
             }
         }
         if(type == 'team'){
-            if([1,2,3,4,5,6].includes(parseInt(string))){
+            if([1,2,3,4,5,6,7].includes(parseInt(string))){
                 return string;
             }
             else{

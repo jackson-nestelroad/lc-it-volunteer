@@ -191,7 +191,7 @@ submit.addEventListener('click', function(event){
     console.log(hours);
     // make sure the number of hours is positive and less than 24
     // make sure they didn't enter a fake team
-    team = ([1,2,3,4,5,6].includes(parseInt(team))) ? team : false;
+    team = ([1,2,3,4,5,6,7].includes(parseInt(team))) ? team : false;
     var values = {
         'name': name,
         'team': team,

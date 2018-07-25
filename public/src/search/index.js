@@ -29,8 +29,9 @@ const teams = [
     'Software',
     'Database',
     'Project',
-    'Communication',
-    'Development'
+    'Admin',
+    'Develop',
+    'Social'
 ]
 // can we press enter to submit search?
 var enter = true;
@@ -229,7 +230,7 @@ submit.addEventListener('click', function(event){
     // handle team searches
     if(select.value == 4){
         var search = teamSelect.value;
-        if(![1,2,3,4,5,6].includes(parseInt(search))){
+        if(![1,2,3,4,5,6,7].includes(parseInt(search))){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
             return;  
@@ -316,11 +317,11 @@ submit.addEventListener('click', function(event){
                             <td class="small">#${id}</td>
                             <td class="clickForInfo">${name}</td>
                             <td class="center">
-                                <i>Weekly Hours</i>
+                                <i>Week</i>
                                 <br>
                                 <span>100</span>
                             <td class="center no-mobile">
-                                <i>Hours</i>
+                                <i>Total</i>
                                 <br>
                                 <span>${hours}</span>
                             </td>
