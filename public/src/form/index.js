@@ -1,9 +1,9 @@
 // date picker initialization
 var datePicker = $('.datepicker-here').datepicker({
     position: 'top left',
-    language: 'en',
-    minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
-    maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
+    language: 'en'//,
+    // minDate: new Date(`${(new Date()).getMonth()+1}/1/${(new Date()).getFullYear()-1}`),
+    // maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
 })
 
 // variable for if we are checking an email address
