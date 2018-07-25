@@ -6,6 +6,31 @@ var datePicker = $('.datepicker-here').datepicker({
     maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
 })
 
+datePicker.data('datepicker').selectDate(new Date());
+
+var startPicker = $('.only-time-start').datepicker({
+    dateFormat: ' ',
+    timepicker: true,
+    onlyTimepicker: true,
+    position: 'top left',
+    language: 'en',
+    timeFormat: 'hh:ii AA',
+    startDate: new Date('1/1/2000 08:00')
+});
+
+var endPicker = $('.only-time-end').datepicker({
+    dateFormat: ' ',
+    timepicker: true,
+    onlyTimepicker: true,
+    position: 'top left',
+    language: 'en',
+    timeFormat: 'hh:ii AA',
+    startDate: new Date('1/1/2000 09:00')
+});
+
+startPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
+endPicker.data('datepicker').selectDate(new Date('1/1/2000 09:00'));
+
 // variable for if we are checking an email address
 var emailOn = false;
 // variable for allowing enter to be used to submit form
@@ -30,39 +55,16 @@ const hours = document.getElementsByClassName('input hours')[1];
 const start = document.getElementsByClassName('input start time')[0];
 const end = document.getElementsByClassName('input end time')[0];
 
-function destroyDate(){
-    $('.only-time-start').datepicker().data('datepicker').destroy();
-    $('.only-time-end').datepicker().data('datepicker').destroy();
-}
+// function destroyDate(){
+//     $('.only-time-start').datepicker().data('datepicker').destroy();
+//     $('.only-time-end').datepicker().data('datepicker').destroy();
+// }
 // detect checkbox changes and add or remove fields
 check.addEventListener('change', function(event){
     if(check.checked){
         hours.style['display'] = 'none';
         start.style['display'] = 'block';
         end.style['display'] = 'block';
-
-        // var startPicker = $('.only-time-start').datepicker({
-        //     dateFormat: ' ',
-        //     timepicker: true,
-        //     onlyTimepicker: true,
-        //     position: 'top left',
-        //     language: 'en',
-        //     timeFormat: 'hh:ii AA',
-        //     startDate: new Date('1/1/2000 08:00')
-        // });
-        
-        // var endPicker = $('.only-time-end').datepicker({
-        //     dateFormat: ' ',
-        //     timepicker: true,
-        //     onlyTimepicker: true,
-        //     position: 'top left',
-        //     language: 'en',
-        //     timeFormat: 'hh:ii AA',
-        //     startDate: new Date('1/1/2000 09:00')
-        // });
-        
-        // startPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
-        // endPicker.data('datepicker').selectDate(new Date('1/1/2000 09:00'));
     }
     else{
         hours.style['display'] = 'block';
