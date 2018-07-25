@@ -560,7 +560,7 @@ exports.searchByDate = function(date){
 }
 
 // searches by range of dates
-exports.searchByDate = function(dates){
+exports.searchByDates = function(dates){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
