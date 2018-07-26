@@ -945,7 +945,7 @@ exports.getByID = function(id){
                     JOIN teams ON teams.team_id = logs.team_id
                     WHERE vol_id = 1
                     ORDER BY date DESC
-                    LIMIT 10)
+                    LIMIT 5)
                 SELECT
                 volunteers.vol_id,
                 first_name,

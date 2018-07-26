@@ -414,7 +414,10 @@ document.getElementById('search-results').onclick = function(element){
                 rows.forEach(row => {
                     var add = document.createElement('p');
                     add.className = 'log';
-                    add.innerHTML = `${row.date} – ${row.hours} hours with ${row.team}`;
+                    var date = new Date(row.last_active);
+                    date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                    date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+                    add.innerHTML = `${date} – ${row.hours} hours with ${row.team}`;
                     logs.appendChild(add);
                 });
                 // display modal with information
