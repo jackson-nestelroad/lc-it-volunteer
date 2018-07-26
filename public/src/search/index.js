@@ -34,6 +34,15 @@ const teams = [
     'Develop',
     'Social'
 ]
+// order options
+const orders = [
+    'name',
+    'campus',
+    'week',
+    'total',
+    'team',
+    'last'
+]
 // can we press enter to submit search?
 var enter = true;
 // button constants for events
@@ -214,6 +223,17 @@ function updateHeader(category, query){
     }
     document.getElementsByClassName('search-header')[0].innerHTML = string;
 }
+// check which order radio button is selected
+function getOrder(){
+    // default to name just in case
+    var checked = 'name';
+    for(var k = 0; k < orders.length; k++){
+        if(document.getElementById(`${orders[k]}-radio`).checked){
+            checked = orders[k];
+        }
+    }
+    return checked;
+}
 // search submitted -- POST request
 // this sounds backwards, but we are not an API, we are an interactive search page
 // POST requests will allow us to update the search page AFTER the request is completed
@@ -257,6 +277,7 @@ submit.addEventListener('click', function(event){
         var search = searchCategories[select.value-1];
     }
     console.log(search);
+    var order = getOrder();
     // clear search results
     document.getElementById('search-results').innerHTML = '';
     // send our request
@@ -265,7 +286,8 @@ submit.addEventListener('click', function(event){
         context: document.body,
         data: {
             category: select.value,
-            query: search
+            query: search,
+            order: order
         }
     })
     .done(function(rows){

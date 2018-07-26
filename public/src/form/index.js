@@ -25,11 +25,11 @@ var endPicker = $('.only-time-end').datepicker({
     position: 'top left',
     language: 'en',
     timeFormat: 'hh:ii AA',
-    startDate: new Date('1/1/2000 09:00')
+    startDate: new Date('1/1/2000 08:00')
 });
 
 startPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
-endPicker.data('datepicker').selectDate(new Date('1/1/2000 09:00'));
+endPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
 
 // variable for if we are checking an email address
 var emailOn = false;
