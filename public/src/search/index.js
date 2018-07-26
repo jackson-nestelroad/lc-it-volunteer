@@ -399,7 +399,7 @@ document.getElementById('search-results').onclick = function(element){
             }
             else{
                 var name = rows[0].first_name + ' ' + rows[0].last_name;
-                var team = rows[0].team;
+                var team = rows[0].preferred;
                 var email = rows[0].email;
                 var phone = rows[0].phone;
                 var campus = rows[0].campus;
@@ -408,7 +408,15 @@ document.getElementById('search-results').onclick = function(element){
                 document.getElementById('team').innerHTML = team;
                 document.getElementById('email').innerHTML = email;
                 document.getElementById('phone').innerHTML = phone;
-                document.getElementById('campus').innerHTML = campus;
+                document.getElementById('campus').innerHTML = campus;        
+                var logs = document.getElementById('logs');
+                logs.innerHTML = '';
+                rows.forEach(row => {
+                    var add = document.createElement('p');
+                    add.className = 'log';
+                    add.innerHTML = `${row.date} – ${row.hours} hours with ${row.team}`;
+                    logs.appendChild(add);
+                });
                 // display modal with information
                 document.getElementById('volunteerInfo').style['display'] = 'block';
             }

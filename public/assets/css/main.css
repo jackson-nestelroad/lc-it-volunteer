@@ -521,12 +521,16 @@ hr{
 
 #volunteerInfo p.title{
     font-weight: 700;
-    font-size: 24pt;
+    font-size: 18pt;
     margin: 0px auto 5px auto;
 }
 
 #volunteerInfo p.info{
-    font-size: 14pt;
+    font-size: 12pt;
+}
+
+#volunteerInfo p.log{
+    font-size: 10pt;
 }
 
 #volunteerInfo p.info.campus{

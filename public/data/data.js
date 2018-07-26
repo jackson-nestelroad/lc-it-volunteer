@@ -935,11 +935,32 @@ exports.getByID = function(id){
         pool.connect()
         .then(client => {
             client.query(`
-                SELECT volunteers.vol_id, first_name, last_name, phone, email, name team, campus
+                WITH history AS
+                    (SELECT
+                    date,
+                    vol_id,
+                    name team,
+                    hours
+                    FROM logs
+                    JOIN teams ON teams.team_id = logs.team_id
+                    WHERE vol_id = 1
+                    ORDER BY date DESC
+                    LIMIT 10)
+                SELECT
+                volunteers.vol_id,
+                first_name,
+                last_name, 
+                phone, 
+                email, 
+                campus,
+                name preferred,
+                date,
+                history.team team,
+                hours
                 FROM volunteers
-                JOIN teams
-                ON team = teams.team_id
-                WHERE vol_id = ${id};
+                JOIN history ON history.vol_id = volunteers.vol_id
+                JOIN teams ON teams.team_id = volunteers.team
+                ORDER BY date DESC;
             `)
             .then(res => {
                 resolve(res.rows);
@@ -1038,6 +1059,36 @@ exports.getPieData = function(id){
                     GROUP BY team_id
                     ORDER BY team_id) a
                 ON a.team_id = teams.team_id;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
+// gets a volunteer's history by ID
+exports.getHistory = function(id){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT date, name team, hours 
+                FROM logs
+                JOIN teams ON teams.team_id = logs.team_id
+                WHERE vol_id = ${id}
+                ORDER BY date DESC
+                LIMIT 10;
             `)
             .then(res => {
                 resolve(res.rows);
