@@ -943,7 +943,7 @@ exports.getByID = function(id){
                     hours
                     FROM logs
                     JOIN teams ON teams.team_id = logs.team_id
-                    WHERE vol_id = 1
+                    WHERE vol_id = ${id}
                     ORDER BY date DESC
                     LIMIT 5)
                 SELECT
@@ -960,6 +960,7 @@ exports.getByID = function(id){
                 FROM volunteers
                 LEFT JOIN history ON history.vol_id = volunteers.vol_id
                 LEFT JOIN teams ON teams.team_id = volunteers.team
+                WHERE volunteers.vol_id = ${id}
                 ORDER BY date DESC;
             `)
             .then(res => {

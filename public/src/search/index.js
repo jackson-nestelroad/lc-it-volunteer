@@ -411,15 +411,36 @@ document.getElementById('search-results').onclick = function(element){
                 document.getElementById('campus').innerHTML = campus;        
                 var logs = document.getElementById('logs');
                 logs.innerHTML = '';
-                rows.forEach(row => {
-                    var add = document.createElement('p');
-                    add.className = 'log';
-                    var date = new Date(row.date);
-                    date = new Date(date.setTime(date.getTime() + 1 * 86400000));
-                    date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
-                    add.innerHTML = `${date} – ${row.hours} hours with ${row.team}`;
-                    logs.appendChild(add);
-                });
+                if(rows.length == 1){
+                    if(rows.date == null){
+                        var add = document.createElement('p');
+                        add.className = 'log';
+                        add.innerHTML = `Never volunteered!`;
+                        logs.appendChild(add);  
+                    }
+                    else{
+                        rows.forEach(row => {
+                            var add = document.createElement('p');
+                            add.className = 'log';
+                            var date = new Date(row.date);
+                            date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                            date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+                            add.innerHTML = `${date} – ${row.hours} hours with ${row.team}`;
+                            logs.appendChild(add);
+                        });
+                    }
+                }
+                else{
+                    rows.forEach(row => {
+                        var add = document.createElement('p');
+                        add.className = 'log';
+                        var date = new Date(row.date);
+                        date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                        date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+                        add.innerHTML = `${date} – ${row.hours} hours with ${row.team}`;
+                        logs.appendChild(add);
+                    });
+                }
                 // display modal with information
                 document.getElementById('volunteerInfo').style['display'] = 'block';
             }
