@@ -141,6 +141,7 @@ Updated Roadmap
         
     TO DO:
         Make Order By radio boxes on search page.
+            Name, Campus, Week, Total, Team, Last 
         Make History popup on search page.
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
