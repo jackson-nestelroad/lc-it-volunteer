@@ -481,6 +481,11 @@ document.getElementById('search-results').onclick = function(element){
                             display: false,
                             position: 'top',
                             onclick: null
+                        },
+                        scales:{
+                            xAxes: [{
+                                display: false
+                            }]
                         }
                     }
                 })
