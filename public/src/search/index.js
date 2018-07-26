@@ -473,6 +473,7 @@ document.getElementById('search-results').onclick = function(element){
                         ]
                     },
                     options: {
+                        maintainAspectRatio: false,
                         title: {
                             display: false
                         },
