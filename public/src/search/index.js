@@ -412,7 +412,7 @@ document.getElementById('search-results').onclick = function(element){
                 var logs = document.getElementById('logs');
                 logs.innerHTML = '';
                 if(rows.length == 1){
-                    if(rows.date == null){
+                    if(rows[0].date == null){
                         var add = document.createElement('p');
                         add.className = 'log';
                         add.innerHTML = `Never volunteered!`;
