@@ -421,7 +421,7 @@ exports.searchByTeam = function(team){
                 campus,
                 last_active,
                 total,
-                hours,
+                hours week,
                 team1.name preferred,
                 team2.name favorite
                 FROM sub2
