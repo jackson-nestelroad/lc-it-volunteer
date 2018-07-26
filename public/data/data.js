@@ -233,8 +233,17 @@ function getWeek(){
     return week;
 }
 
+const orders = [
+    'first_name, last_name',
+    'campus',
+    'week DESC',
+    'total DESC',
+    'preferred',
+    'last_active DESC NULLS LAST'
+]
+
 // searches by first name
-exports.searchByFirstName = function(search){
+exports.searchByFirstName = function(search, order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -284,7 +293,7 @@ exports.searchByFirstName = function(search){
                 LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY first_name, last_name;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -304,7 +313,7 @@ exports.searchByFirstName = function(search){
 }
 
 // searches by last name
-exports.searchByLastName = function(search){
+exports.searchByLastName = function(search, order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -354,7 +363,7 @@ exports.searchByLastName = function(search){
                 LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY last_name, first_name;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -374,7 +383,7 @@ exports.searchByLastName = function(search){
 }
 
 // searches by most active OR preferred team
-exports.searchByTeam = function(team){
+exports.searchByTeam = function(team, order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -429,7 +438,7 @@ exports.searchByTeam = function(team){
                 LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY first_name, last_name;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -449,7 +458,7 @@ exports.searchByTeam = function(team){
 }
 
 // searches by date
-exports.searchByDate = function(date){
+exports.searchByDate = function(date, order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -512,7 +521,7 @@ exports.searchByDate = function(date){
                 LEFT JOIN teams ON teams.team_id = sub3.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY favorite, first_name;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -532,7 +541,7 @@ exports.searchByDate = function(date){
 }
 
 // searches by range of dates
-exports.searchByDates = function(dates){
+exports.searchByDates = function(dates, order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -595,7 +604,7 @@ exports.searchByDates = function(dates){
                 LEFT JOIN teams ON teams.team_id = sub3.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY favorite, first_name;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -615,7 +624,7 @@ exports.searchByDates = function(dates){
 }
 
 // searches by campus
-exports.searchByCampus = function(campus){
+exports.searchByCampus = function(campus, order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -665,7 +674,7 @@ exports.searchByCampus = function(campus){
                 LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY preferred, first_name;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -772,7 +781,7 @@ exports.leaderboard = function(){
 }
 
 // gets all inactive volunteers
-exports.getInactive = function(){
+exports.getInactive = function(order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -832,7 +841,7 @@ exports.getInactive = function(){
                 LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY last_active;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);
@@ -852,7 +861,7 @@ exports.getInactive = function(){
 }
 
 // gets all all volunteers
-exports.getAll = function(){
+exports.getAll = function(order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
@@ -901,7 +910,7 @@ exports.getAll = function(){
                 LEFT JOIN teams AS team2 ON team2.team_id = sub2.favorite
                 WHERE vol_id IN
                     (SELECT vol_id FROM query)
-                ORDER BY preferred ASC NULLS LAST, week DESC, total DESC, first_name ASC, last_name ASC;
+                ORDER BY ${orders[order]};
             `)
             .then(res => {
                 resolve(res.rows);

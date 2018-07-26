@@ -226,10 +226,10 @@ function updateHeader(category, query){
 // check which order radio button is selected
 function getOrder(){
     // default to name just in case
-    var checked = 'name';
+    var checked = 0;
     for(var k = 0; k < orders.length; k++){
         if(document.getElementById(`${orders[k]}-radio`).checked){
-            checked = orders[k];
+            checked = k;
         }
     }
     return checked;

@@ -128,6 +128,7 @@ app.route('/search')
     .post(function(req, res){
         var category = req.body.category;
         var query = req.body.query;
+        var order = req.body.order;
         // return initial campus data
         if(req.body.category == -1){
             campusDatabase.get()
@@ -163,7 +164,7 @@ app.route('/search')
         }
         // search by first name
         if(category == 2){
-            database.searchByFirstName(query.toLowerCase())
+            database.searchByFirstName(query.toLowerCase(), order)
             .then(rows => {
                 res.send(rows);
             })
@@ -174,7 +175,7 @@ app.route('/search')
         }
         // search by last name
         if(category == 3){
-            database.searchByLastName(query.toLowerCase())
+            database.searchByLastName(query.toLowerCase(), order)
             .then(rows => {
                 res.send(rows);
             })
@@ -185,7 +186,7 @@ app.route('/search')
         }
         // search by favorite/preferred team
         if(category == 4){
-            database.searchByTeam(query.toLowerCase())
+            database.searchByTeam(query.toLowerCase(), order)
             .then(rows => {
                 res.send(rows);
             })
@@ -199,7 +200,7 @@ app.route('/search')
             query = JSON.parse(query);
             // one date
             if(query.length == 1){
-                database.searchByDate(query[0])
+                database.searchByDate(query[0], order)
                 .then(rows => {
                     res.send(rows);
                 })
@@ -210,7 +211,7 @@ app.route('/search')
             }
             // range of dates
             else if(query.length == 2){
-                database.searchByDates(query)
+                database.searchByDates(query, order)
                 .then(rows => {
                     res.send(rows);
                 })
@@ -226,7 +227,7 @@ app.route('/search')
         }
         // inactivity list, no query
         if(category == 6){
-            database.getInactive()
+            database.getInactive(order)
             .then(rows => {
                 res.send(rows);
             })
@@ -237,7 +238,7 @@ app.route('/search')
         }
         // search by campus
         if(category == 7){
-            database.searchByCampus(query)
+            database.searchByCampus(query, order)
             .then(rows => {
                 res.send(rows);
             })
@@ -247,7 +248,7 @@ app.route('/search')
             })
         }
         if(category == 8){
-            database.getAll(query)
+            database.getAll(order)
             .then(rows => {
                 res.send(rows);
             })
