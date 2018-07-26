@@ -392,12 +392,17 @@ document.getElementById('search-results').onclick = function(element){
                 query: id
             }
         })
-        .done(function(rows){
-            if(rows == 'error'){
+        .done(function(object){
+            if(object == 'error'){
                 // this string is sent if something bad happened
                 document.getElementById('httpsqlerror').style['display'] = 'block';
             }
             else{
+                // rows is the info in the modal
+                var rows = object.info;
+                // dist is for the bar graph only
+                var dist = object.dist;
+                // now format the data
                 var name = rows[0].first_name + ' ' + rows[0].last_name;
                 var team = rows[0].preferred;
                 var email = rows[0].email;
@@ -441,6 +446,42 @@ document.getElementById('search-results').onclick = function(element){
                         logs.appendChild(add);
                     });
                 }
+                // draw graph with var dist ([]) as data
+                var labels = [];
+                var data = [];
+                dist.forEach(row => {
+                    labels.push(row.team);
+                    if(row.frequency == null){
+                        data.push(0);
+                    }
+                    else{
+                        data.push(row.frequency);
+                    }
+                })
+                var ctx = document.getElementById('bar').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Hours',
+                                backgroundColor: ['#ff9393', '#fcb77e', '#f2e27b', '#81db7d', '#88d0e8', '#88a0f7', '#e096f7'],
+                                data: data
+                            }
+                        ]
+                    },
+                    options: {
+                        title: {
+                            display: false
+                        },
+                        legend: {
+                            display: false,
+                            position: 'top',
+                            onclick: null
+                        }
+                    }
+                })
                 // display modal with information
                 document.getElementById('volunteerInfo').style['display'] = 'block';
             }

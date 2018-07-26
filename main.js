@@ -141,10 +141,11 @@ app.route('/search')
             });
         }
         // popup with email and phone number
+        // WILL return an object with TWO sets of rows!!
         if(category == 0){
             database.getByID(query)
-            .then(rows => {
-                res.send(rows);
+            .then(object => {
+                res.send(object);
             })
             .catch(err => {
                 console.log(err);

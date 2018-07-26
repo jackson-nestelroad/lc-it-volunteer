@@ -934,6 +934,7 @@ exports.getByID = function(id){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
+            var object = {};
             client.query(`
                 WITH history AS
                     (SELECT
@@ -962,6 +963,60 @@ exports.getByID = function(id){
                 LEFT JOIN teams ON teams.team_id = volunteers.team
                 WHERE volunteers.vol_id = ${id}
                 ORDER BY date DESC;
+            `)
+            .then(res => {
+                object.info = res.rows;
+                client.query(`
+                    WITH dist AS 
+                        (SELECT team_id, COUNT(*) frequency
+                        FROM logs
+                        WHERE vol_id = ${id}
+                        GROUP BY team_id
+                        ORDER BY frequency DESC)
+                    SELECT
+                    teams.team_id,
+                    name team,
+                    frequency
+                    FROM dist
+                    RIGHT JOIN teams ON teams.team_id = dist.team_id
+                    ORDER BY team_id;
+                `)
+                .then(res2 => {
+                    object.dist = res2.rows;
+                    resolve(object);
+                    client.release();
+                })
+                .catch(err => {
+                    console.log(err);
+                    client.release();
+                    reject('error');
+                })
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
+// gets a volunteer's team distribution by ID
+exports.getTeamDistribution = function(id){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT name team, COUNT(*) frequency
+                FROM logs
+                JOIN teams ON teams.team_id = logs.team_id
+                WHERE vol_id = ${id}
+                GROUP BY name
+                ORDER BY frequency DESC;
             `)
             .then(res => {
                 resolve(res.rows);
@@ -1060,36 +1115,6 @@ exports.getPieData = function(id){
                     GROUP BY team_id
                     ORDER BY team_id) a
                 ON a.team_id = teams.team_id;
-            `)
-            .then(res => {
-                resolve(res.rows);
-                client.release();
-            })
-            .catch(err => {
-                console.log(err);
-                client.release();
-                reject('error');
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            reject('error');
-        })
-    })
-}
-
-// gets a volunteer's history by ID
-exports.getHistory = function(id){
-    return new Promise((resolve, reject) => {
-        pool.connect()
-        .then(client => {
-            client.query(`
-                SELECT date, name team, hours 
-                FROM logs
-                JOIN teams ON teams.team_id = logs.team_id
-                WHERE vol_id = ${id}
-                ORDER BY date DESC
-                LIMIT 10;
             `)
             .then(res => {
                 resolve(res.rows);
