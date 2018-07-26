@@ -545,6 +545,10 @@ hr{
     font-size: 10pt;
 }
 
+#volunteerInfo p.log{
+    font-size: 8pt;
+}
+
 #volunteerInfo p.info.campus{
     font-size: 10pt;
     font-weight: 700;
