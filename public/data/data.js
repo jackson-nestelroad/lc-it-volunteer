@@ -236,8 +236,8 @@ function getWeek(){
 const orders = [
     'first_name, last_name',
     'campus',
-    'week DESC',
-    'total DESC',
+    'week DESC NULLS LAST',
+    'total DESC NULLS LAST',
     'preferred',
     'last_active DESC NULLS LAST'
 ]
