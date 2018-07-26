@@ -409,28 +409,36 @@ hr{
     font-weight: 300 !important;
 }
 
+.grid-container-radio .radio .radio{
+    display: grid;
+}
+
 .grid-container-radio .radio input{
     z-index: 1;
-    position: absolute;
-    height: 22px;
-    width: 20px;
+    height: 15px;
     opacity: 0;
     cursor: pointer;
+    margin: 0 auto;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
 }
 
 .custom{
-    position: absolute;
-    height: 25px;
-    width: 25px;
+    display: block;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
     border: 1px solid #dad8d6;
+    margin: 0 auto;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
 }
 
 .grid-container-radio .radio input:hover ~ .custom {
-    height: 23px;
-    width: 23px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
-    border: 2px solid #0094bd;
+    border: 1px solid #0094bd;
 }
 
 .grid-container-radio .radio input:checked ~ .custom {
@@ -439,10 +447,10 @@ hr{
 }
 
 .grid-container-radio .radio input:checked:hover ~ .custom {
-    height: 23px;
-    width: 23px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
-    border: 2px solid #0094bd;
+    border: 1px solid #0094bd;
 }
 
 .tool input,

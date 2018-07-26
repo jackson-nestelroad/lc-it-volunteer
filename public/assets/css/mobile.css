@@ -382,7 +382,77 @@ hr{
     text-align: center;
     align-items: center;
     grid-template-columns: 32px 75px 1fr 1fr 1fr 1fr;
-    grid-template-rows: repeat(2, minmax(50px, 1fr));
+    grid-template-rows: repeat(3, minmax(50px, 1fr));
+}
+
+.grid-container-radio{
+    grid-column: 1 / 7;
+    grid-row: 3 / 4;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-gap: 3px;
+    text-align: center;
+    align-items: center;
+    grid-template-columns: repeat(7, minmax(25px, 0.15fr));
+    grid-template-rows: repeat(1, minmax(25px, 1fr));
+}
+
+.grid-container-radio .title{
+    grid-column: 1 / 2;
+}
+
+.grid-container-radio .title p{
+    font-size: 10pt !important;
+}
+
+.grid-container-radio .radio p{
+    font-size: 8pt !important;
+    font-weight: 300 !important;
+}
+
+.grid-container-radio .radio .radio{
+    display: grid;
+}
+
+.grid-container-radio .radio input{
+    z-index: 1;
+    height: 10px;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0 auto;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.custom{
+    display: block;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: 1px solid #dad8d6;
+    margin: 0 auto;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.grid-container-radio .radio input:hover ~ .custom {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: 1px solid #0094bd;
+}
+
+.grid-container-radio .radio input:checked ~ .custom {
+    background-color: #0094bd;
+    border: 1px solid #0094bd;
+}
+
+.grid-container-radio .radio input:checked:hover ~ .custom {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: 1px solid #0094bd;
 }
 
 .mobile-category{
