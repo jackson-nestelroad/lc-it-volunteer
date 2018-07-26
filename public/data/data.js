@@ -958,8 +958,8 @@ exports.getByID = function(id){
                 history.team team,
                 hours
                 FROM volunteers
-                JOIN history ON history.vol_id = volunteers.vol_id
-                JOIN teams ON teams.team_id = volunteers.team
+                LEFT JOIN history ON history.vol_id = volunteers.vol_id
+                LEFT JOIN teams ON teams.team_id = volunteers.team
                 ORDER BY date DESC;
             `)
             .then(res => {
