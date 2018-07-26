@@ -533,6 +533,10 @@ hr{
     font-size: 10pt;
 }
 
+#volunteerInfo .graph{
+    height: 100px;
+}
+
 #volunteerInfo p.info.campus{
     font-size: 14pt;
     font-weight: 700;

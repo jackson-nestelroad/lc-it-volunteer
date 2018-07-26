@@ -458,6 +458,7 @@ document.getElementById('search-results').onclick = function(element){
                         data.push(row.frequency);
                     }
                 })
+                document.getElementsByClassName('graph')[0].innerHTML = '<canvas id="bar" width="100%" height="100%"></canvas>';
                 var ctx = document.getElementById('bar').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
