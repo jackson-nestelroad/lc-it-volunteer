@@ -87,8 +87,12 @@ document.getElementsByTagName('html')[0].addEventListener('click', function(even
         teamSelect.className == 'open' ? teamSelect.className = 'closed' : teamSelect.className = 'closed';
     }
 })
+
 // close button in info modal
 close5.addEventListener('click', function(event){
+    // check if activity setting is switched
+    // if so, submit a POST request to change this attribute in the database
+    // get ID from inside the info modal
     document.getElementById('volunteerInfo').style['display'] = 'none';
     enter = true;
 })
@@ -243,18 +247,11 @@ check.addEventListener('change', function(event){
     // this variable checks if we 
     activitySwitch = activitySwitch == 1 ? 0 : 1;
     if(activitySwitch == 0){
-        closeBtn5.style['display'] = 'block';
-        saveBtn.style['display'] = 'none';
+        closeBtn5.innerHTML = 'Close';
     }
     if(activitySwitch == 1){
-        closeBtn5.style['display'] = 'none';
-        saveBtn.style['display'] = 'block';
+        closeBtn5.innerHTML = 'Save';
     }
-})
-// activity setting is switched
-// submit POST request to change this attribute in the database.
-saveBtn.addEventListener('click', function(event){
-    // get ID from inside the info modal
 })
 // search submitted -- POST request
 // this sounds backwards, but we are not an API, we are an interactive search page
