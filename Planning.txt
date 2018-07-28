@@ -143,6 +143,15 @@ Updated Roadmap
         Added history to volunteer info modal.
         Added team distribution to volunteer info modal.
         
+        For inactive attribute...
+            Add column to volunteers table.
+            Retrieve the column in every search query.
+            Use the column value to auto check the inactive checkmark in the info modal when it is created on click.
+            Uncomment POST request to change the value.
+            Check for attribute in every query and remove it from results.
+            Add attribute to Inactivity List.
+            Make volunteer disappear after 90 days.
+        
         
     TO DO:
         Added inactive attribute to volunteers that removes them from search results.
