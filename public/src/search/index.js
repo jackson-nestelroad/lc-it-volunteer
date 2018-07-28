@@ -95,6 +95,8 @@ close5.addEventListener('click', function(event){
     // get ID from inside the info modal
     document.getElementById('volunteerInfo').style['display'] = 'none';
     enter = true;
+    activitySwitch = 0;
+    close5.innerHTML = 'Close';
 })
 // close button in error modal
 close4.addEventListener('click', function(event){
@@ -247,10 +249,10 @@ check.addEventListener('change', function(event){
     // this variable checks if we 
     activitySwitch = activitySwitch == 1 ? 0 : 1;
     if(activitySwitch == 0){
-        closeBtn5.innerHTML = 'Close';
+        close5.innerHTML = 'Close';
     }
     if(activitySwitch == 1){
-        closeBtn5.innerHTML = 'Save';
+        close5.innerHTML = 'Save';
     }
 })
 // search submitted -- POST request
