@@ -467,7 +467,7 @@ document.getElementById('search-results').onclick = function(element){
                         datasets: [
                             {
                                 label: 'Hours',
-                                backgroundColor: ['#ff9393', '#fcb77e', '#f2e27b', '#81db7d', '#88d0e8', '#88a0f7', '#e096f7'],
+                                backgroundColor: ['rgba(255,147,147,0.5)', 'rgba(252,183,126,0.5)', 'rgba(242,226,123,0.5)', 'rgba(129,219,125,0.5)', 'rgba(136,208,232,0.5)', 'rgba(136,160,247,0.5)', 'rgba(224,150,247,0.5)'],
                                 data: data
                             }
                         ]
@@ -484,6 +484,9 @@ document.getElementById('search-results').onclick = function(element){
                         },
                         scales:{
                             xAxes: [{
+                                display: false
+                            }],
+                            yAxes: [{
                                 display: false
                             }]
                         }

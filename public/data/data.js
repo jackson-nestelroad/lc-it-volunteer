@@ -968,7 +968,7 @@ exports.getByID = function(id){
                 object.info = res.rows;
                 client.query(`
                     WITH dist AS 
-                        (SELECT team_id, COUNT(*) frequency
+                        (SELECT team_id, SUM(hours) frequency
                         FROM logs
                         WHERE vol_id = ${id}
                         GROUP BY team_id
