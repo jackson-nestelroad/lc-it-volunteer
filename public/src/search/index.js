@@ -59,6 +59,10 @@ const query = document.getElementById('search-query');
 const campusSearch = document.getElementsByClassName('mobile-query')[0];
 const teamSearch = document.getElementsByClassName('mobile-query')[1];
 const normalSearch = document.getElementsByClassName('mobile-query')[2];
+
+const check = document.getElementById('inactive-check');
+const save = document.getElementById('saveBtn');
+const activitySwitch = 0;
 // change arrow on dropdowns
 document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
@@ -234,6 +238,24 @@ function getOrder(){
     }
     return checked;
 }
+// check if volunteer is being changed from inactive to active
+check.addEventListener('change', function(event){
+    // this variable checks if we 
+    activitySwitch = activitySwitch == 1 ? 0 : 1;
+    if(activitySwitch == 0){
+        closeBtn5.style['display'] = 'block';
+        saveBtn.style['display'] = 'none';
+    }
+    if(activitySwitch == 1){
+        closeBtn5.style['display'] = 'none';
+        saveBtn.style['display'] = 'block';
+    }
+})
+// activity setting is switched
+// submit POST request to change this attribute in the database.
+saveBtn.addEventListener('click', function(event){
+    // get ID from inside the info modal
+})
 // search submitted -- POST request
 // this sounds backwards, but we are not an API, we are an interactive search page
 // POST requests will allow us to update the search page AFTER the request is completed
@@ -403,12 +425,14 @@ document.getElementById('search-results').onclick = function(element){
                 // dist is for the bar graph only
                 var dist = object.dist;
                 // now format the data
+                var id = rows[0].vol_id;
                 var name = rows[0].first_name + ' ' + rows[0].last_name;
                 var team = rows[0].preferred;
                 var email = rows[0].email;
                 var phone = rows[0].phone;
                 var campus = rows[0].campus;
                 // set the information in the modal
+                document.getElementById('id').innerHTML = id;
                 document.getElementById('name').innerHTML = name;
                 document.getElementById('team').innerHTML = team;
                 document.getElementById('email').innerHTML = email;
