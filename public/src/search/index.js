@@ -62,7 +62,7 @@ const normalSearch = document.getElementsByClassName('mobile-query')[2];
 
 const check = document.getElementById('inactive-check');
 const save = document.getElementById('saveBtn');
-const activitySwitch = 0;
+var activitySwitch = 0;
 // change arrow on dropdowns
 document.getElementsByTagName('html')[0].addEventListener('click', function(event){
     var clicked = event.target.id;
