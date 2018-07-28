@@ -546,8 +546,8 @@ hr{
 
 #volunteerInfo .checkbox .checkmark{
     display: block;
-    height: 18px;
-    width: 18px;
+    height: 12px;
+    width: 12px;
     border-radius: 50%;
     border: 1px solid #dad8d6;
     margin: 0 auto;
