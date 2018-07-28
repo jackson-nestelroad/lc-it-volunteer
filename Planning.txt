@@ -137,12 +137,20 @@ Updated Roadmap
         Added weekly hours to search results.
         Added campus to search results.
         Added All Volunteers list to search page.
+    7/26/18
+        Added Order By radio boxes on search page.
+        Received feedback from Alex and Shelley.
+        Added history to volunteer info modal.
+        Added team distribution to volunteer info modal.
         
         
     TO DO:
-        Make Order By radio boxes on search page.
-            Name, Campus, Week, Total, Team, Last 
-        Make History popup on search page.
+        Added inactive attribute to volunteers that removes them from search results.
+        Added ability to mark volunteers as inactive or not.
+        Added Notes and Staff attribute to log entries.
+        Designed Notebook page.
+        Created log entry assignment process.
+        
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
         Connected to Life.Church data warehouse for campus data remotely.
