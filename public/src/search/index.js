@@ -93,10 +93,34 @@ close5.addEventListener('click', function(event){
     // check if activity setting is switched
     // if so, submit a POST request to change this attribute in the database
     // get ID from inside the info modal
-    document.getElementById('volunteerInfo').style['display'] = 'none';
-    enter = true;
-    activitySwitch = 0;
-    close5.innerHTML = 'Close';
+    if(activitySwitch == 1){
+        var id = document.getElementById('id').value;
+        var active = !document.getElementById('inactive-check').checked;
+        // $.ajax({
+        //         method: 'POST',
+        //         context: document.body,
+        //         data: {
+        //             category: -2,
+        //             id: id,
+        //             active: active
+        //         }
+        //     })
+        //     .done(function(rows){
+        //         document.getElementById('volunteerInfo').style['display'] = 'none';
+        //         enter = true;
+        //         activitySwitch = 0;
+        //         close5.innerHTML = 'Close'; 
+        //     })
+        //     .fail(function(code){
+        //         document.getElementById('httpsqlerror').style['display'] = 'none';
+        //     })
+    }
+    else{
+        document.getElementById('volunteerInfo').style['display'] = 'none';
+        enter = true;
+        activitySwitch = 0;
+        close5.innerHTML = 'Close'; 
+    }
 })
 // close button in error modal
 close4.addEventListener('click', function(event){

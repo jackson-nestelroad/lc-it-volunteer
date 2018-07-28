@@ -129,6 +129,17 @@ app.route('/search')
         var category = req.body.category;
         var query = req.body.query;
         var order = req.body.order;
+        // update activity
+        if(req.body.category == -2){
+            database.switchActivity(req.body.id, req.body.active)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
         // return initial campus data
         if(req.body.category == -1){
             campusDatabase.get()

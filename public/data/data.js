@@ -1132,3 +1132,30 @@ exports.getPieData = function(id){
         })
     })
 }
+
+// switch activity attribute by ID
+exports.switchActivity = function(id, active){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                UPDATE volunteers
+                SET inactive = ${active}
+                WHERE vol_id = ${id};
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
