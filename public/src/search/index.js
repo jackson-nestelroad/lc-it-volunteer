@@ -467,7 +467,7 @@ document.getElementById('search-results').onclick = function(element){
                         datasets: [
                             {
                                 label: 'Hours',
-                                backgroundColor: ['rgba(255,147,147,0.5)', 'rgba(252,183,126,0.5)', 'rgba(242,226,123,0.5)', 'rgba(129,219,125,0.5)', 'rgba(136,208,232,0.5)', 'rgba(136,160,247,0.5)', 'rgba(224,150,247,0.5)'],
+                                backgroundColor: ['rgba(255,147,147,0.8)', 'rgba(252,183,126,0.8)', 'rgba(242,226,123,0.8)', 'rgba(129,219,125,0.8)', 'rgba(136,208,232,0.8)', 'rgba(136,160,247,0.8)', 'rgba(224,150,247,0.8)'],
                                 data: data
                             }
                         ]
