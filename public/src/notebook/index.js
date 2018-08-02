@@ -45,7 +45,8 @@ var enter = true;
 const back = document.getElementById('backBtn');
 const submit = document.getElementById('searchBtn');
 const close4 = document.getElementById('closeBtn4');
-const close5 = document.getElementById('closeBtn5')
+const close5 = document.getElementById('closeBtn5');
+const close6 = document.getElementById('closeBtn6');
 
 const select = document.getElementById('category-select');
 const teamSelect = document.getElementById('team-search');
@@ -96,6 +97,10 @@ close5.addEventListener('click', function(event){
     var newStaff = staff.value;
     var newNotes = notes.value;
     if(newStaff != oldStaff || newNotes != oldNotes){
+        // they are updating notes, but not putting a staff name
+        if(newNotes != oldNotes && newStaff == ''){
+            newStaff = '??????';
+        }
         var id = document.getElementById('id').innerHTML;
         newStaff = newStaff == '' ? null : newStaff;
         newNotes = oldStaff == '' ? null : newNotes;
@@ -111,8 +116,8 @@ close5.addEventListener('click', function(event){
         })
         .done(function(rows){
             document.getElementById('notebook').style['display'] = 'none';
-            enter = true;
-            close5.innerHTML = 'Close'; 
+            close5.innerHTML = 'Close';
+            document.getElementById('success').style['display'] = 'block';
         })
         .fail(function(code){
             document.getElementById('httpsqlerror').style['display'] = 'block';
@@ -123,6 +128,11 @@ close5.addEventListener('click', function(event){
         enter = true;
         close5.innerHTML = 'Close'; 
     }
+})
+// close button in success modal
+close6.addEventListener('click', function(event){
+    document.getElementById('success').style['display'] = 'none';
+    enter = true;
 })
 // close button in error modal
 close4.addEventListener('click', function(event){

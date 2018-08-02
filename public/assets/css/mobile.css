@@ -706,11 +706,11 @@ hr{
 }
 
 #notebook .description{
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 #notebook .title{
-    font-size: 16pt;
+    font-size: 14pt;
     margin: 0px auto 5px auto;
 }
 
@@ -726,7 +726,7 @@ hr{
 
 #notebook textarea{
     width: 70% !important;
-    height: 250px !important;
+    height: 150px !important;
     padding: 12px !important;
     border: solid 1px #dad8d6 !important;
     border-radius: 6px !important;
