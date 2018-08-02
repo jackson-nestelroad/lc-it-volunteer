@@ -80,8 +80,8 @@ function updateHeader(category, search){
     var string = '';
     if(category == 'date'){
         string = JSON.parse(search);
-        search = search.join(' - ');
-        string = `Date: ${search}`;
+        string = string.join(' - ');
+        string = `Date: ${string}`;
     }
     if(category == 'team'){
         string = `Team: ${teams[search-1]}`;
@@ -235,7 +235,7 @@ submit.addEventListener('click', function(event){
                 var name = element.first_name + ' ' + element.last_name;
                 var campus = element.campus;
                 var hours = element.hours;
-                var team = element.favorite;
+                var team = element.team;
 
                 var date = new Date(element.date);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
@@ -278,7 +278,7 @@ submit.addEventListener('click', function(event){
                             <td class="center">
                                 <i>Team</i>
                                 <br />
-                                <span>${team}/span>
+                                <span>${team}</span>
                             </td>
                             <td class="center">
                                 <i>Date</i>
@@ -289,7 +289,7 @@ submit.addEventListener('click', function(event){
                     </tbody>
                 </table>
                 `
-                document.getElementById('search-results').appendChild(add);
+                document.getElementById('notebook-logs').appendChild(add);
             });
             enter = true;   
         }
