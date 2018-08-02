@@ -201,6 +201,8 @@ submit.addEventListener('click', function(event){
         search = search.split(' - ');
         search = JSON.stringify(search);
     }
+    // clear results and send request
+    document.getElementById('notebook-logs').innerHTML = '';
     $.ajax({
         method: 'POST',
         context: document.body,
