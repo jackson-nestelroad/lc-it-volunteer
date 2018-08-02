@@ -326,7 +326,11 @@ document.getElementById('notebook-logs').onclick = function(element){
                 var name = rows[0].first_name + ' ' + rows[0].last_name;
                 var team = rows[0].team;
                 var id = rows[0].log_id;
+
                 var date = rows[0].date;
+                date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+                
                 var hours = rows[0].hours;
                 var staffValue = rows[0].staff;
                 var notesValue = rows[0].notes;
