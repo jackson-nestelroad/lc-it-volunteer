@@ -535,7 +535,8 @@ hr{
     display: none !important;
 }
 
-#volunteerInfo .checkbox{
+#volunteerInfo .checkbox,
+#notebook .checkbox{
     display: grid;
     grid-template-columns: repeat(2, 0.25fr);
     grid-template-rows: 1fr;
@@ -543,13 +544,15 @@ hr{
     margin: 0 35%;
 }
 
-#volunteerInfo .checkbox p{
+#volunteerInfo .checkbox p,
+#notebook .checkbox p{
     grid-column: 1 / 2;
     font-size: 8pt;
     margin: 0 5px;
 }
 
-#volunteerInfo .checkbox input{
+#volunteerInfo .checkbox input,
+#notebook .checkbox input{
     z-index: 1;
     height: 18px;
     width: 18px;
@@ -560,7 +563,8 @@ hr{
     grid-row: 1 / 2;
 }
 
-#volunteerInfo .checkbox .checkmark{
+#volunteerInfo .checkbox .checkmark,
+#notebook .checkbox .checkmark{
     display: block;
     height: 12px;
     width: 12px;
@@ -571,19 +575,22 @@ hr{
     grid-row: 1 / 2;
 }
 
-#volunteerInfo .checkbox input:hover ~ .checkmark {
+#volunteerInfo .checkbox input:hover ~ .checkmark,
+#notebook .checkbox input:hover ~ .checkmark{
     height: 18px;
     width: 18px;
     border-radius: 50%;
     border: 1px solid #0094bd;
 }
 
-#volunteerInfo .checkbox input:checked ~ .checkmark {
+#volunteerInfo .checkbox input:checked ~ .checkmark,
+#notebook .checkbox input:checked ~ .checkmark{
     background-color: #0094bd;
     border: 1px solid #0094bd;
 }
 
-#volunteerInfo .checkbox input:checked:hover ~ .checkmark {
+#volunteerInfo .checkbox input:checked:hover ~ .checkmark,
+#notebook .checkbox input:checked:hover ~ .checkmark{
     height: 18px;
     width: 18px;
     border-radius: 50%;
