@@ -1244,10 +1244,12 @@ exports.assignLog = function(id, staff, notes){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
+            staff = staff ? JSON.stringify(staff) : 'NULL';
+            notes = notes ? JSON.stringify(notes) : 'NULL';
             client.query(`
                 UPDATE logs
-                SET staff = '${staff}',
-                    notes = '${notes}'
+                SET staff = ${staff},
+                    notes = ${notes}
                 WHERE log_id = ${id};
             `)
             .then(res => {

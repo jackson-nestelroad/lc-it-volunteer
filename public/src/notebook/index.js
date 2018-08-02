@@ -133,9 +133,6 @@ close5.addEventListener('click', function(event){
         var newNotes = notes.value.trim();
         if(newStaff != oldStaff || newNotes != oldNotes){
             // they are updating notes, but not putting a staff name
-            if(newNotes != oldNotes && newStaff == '' && newNotes != ''){
-                newStaff = '??????';
-            }
             var id = document.getElementById('id').innerHTML;
             newStaff = newStaff == '' ? null : newStaff;
             newNotes = oldStaff == '' ? null : newNotes;
@@ -299,13 +296,10 @@ submit.addEventListener('click', function(event){
 
                 if(staff == null){
                     add.className = 'entry red';
-                }
-
-                if(staff != null && notes != null){
-                    add.title = `${staff}: ${notes}`;
+                    add.title = 'Not assigned!';
                 }
                 else{
-                    add.title = 'Not assigned!';
+                    add.title = notes ? `${staff}: ${notes}` : `${staff}`
                 }
 
                 add.innerHTML = `
