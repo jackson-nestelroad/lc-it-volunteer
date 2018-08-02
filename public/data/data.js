@@ -32,8 +32,7 @@ exports.build = function(){
                     email VARCHAR(255) UNIQUE NOT NULL,
                     phone VARCHAR(255) NOT NULL,
                     team integer NOT NULL,
-                    campus VARCHAR(255) NOT NULL,
-                    active boolean NOT NULL
+                    campus VARCHAR(255) NOT NULL
                 );  
            `)
             .then(res => {
@@ -47,14 +46,11 @@ exports.build = function(){
        pool.connect()
        .then(client => {
            client.query(`
-                CREATE TABLE IF NOT EXISTS logs(
-                    log_id serial PRIMARY_KEY,
+                CREATE TABLE logs(
                     date DATE NOT NULL,
                     vol_id integer NOT NULL,
                     team_id integer NOT NULL,
-                    hours integer NOT NULL,
-                    staff VARCHAR(255),
-                    notes VARCHAR(1000)
+                    hours integer NOT NULL
                 );
            `)
             .then(res => {
@@ -181,8 +177,8 @@ exports.add = function(first, last, email, phone, team, campus){
         pool.connect()
         .then(client => {
             client.query(`
-                INSERT INTO volunteers(first_name, last_name, email, phone, team, campus, active)
-                VALUES('${first}', '${last}', '${email}', '${phone}', '${team}', '${campus}', TRUE);
+                INSERT INTO volunteers(first_name, last_name, email, phone, team, campus)
+                VALUES('${first}', '${last}', '${email}', '${phone}', '${team}', '${campus}');
             `)
             .then(res => {
                 resolve('success');
@@ -237,12 +233,6 @@ function getWeek(){
     return week;
 }
 
-function subtractDays(number){
-    var now = new Date();
-    var then =  new Date((now.getTime() - number * 86400000));
-    return `${then.getMonth()+1}/${then.getDate()}/${then.getFullYear()}`;
-}
-
 const orders = [
     'first_name, last_name',
     'campus',
@@ -258,20 +248,11 @@ exports.searchByFirstName = function(search, order){
         pool.connect()
         .then(client => {
             var week = getWeek();
-            var inactiveDate = subtractDays(90);
             client.query(`
-                WITH 
-                    inactive AS
-                        (SELECT logs.vol_id
-                        FROM logs
-                        GROUP BY logs.vol_id
-                        HAVING MAX(date) < ${inactiveDate})
-                    query AS
+                WITH query AS
                         (SELECT vol_id
                         FROM volunteers
-                        WHERE lower(first_name) LIKE '${search}%'
-                        AND vol_id NOT IN inactive
-                        AND vol_id.active IS TRUE),
+                        WHERE lower(first_name) LIKE '${search}%'),
                     week AS
                         (SELECT vol_id, SUM(hours) hours
                         FROM logs
@@ -290,7 +271,6 @@ exports.searchByFirstName = function(search, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
@@ -303,7 +283,6 @@ exports.searchByFirstName = function(search, order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 hours week,
@@ -362,7 +341,6 @@ exports.searchByLastName = function(search, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
@@ -375,7 +353,6 @@ exports.searchByLastName = function(search, order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 hours week,
@@ -439,7 +416,6 @@ exports.searchByTeam = function(team, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
@@ -452,7 +428,6 @@ exports.searchByTeam = function(team, order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 hours week,
@@ -514,7 +489,6 @@ exports.searchByDate = function(date, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.last_active,
                         week.hours
@@ -526,7 +500,6 @@ exports.searchByDate = function(date, order){
                         first_name,
                         last_name,
                         campus,
-                        active,
                         last_active,
                         query.hours total,
                         sub2.hours week,
@@ -539,7 +512,6 @@ exports.searchByDate = function(date, order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 week,
@@ -600,7 +572,6 @@ exports.searchByDates = function(dates, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.last_active,
                         week.hours
@@ -612,7 +583,6 @@ exports.searchByDates = function(dates, order){
                         first_name,
                         last_name,
                         campus,
-                        active,
                         last_active,
                         query.hours total,
                         sub2.hours week,
@@ -625,7 +595,6 @@ exports.searchByDates = function(dates, order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 week,
@@ -683,7 +652,6 @@ exports.searchByCampus = function(campus, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
@@ -696,7 +664,6 @@ exports.searchByCampus = function(campus, order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 hours week,
@@ -762,7 +729,6 @@ exports.leaderboard = function(){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.last_active,
                         week.hours
@@ -774,7 +740,6 @@ exports.leaderboard = function(){
                         first_name,
                         last_name,
                         campus,
-                        active,
                         last_active,
                         query.hours total,
                         sub2.hours week,
@@ -787,7 +752,6 @@ exports.leaderboard = function(){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 week,
@@ -855,7 +819,6 @@ exports.getInactive = function(order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
@@ -868,7 +831,6 @@ exports.getInactive = function(order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 hours week,
@@ -926,7 +888,6 @@ exports.getAll = function(order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active,
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
@@ -939,7 +900,6 @@ exports.getAll = function(order){
                 first_name,
                 last_name,
                 campus,
-                active,
                 last_active,
                 total,
                 hours week,
@@ -994,7 +954,6 @@ exports.getByID = function(id){
                 phone, 
                 email, 
                 campus,
-                active,
                 name preferred,
                 date,
                 history.team team,
@@ -1179,188 +1138,11 @@ exports.switchActivity = function(id, active){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
-            var bool;
-            bool = active == true ? 'TRUE' : 'FALSE';
             client.query(`
                 UPDATE volunteers
-                SET active = ${bool}
+                SET inactive = ${active}
                 WHERE vol_id = ${id};
             `)
-            .then(res => {
-                resolve(res.rows);
-                client.release();
-            })
-            .catch(err => {
-                console.log(err);
-                client.release();
-                reject('error');
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            reject('error');
-        })
-    })
-}
-
-// assign log entry to a staff member with notes
-exports.assignLog = function(id, staff, notes){
-    return new Promise((resolve, reject) => {
-        pool.connect()
-        .then(client => {
-            client.query(`
-                UPDATE logs
-                SET staff = ${staff}
-                SET notes = ${notes}
-                WHERE log_id = ${id};
-            `)
-            .then(res => {
-                resolve(res.rows);
-                client.release();
-            })
-            .catch(err => {
-                console.log(err);
-                client.release();
-                reject('error');
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            reject('error');
-        })
-    })
-}
-
-// get log entry WITH staff and notes by log ID
-exports.getNotes = function(id){
-    return new Promise((resolve, reject) => {
-        pool.connect()
-        .then(client => {
-            client.query(`
-                SELECT first_name,
-                last_name,
-                log_id,
-                date,
-                name team,
-                hours,
-                staff,
-                notes
-                FROM logs
-                WHERE log_id = ${id}
-                JOIN teams ON teams.team_id = logs.team_id
-                JOIN volunteers ON volunteers.vol_id = logs.vol_id;
-            `)
-            .then(res => {
-                resolve(res.rows);
-                client.release();
-            })
-            .catch(err => {
-                console.log(err);
-                client.release();
-                reject('error');
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            reject('error');
-        })
-    })
-}
-
-// get log entries on notebook page
-exports.returnLogs = function(search, query){
-    return new Promise((resolve, reject) => {
-        pool.connect()
-        .then(client => {
-            var sql;
-            var minDate = subtractDays(30);
-            if(search == 'team'){
-                // query is team_id
-                sql = `
-                    WITH 
-                        display AS
-                            (SELECT log_id,
-                            date, 
-                            vol_id,
-                            team_id,
-                            hours,
-                            staff,
-                            notes
-                            FROM logs
-                            WHERE team_id = ${query}
-                            AND date > ${minDate})
-                    SELECT log_id,
-                    date,
-                    name team,
-                    hours,
-                    first_name,
-                    last_name,
-                    campus,
-                    staff,
-                    notes
-                    FROM display
-                    JOIN volunteers ON volunteers.vol_id = logs.vol_id
-                    JOIN teams ON teams.team_id = logs.team_id
-                    ORDER BY date DESC;
-                `;
-            }
-            else{
-                // query is an array
-                // this is different from searchByDate (used a single string), so now we always have to use an array
-                if(query.length == 1){
-                    sql = `
-                        WITH 
-                            display AS
-                                (SELECT log_id,
-                                date, 
-                                vol_id,
-                                team_id,
-                                hours,
-                                staff,
-                                notes
-                                FROM logs
-                                WHERE date = ${query[0]})
-                        SELECT log_id,
-                        date,
-                        name team,
-                        hours,
-                        first_name,
-                        las t_name,
-                        campus,
-                        staff,
-                        notes
-                        FROM display
-                        JOIN volunteers ON volunteers.vol_id = logs.vol_id
-                        JOIN teams ON teams.team_id = logs.team_id
-                        ORDER BY date DESC;
-                    `; 
-                }
-                sql = `
-                   WITH 
-                        display AS
-                            (SELECT log_id,
-                            date, 
-                            vol_id,
-                            team_id,
-                            hours
-                            FROM logs
-                            WHERE date BETWEEN ${query[0]} AND ${query[1]})
-                    SELECT log_id,
-                    date,
-                    name team,
-                    hours,
-                    first_name,
-                    last_name,
-                    campus,
-                    staff,
-                    notes
-                    FROM display
-                    JOIN volunteers ON volunteers.vol_id = logs.vol_id
-                    JOIN teams ON teams.team_id = logs.team_id
-                    ORDER BY date DESC;
-                `;                
-            }
-            client.query(sql)
             .then(res => {
                 resolve(res.rows);
                 client.release();
