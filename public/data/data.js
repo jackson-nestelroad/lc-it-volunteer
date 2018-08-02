@@ -265,13 +265,13 @@ exports.searchByFirstName = function(search, order){
                         (SELECT logs.vol_id
                         FROM logs
                         GROUP BY logs.vol_id
-                        HAVING MAX(date) < ${inactiveDate})
+                        HAVING MAX(date) < ${inactiveDate}),
                     query AS
                         (SELECT vol_id
                         FROM volunteers
                         WHERE lower(first_name) LIKE '${search}%'
-                        AND vol_id NOT IN inactive
-                        AND vol_id.active IS TRUE),
+                        AND vol_id NOT IN (SELECT vol_id FROM inactive)
+                        AND active IS TRUE),
                     week AS
                         (SELECT vol_id, SUM(hours) hours
                         FROM logs
@@ -290,7 +290,7 @@ exports.searchByFirstName = function(search, order){
                         volunteers.first_name,
                         volunteers.last_name,
                         volunteers.campus,
-                        volunteers.active
+                        volunteers.active,
                         volunteers.team preferred,
                         sub.favorite,
                         sub.last_active,
