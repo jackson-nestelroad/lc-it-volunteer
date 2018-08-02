@@ -1179,8 +1179,7 @@ exports.switchActivity = function(id, active){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
-            var bool;
-            bool = active ? 'TRUE' : 'FALSE';
+            var bool = JSON.parse(active) ? 'TRUE' : 'FALSE';
             client.query(`
                 UPDATE volunteers
                 SET active = ${bool}
