@@ -1268,7 +1268,7 @@ exports.assignLog = function(id, staff, notes){
 }
 
 // deletes log entry by ID
-exports.assignLog = function(id){
+exports.deleteLog = function(id){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
