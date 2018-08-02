@@ -291,54 +291,6 @@ submit.addEventListener('click', function(event){
                     </tbody>
                 </table>
                 `;
-                // pops up assignment modal
-                add.onclick = function(element){
-                    console.log(element);
-                    console.log(element.target);
-                    enter = false;
-                    // get log_id based on which entry you clicked on
-                    var id = parseInt(element.target.children[0].innerHTML.substr(1));
-                    $.ajax({
-                        method: 'POST',
-                        context: document.body,
-                        data: {
-                            reason: 'modal',
-                            id: id
-                        }
-                    })
-                    .done(function(rows){
-                        if(object == 'error'){
-                            // this string is sent if something bad happened
-                            document.getElementById('httpsqlerror').style['display'] = 'block';
-                        }
-                        else{
-                            // now format the data
-                            var name = rows[0].first_name + ' ' + rows[0].last_name;
-                            var team = rows[0].team;
-                            var id = rows[0].log_id;
-                            var date = rows[0].date;
-                            var hours = rows[0].hours;
-                            var staffValue = rows[0].staff;
-                            var notesValue = rows[0].notes;
-            
-                            var description = `${name} volunteered on ${date} for ${hours} hours with ${team}`;
-            
-                            // set the information in the modal
-                            document.getElementById('id').innerHTML = id;
-                            document.getElementById('description').innerHTML = description;
-                            oldStaff = staffValue;
-                            oldNotes = notesValue;
-                            staff.value = staffValue;
-                            notes.value = notesValue;
-            
-                            // display modal with information
-                            document.getElementById('notebook').style['display'] = 'block';
-                        }
-                    })
-                    .fail(function(code){
-                        document.getElementById('httpsqlerror').style['display'] = 'block';
-                    })
-                }
                 document.getElementById('notebook-logs').appendChild(add);
             });
             enter = true;   
@@ -348,6 +300,56 @@ submit.addEventListener('click', function(event){
         document.getElementById('httpsqlerror').style['display'] = 'block';
     })
 })
+
+// pops up assignment modal
+document.getElementById('notebook-logs').onclick = function(element){
+    var clicked = element.target.className == 'image' ? element.target.parentElement : element.target; 
+    if(clicked.className == 'icon'){
+        enter = false;
+        // get log_id based on which entry you clicked on
+        var id = parseInt(clicked.parentElement.children[0].innerHTML);
+        $.ajax({
+            method: 'POST',
+            context: document.body,
+            data: {
+                reason: 'modal',
+                id: id
+            }
+        })
+        .done(function(rows){
+            if(object == 'error'){
+                // this string is sent if something bad happened
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            }
+            else{
+                // now format the data
+                var name = rows[0].first_name + ' ' + rows[0].last_name;
+                var team = rows[0].team;
+                var id = rows[0].log_id;
+                var date = rows[0].date;
+                var hours = rows[0].hours;
+                var staffValue = rows[0].staff;
+                var notesValue = rows[0].notes;
+    
+                var description = `${name} volunteered on ${date} for ${hours} hours with ${team}`;
+    
+                // set the information in the modal
+                document.getElementById('id').innerHTML = id;
+                document.getElementById('description').innerHTML = description;
+                oldStaff = staffValue;
+                oldNotes = notesValue;
+                staff.value = staffValue;
+                notes.value = notesValue;
+    
+                // display modal with information
+                document.getElementById('notebook').style['display'] = 'block';
+            }
+        })
+        .fail(function(code){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        })
+    }
+}
 
 // submit on load basically
 defaultDates();
