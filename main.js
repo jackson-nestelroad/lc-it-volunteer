@@ -300,5 +300,59 @@ app.route('/display')
             })
         }
     })
+app.route('/notebook')
+    .get(function(req, res){
+        res.sendFile(__dirname + '/public/src/notebook/password.html');
+    })
+    .post(function(req, res){
+        var reason = req.body.reason;
+        // check password input
+        // change password to environment variable
+        if(reason == 'load'){
+            var password = req.body.password;
+            if(password == process.env.NOTEBOOK_PASS){
+                res.sendFile(__dirname + '/public/src/notebook/index.html');
+            }
+            else{
+                res.send('incorrect');
+            }
+        }
+        if(reason == 'assign'){
+            var id = req.body.id;
+            var staff = req.body.staff;
+            var notes = req.body.notes;
+            database.assignLog(id, staff, notes)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(reason == 'fetch'){
+            var search = req.body.category;
+            var query = req.body.query;
+            database.returnLogs(search, query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(reason == 'modal'){
+            var id = req.body.id;
+            database.getNotes(id)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+    })
 // port
 app.listen(port, () => console.log('Listening on port '+ port + '!'));

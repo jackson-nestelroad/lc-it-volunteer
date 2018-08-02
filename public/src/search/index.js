@@ -112,7 +112,7 @@ close5.addEventListener('click', function(event){
         //         close5.innerHTML = 'Close'; 
         //     })
         //     .fail(function(code){
-        //         document.getElementById('httpsqlerror').style['display'] = 'none';
+        //         document.getElementById('httpsqlerror').style['display'] = 'block';
         //     })
     }
     else{
