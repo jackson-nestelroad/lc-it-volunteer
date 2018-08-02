@@ -100,7 +100,7 @@ close5.addEventListener('click', function(event){
     // if so, submit a POST request to change this attribute in the database
     // get ID from inside the info modal
     if(activitySwitch == 1){
-        var id = document.getElementById('id').value;
+        var id = document.getElementById('id').innerHTML;
         var active = !document.getElementById('inactive-check').checked;
         $.ajax({
                 method: 'POST',
@@ -474,7 +474,7 @@ document.getElementById('search-results').onclick = function(element){
 
                 activitySwitch = -1;
                 check.checked = !active;    
-                    
+
                 var logs = document.getElementById('logs');
                 logs.innerHTML = '';
                 if(rows.length == 1){

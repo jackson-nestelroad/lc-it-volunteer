@@ -580,6 +580,12 @@ hr{
     margin: 0px auto 5px auto;
 }
 
+#success p.title{
+    font-weight: 700;
+    font-size: 18pt;
+    margin: 0px auto 5px auto;
+}
+
 #volunteerInfo p.info{
     font-size: 12pt;
 }
