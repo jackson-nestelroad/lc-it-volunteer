@@ -336,8 +336,8 @@ document.getElementById('notebook-logs').onclick = function(element){
                 // set the information in the modal
                 document.getElementById('id').innerHTML = id;
                 document.getElementById('description').innerHTML = description;
-                oldStaff = staffValue;
-                oldNotes = notesValue;
+                oldStaff = staffValue == null ? '' : staffValue;
+                oldNotes = notesValue == null ? '' : notesValue;
                 staff.value = staffValue;
                 notes.value = notesValue;
     

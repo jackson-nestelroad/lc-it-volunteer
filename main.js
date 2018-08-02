@@ -318,7 +318,7 @@ app.route('/notebook')
                 res.send('incorrect');
             }
         }
-        if(reason == 'assign'){
+        if(reason == 'update'){
             var id = req.body.id;
             var staff = req.body.staff;
             var notes = req.body.notes;
