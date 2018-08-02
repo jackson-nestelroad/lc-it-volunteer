@@ -1344,9 +1344,6 @@ exports.returnLogs = function(search, query){
                 // query is an array
                 // this is different from searchByDate (used a single string), so now we always have to use an array
                 query = JSON.parse(query);
-                console.log(query);
-                console.log(query.length);
-                console.log(query[0]);
                 if(query.length == 1){
                     sql = `
                         WITH 
@@ -1375,32 +1372,34 @@ exports.returnLogs = function(search, query){
                         ORDER BY date DESC;
                     `; 
                 }
-                sql = `
-                   WITH 
-                        display AS
-                            (SELECT log_id,
-                            date, 
-                            vol_id,
-                            team_id,
-                            hours,
-                            staff,
-                            notes
-                            FROM logs
-                            WHERE date BETWEEN '${query[0]}' AND '${query[1]}')
-                    SELECT log_id,
-                    date,
-                    name team,
-                    hours,
-                    first_name,
-                    last_name,
-                    campus,
-                    staff,
-                    notes
-                    FROM display
-                    JOIN volunteers ON volunteers.vol_id = display.vol_id
-                    JOIN teams ON teams.team_id = display.team_id
-                    ORDER BY date DESC;
-                `;                
+                else{
+                    sql = `
+                        WITH 
+                            display AS
+                                (SELECT log_id,
+                                date, 
+                                vol_id,
+                                team_id,
+                                hours,
+                                staff,
+                                notes
+                                FROM logs
+                                WHERE date BETWEEN '${query[0]}' AND '${query[1]}')
+                        SELECT log_id,
+                        date,
+                        name team,
+                        hours,
+                        first_name,
+                        last_name,
+                        campus,
+                        staff,
+                        notes
+                        FROM display
+                        JOIN volunteers ON volunteers.vol_id = display.vol_id
+                        JOIN teams ON teams.team_id = display.team_id
+                        ORDER BY date DESC;
+                    `;
+                }                
             }
             client.query(sql)
             .then(res => {
