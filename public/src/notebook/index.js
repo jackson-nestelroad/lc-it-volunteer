@@ -116,6 +116,7 @@ close5.addEventListener('click', function(event){
         .done(function(rows){
             document.getElementById('notebook').style['display'] = 'none';
             close5.innerHTML = 'Close';
+            check.checked = false;
             document.getElementById('success').style['display'] = 'block';
         })
         .fail(function(code){
