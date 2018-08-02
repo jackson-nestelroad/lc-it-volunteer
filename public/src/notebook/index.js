@@ -135,7 +135,7 @@ close5.addEventListener('click', function(event){
             // they are updating notes, but not putting a staff name
             var id = document.getElementById('id').innerHTML;
             newStaff = newStaff == '' ? null : newStaff;
-            newNotes = oldStaff == '' ? null : newNotes;
+            newNotes = newNotes == '' ? null : newNotes;
             $.ajax({
                 method: 'POST',
                 context: document.body,
@@ -299,7 +299,7 @@ submit.addEventListener('click', function(event){
                     add.title = 'Not assigned!';
                 }
                 else{
-                    add.title = notes ? `${staff}: ${notes}` : `${staff}`
+                    add.title = notes ? `${staff}: ${notes}` : `${staff}`;
                 }
 
                 add.innerHTML = `
