@@ -436,9 +436,9 @@ exports.searchByTeam = function(team, order){
                         UNION 
                         (SELECT vol_id
                         FROM volunteers
-                        WHERE team = ${team})
+                        WHERE team = ${team}
                         AND vol_id NOT IN (SELECT vol_id FROM inactive)
-                        AND active IS TRUE),
+                        AND active IS TRUE)),
                     week AS
                         (SELECT vol_id, SUM(hours) hours
                         FROM logs
