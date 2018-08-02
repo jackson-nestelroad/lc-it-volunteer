@@ -265,7 +265,7 @@ exports.searchByFirstName = function(search, order){
                         (SELECT logs.vol_id
                         FROM logs
                         GROUP BY logs.vol_id
-                        HAVING MAX(date) < ${inactiveDate}),
+                        HAVING MAX(date) < '${inactiveDate}'),
                     query AS
                         (SELECT vol_id
                         FROM volunteers
