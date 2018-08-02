@@ -851,23 +851,20 @@ exports.getInactive = function(order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
-            var date = new Date();
-            // inactivity period is 60 days
-            date = new Date(date.setTime(date.getTime() - 60 * 86400000));
-            date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+            var inactiveDate = subtractDays(60);
             var week = getWeek();
             client.query(`
                 WITH query AS
                         ((SELECT vol_id
                         FROM logs
                         GROUP BY vol_id
-                        HAVING MAX(date) < '${date}')
+                        HAVING MAX(date) < '${inactiveDate}')
                         UNION ALL
                         (SELECT vol_id
                         FROM volunteers
                         WHERE vol_id NOT IN
                         (SELECT vol_id FROM logs)
-                        AND active IS FALSE)),
+                        OR active IS FALSE)),
                     week AS
                         (SELECT vol_id, SUM(hours) hours
                         FROM logs
@@ -946,7 +943,7 @@ exports.getAll = function(order){
                     query AS
                         (SELECT vol_id
                         FROM volunteers
-                        AND vol_id NOT IN (SELECT vol_id FROM inactive)
+                        WHERE vol_id NOT IN (SELECT vol_id FROM inactive)
                         AND active IS TRUE),
                     week AS
                         (SELECT vol_id, SUM(hours) hours
