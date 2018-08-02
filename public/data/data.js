@@ -1180,7 +1180,7 @@ exports.switchActivity = function(id, active){
         pool.connect()
         .then(client => {
             var bool;
-            bool = active == true ? 'TRUE' : 'FALSE';
+            bool = active ? 'TRUE' : 'FALSE';
             client.query(`
                 UPDATE volunteers
                 SET active = ${bool}
