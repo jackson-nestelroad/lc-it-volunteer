@@ -300,6 +300,7 @@ app.route('/display')
             })
         }
     })
+// notebook page where staff can add notes to their volunteer entries
 app.route('/notebook')
     .get(function(req, res){
         res.sendFile(__dirname + '/public/src/notebook/password.html');

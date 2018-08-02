@@ -300,7 +300,6 @@ submit.addEventListener('click', function(event){
         document.getElementById('httpsqlerror').style['display'] = 'block';
     })
 })
-// !! EDIT THIS !!
 // pops up assignment modal
 document.getElementById('notebook-logs').onclick = function(element){
 	if(element.target.className == 'entry'){
@@ -330,7 +329,7 @@ document.getElementById('notebook-logs').onclick = function(element){
                 var staffValue = rows[0].staff;
                 var notesValue = rows[0].notes;
 
-                var description = `${date} – ${hours} hours with ${team}`;
+                var description = `${name} volunteered on ${date} for ${hours} hours with ${team}`;
 
                 // set the information in the modal
                 document.getElementById('id').innerHTML = id;
