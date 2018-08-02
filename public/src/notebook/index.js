@@ -317,7 +317,7 @@ document.getElementById('notebook-logs').onclick = function(element){
             }
         })
         .done(function(rows){
-            if(object == 'error'){
+            if(rows == 'error'){
                 // this string is sent if something bad happened
                 document.getElementById('httpsqlerror').style['display'] = 'block';
             }

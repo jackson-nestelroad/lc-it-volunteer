@@ -1282,9 +1282,9 @@ exports.getNotes = function(id){
                 staff,
                 notes
                 FROM logs
-                WHERE log_id = ${id}
                 JOIN teams ON teams.team_id = logs.team_id
-                JOIN volunteers ON volunteers.vol_id = logs.vol_id;
+                JOIN volunteers ON volunteers.vol_id = logs.vol_id 
+                AND log_id = ${id};
             `)
             .then(res => {
                 resolve(res.rows);
