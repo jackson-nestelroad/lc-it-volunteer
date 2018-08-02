@@ -47,6 +47,7 @@ const submit = document.getElementById('searchBtn');
 const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
 const close7 = document.getElementById('closeBtn7');
+const check = document.getElementById('delete-check');
 
 const select = document.getElementById('category-select');
 const teamSelect = document.getElementById('team-search');
@@ -90,28 +91,26 @@ function updateHeader(category, search){
     document.getElementsByClassName('search-header')[0].innerHTML = string;
 }
 
-// close button in notebook modal
-close5.addEventListener('click', function(event){
-    // check if stored variables for staff and notes have changed
-    // aka different from the values in the notebook modal
+// check when checkmark is checked
+check.addEventListener('change', function(event){
     var newStaff = staff.value;
     var newNotes = notes.value;
-    if(newStaff != oldStaff || newNotes != oldNotes){
-        // they are updating notes, but not putting a staff name
-        if(newNotes != oldNotes && newStaff == ''){
-            newStaff = '??????';
-        }
+    if(newStaff == oldStaff && newNotes == oldNotes){
+        close5.innerHTML = this.checked ? 'Save' : 'Close';
+    }
+})
+
+// close button in notebook modal
+close5.addEventListener('click', function(event){
+    // first check if we are deleting this log
+    if(check.checked){
         var id = document.getElementById('id').innerHTML;
-        newStaff = newStaff == '' ? null : newStaff;
-        newNotes = oldStaff == '' ? null : newNotes;
         $.ajax({
             method: 'POST',
             context: document.body,
             data: {
-                reason: 'update',
-                id: id,
-                staff: newStaff,
-                notes: newNotes
+                reason: 'delete',
+                id: id
             }
         })
         .done(function(rows){
@@ -123,10 +122,44 @@ close5.addEventListener('click', function(event){
             document.getElementById('httpsqlerror').style['display'] = 'block';
         })
     }
+    // we are only updating the log, if anything
     else{
-        document.getElementById('notebook').style['display'] = 'none';
-        enter = true;
-        close5.innerHTML = 'Close'; 
+        // check if stored variables for staff and notes have changed
+        // aka different from the values in the notebook modal
+        var newStaff = staff.value;
+        var newNotes = notes.value;
+        if(newStaff != oldStaff || newNotes != oldNotes){
+            // they are updating notes, but not putting a staff name
+            if(newNotes != oldNotes && newStaff == ''){
+                newStaff = '??????';
+            }
+            var id = document.getElementById('id').innerHTML;
+            newStaff = newStaff == '' ? null : newStaff;
+            newNotes = oldStaff == '' ? null : newNotes;
+            $.ajax({
+                method: 'POST',
+                context: document.body,
+                data: {
+                    reason: 'update',
+                    id: id,
+                    staff: newStaff,
+                    notes: newNotes
+                }
+            })
+            .done(function(rows){
+                document.getElementById('notebook').style['display'] = 'none';
+                close5.innerHTML = 'Close';
+                document.getElementById('success').style['display'] = 'block';
+            })
+            .fail(function(code){
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            })
+        }
+        else{
+            document.getElementById('notebook').style['display'] = 'none';
+            enter = true;
+            close5.innerHTML = 'Close'; 
+        }
     }
 })
 // close button in success modal

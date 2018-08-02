@@ -1267,6 +1267,32 @@ exports.assignLog = function(id, staff, notes){
     })
 }
 
+// deletes log entry by ID
+exports.assignLog = function(id){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                DELETE FROM logs
+                WHERE log_id = ${id};
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
+
 // get log entry WITH staff and notes by log ID
 exports.getNotes = function(id){
     return new Promise((resolve, reject) => {

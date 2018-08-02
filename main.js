@@ -331,6 +331,17 @@ app.route('/notebook')
                 res.send('error');
             })
         }
+        if(reason == 'delete'){
+            var id = req.body.id;
+            database.deleteLog(id)
+            .then(rows => {
+                res.send('success');
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
         if(reason == 'fetch'){
             var search = req.body.category;
             var query = req.body.query;
