@@ -1247,7 +1247,7 @@ exports.assignLog = function(id, staff, notes){
             client.query(`
                 UPDATE logs
                 SET staff = '${staff}',
-                SET notes = '${notes}'
+                    notes = '${notes}'
                 WHERE log_id = ${id};
             `)
             .then(res => {
