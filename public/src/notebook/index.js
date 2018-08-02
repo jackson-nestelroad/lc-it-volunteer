@@ -180,7 +180,7 @@ submit.addEventListener('click', function(event){
     var category = select.value;
     var search = category == 'date' ? query.value : teamSelect.value;
     enter = false;
-    if(category != 'date' || category != 'team'){
+    if(category != 'date' && category != 'team'){
         document.getElementById('httpsqlerror').style['display'] = 'block';
         enter = true;
         return;
