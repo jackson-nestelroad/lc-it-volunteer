@@ -129,11 +129,11 @@ close5.addEventListener('click', function(event){
     else{
         // check if stored variables for staff and notes have changed
         // aka different from the values in the notebook modal
-        var newStaff = staff.value;
-        var newNotes = notes.value;
+        var newStaff = staff.value.trim();
+        var newNotes = notes.value.trim();
         if(newStaff != oldStaff || newNotes != oldNotes){
             // they are updating notes, but not putting a staff name
-            if(newNotes != oldNotes && newStaff == ''){
+            if(newNotes != oldNotes && newStaff == '' && newNotes != ''){
                 newStaff = '??????';
             }
             var id = document.getElementById('id').innerHTML;
