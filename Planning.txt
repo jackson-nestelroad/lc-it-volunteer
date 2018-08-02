@@ -142,6 +142,16 @@ Updated Roadmap
         Received feedback from Alex and Shelley.
         Added history to volunteer info modal.
         Added team distribution to volunteer info modal.
+    7/29/18
+        Added activity marker in info modal.
+    7/30/18
+        Created HTML and CSS for Notebook page.
+    7/31/18
+        Created basic Javascript for Notebook page.
+        Created password system to access Notebook page.
+    8/1/18
+        Wrote SQL queries for Notebook page.
+        Created log entry assignment process.
         
         For inactive attribute...
             Add column to volunteers table.
@@ -154,11 +164,11 @@ Updated Roadmap
         
         
     TO DO:
-        Added inactive attribute to volunteers that removes them from search results.
-        Added ability to mark volunteers as inactive or not.
         Added Notes and Staff attribute to log entries.
-        Designed Notebook page.
-        Created log entry assignment process.
+        Removed inactive volunteers from search results.
+        Added volunteers marked inactive to Inactive List.
+        Tested Notebook page.
+        
         
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
