@@ -201,7 +201,7 @@ select.addEventListener('change', function(event){
 })
 // check if staff attribute has been edited
 staff.addEventListener('change', function(event){
-    if(staff.value != oldStaff || notes.value != oldNotes){
+    if(staff.value != oldStaff || notes.value != oldNotes || check.checked){
         close5.innerHTML = 'Save';
     }
     else{
@@ -210,7 +210,7 @@ staff.addEventListener('change', function(event){
 })
 // check if notes attribute has been edited
 notes.addEventListener('change', function(event){
-    if(staff.value != oldStaff || notes.value != oldNotes){
+    if(staff.value != oldStaff || notes.value != oldNotes || check.checked){
         close5.innerHTML = 'Save';
     }
     else{
