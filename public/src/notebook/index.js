@@ -96,15 +96,17 @@ close5.addEventListener('click', function(event){
     var newStaff = staff.value;
     var newNotes = notes.value;
     if(newStaff != oldStaff || newNotes != oldNotes){
-        var id = document.getElementById('id').value;
+        var id = document.getElementById('id').innerHTML;
+        newStaff = newStaff == '' ? null : newStaff;
+        newNotes = oldStaff == '' ? null : newNotes;
         $.ajax({
             method: 'POST',
             context: document.body,
             data: {
                 reason: 'update',
                 id: id,
-                staff: staff.value,
-                notes: notes.value
+                staff: newStaff,
+                notes: newNotes
             }
         })
         .done(function(rows){
