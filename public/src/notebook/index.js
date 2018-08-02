@@ -46,7 +46,7 @@ const back = document.getElementById('backBtn');
 const submit = document.getElementById('searchBtn');
 const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
-const close6 = document.getElementById('closeBtn6');
+const close7 = document.getElementById('closeBtn7');
 
 const select = document.getElementById('category-select');
 const teamSelect = document.getElementById('team-search');
@@ -130,7 +130,7 @@ close5.addEventListener('click', function(event){
     }
 })
 // close button in success modal
-close6.addEventListener('click', function(event){
+close7.addEventListener('click', function(event){
     document.getElementById('success').style['display'] = 'none';
     enter = true;
 })
