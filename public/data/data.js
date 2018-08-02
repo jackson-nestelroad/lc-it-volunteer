@@ -1246,8 +1246,8 @@ exports.assignLog = function(id, staff, notes){
         .then(client => {
             client.query(`
                 UPDATE logs
-                SET staff = ${staff},
-                SET notes = ${notes}
+                SET staff = '${staff}',
+                SET notes = '${notes}'
                 WHERE log_id = ${id};
             `)
             .then(res => {
@@ -1323,8 +1323,8 @@ exports.returnLogs = function(search, query){
                             staff,
                             notes
                             FROM logs
-                            WHERE team_id = ${query}
-                            AND date > ${minDate})
+                            WHERE team_id = '${query}'
+                            AND date > '${minDate}')
                     SELECT log_id,
                     date,
                     name team,
@@ -1335,8 +1335,8 @@ exports.returnLogs = function(search, query){
                     staff,
                     notes
                     FROM display
-                    JOIN volunteers ON volunteers.vol_id = logs.vol_id
-                    JOIN teams ON teams.team_id = logs.team_id
+                    JOIN volunteers ON volunteers.vol_id = display.vol_id
+                    JOIN teams ON teams.team_id = display.team_id
                     ORDER BY date DESC;
                 `;
             }
@@ -1355,19 +1355,19 @@ exports.returnLogs = function(search, query){
                                 staff,
                                 notes
                                 FROM logs
-                                WHERE date = ${query[0]})
+                                WHERE date = '${query[0]}')
                         SELECT log_id,
                         date,
                         name team,
                         hours,
                         first_name,
-                        las t_name,
+                        last_name,
                         campus,
                         staff,
                         notes
                         FROM display
-                        JOIN volunteers ON volunteers.vol_id = logs.vol_id
-                        JOIN teams ON teams.team_id = logs.team_id
+                        JOIN volunteers ON volunteers.vol_id = display.vol_id
+                        JOIN teams ON teams.team_id = display.team_id
                         ORDER BY date DESC;
                     `; 
                 }
@@ -1378,9 +1378,11 @@ exports.returnLogs = function(search, query){
                             date, 
                             vol_id,
                             team_id,
-                            hours
+                            hours,
+                            staff,
+                            notes
                             FROM logs
-                            WHERE date BETWEEN ${query[0]} AND ${query[1]})
+                            WHERE date BETWEEN '${query[0]}' AND '${query[1]}')
                     SELECT log_id,
                     date,
                     name team,
@@ -1391,8 +1393,8 @@ exports.returnLogs = function(search, query){
                     staff,
                     notes
                     FROM display
-                    JOIN volunteers ON volunteers.vol_id = logs.vol_id
-                    JOIN teams ON teams.team_id = logs.team_id
+                    JOIN volunteers ON volunteers.vol_id = display.vol_id
+                    JOIN teams ON teams.team_id = display.team_id
                     ORDER BY date DESC;
                 `;                
             }
