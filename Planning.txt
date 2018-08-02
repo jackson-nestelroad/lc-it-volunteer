@@ -152,23 +152,14 @@ Updated Roadmap
     8/1/18
         Wrote SQL queries for Notebook page.
         Created log entry assignment process.
-        
-        For inactive attribute...
-            Add column to volunteers table.
-            Retrieve the column in every search query.
-            Use the column value to auto check the inactive checkmark in the info modal when it is created on click.
-            Uncomment POST request to change the value.
-            Check for attribute in every query and remove it from results.
-            Add attribute to Inactivity List.
-            Make volunteer disappear after 90 days.
-        
-        
-    TO DO:
+    8/2/18
         Added Notes and Staff attribute to log entries.
         Removed inactive volunteers from search results.
         Added volunteers marked inactive to Inactive List.
-        Tested Notebook page.
-        
+        Added Notebook page and log assignment process.
+        Added option to delete log entries.
+    8/3/18
+        Added staff volunteers display.
         
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
