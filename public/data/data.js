@@ -48,7 +48,7 @@ exports.build = function(){
        .then(client => {
            client.query(`
                 CREATE TABLE IF NOT EXISTS logs(
-                    log_id serial PRIMARY_KEY,
+                    log_id serial PRIMARY KEY,
                     date DATE NOT NULL,
                     vol_id integer NOT NULL,
                     team_id integer NOT NULL,
@@ -1210,7 +1210,7 @@ exports.assignLog = function(id, staff, notes){
         .then(client => {
             client.query(`
                 UPDATE logs
-                SET staff = ${staff}
+                SET staff = ${staff},
                 SET notes = ${notes}
                 WHERE log_id = ${id};
             `)

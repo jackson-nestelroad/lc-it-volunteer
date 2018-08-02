@@ -50,6 +50,7 @@ const back = document.getElementById('backBtn');
 const submit = document.getElementById('searchBtn');
 const close4 = document.getElementById('closeBtn4');
 const close5 = document.getElementById('closeBtn5');
+const close6 = document.getElementById('closeBtn6');
 
 const select = document.getElementById('category-select');
 const campusSelect = document.getElementById('campus-search');
@@ -88,6 +89,11 @@ document.getElementsByTagName('html')[0].addEventListener('click', function(even
     }
 })
 
+// close button in success modal
+close6.addEventListener('click', function(event){
+    document.getElementById('success').style['display'] = 'none';
+    enter = true;
+})
 // close button in info modal
 close5.addEventListener('click', function(event){
     // check if activity setting is switched
@@ -96,24 +102,24 @@ close5.addEventListener('click', function(event){
     if(activitySwitch == 1){
         var id = document.getElementById('id').value;
         var active = !document.getElementById('inactive-check').checked;
-        // $.ajax({
-        //         method: 'POST',
-        //         context: document.body,
-        //         data: {
-        //             category: -2,
-        //             id: id,
-        //             active: active
-        //         }
-        //     })
-        //     .done(function(rows){
-        //         document.getElementById('volunteerInfo').style['display'] = 'none';
-        //         enter = true;
-        //         activitySwitch = 0;
-        //         close5.innerHTML = 'Close'; 
-        //     })
-        //     .fail(function(code){
-        //         document.getElementById('httpsqlerror').style['display'] = 'block';
-        //     })
+        $.ajax({
+                method: 'POST',
+                context: document.body,
+                data: {
+                    category: -2,
+                    id: id,
+                    active: active
+                }
+            })
+            .done(function(rows){
+                document.getElementById('volunteerInfo').style['display'] = 'none';
+                activitySwitch = 0;
+                close5.innerHTML = 'Close';
+                document.getElementById('success').style['display'] = 'block'; 
+            })
+            .fail(function(code){
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            })
     }
     else{
         document.getElementById('volunteerInfo').style['display'] = 'none';
@@ -270,7 +276,10 @@ function getOrder(){
 }
 // check if volunteer is being changed from inactive to active
 check.addEventListener('change', function(event){
-    // this variable checks if we 
+    // this variable checks if we
+    if(activitySwitch == -1){
+        activitySwitch = 0;
+    } 
     activitySwitch = activitySwitch == 1 ? 0 : 1;
     if(activitySwitch == 0){
         close5.innerHTML = 'Close';
@@ -454,13 +463,18 @@ document.getElementById('search-results').onclick = function(element){
                 var email = rows[0].email;
                 var phone = rows[0].phone;
                 var campus = rows[0].campus;
+                var active = rows[0].active;
                 // set the information in the modal
                 document.getElementById('id').innerHTML = id;
                 document.getElementById('name').innerHTML = name;
                 document.getElementById('team').innerHTML = team;
                 document.getElementById('email').innerHTML = email;
                 document.getElementById('phone').innerHTML = phone;
-                document.getElementById('campus').innerHTML = campus;        
+                document.getElementById('campus').innerHTML = campus;
+
+                activitySwitch = -1;
+                check.checked = !active;    
+                    
                 var logs = document.getElementById('logs');
                 logs.innerHTML = '';
                 if(rows.length == 1){
