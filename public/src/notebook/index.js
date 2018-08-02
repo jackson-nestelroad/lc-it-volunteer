@@ -292,7 +292,9 @@ submit.addEventListener('click', function(event){
                 </table>
                 `;
                 // pops up assignment modal
-                add.addEventListener('click', function(event){
+                add.onclick = function(element){
+                    console.log(element);
+                    console.log(element.target);
                     enter = false;
                     // get log_id based on which entry you clicked on
                     var id = parseInt(element.target.children[0].innerHTML.substr(1));
@@ -336,7 +338,7 @@ submit.addEventListener('click', function(event){
                     .fail(function(code){
                         document.getElementById('httpsqlerror').style['display'] = 'block';
                     })
-                })
+                }
                 document.getElementById('notebook-logs').appendChild(add);
             });
             enter = true;   
