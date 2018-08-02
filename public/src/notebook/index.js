@@ -102,6 +102,8 @@ check.addEventListener('change', function(event){
 
 // close button in notebook modal
 close5.addEventListener('click', function(event){
+    // click the body for submission to force the inputted text to save
+    document.getElementsByTagName('body')[0].click();
     // first check if we are deleting this log
     if(check.checked){
         var id = document.getElementById('id').innerHTML;
