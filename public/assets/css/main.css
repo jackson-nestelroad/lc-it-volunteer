@@ -726,7 +726,7 @@ hr{
     border: solid 1px #dad8d6 !important;
     border-radius: 6px !important;
     background-color: white;
-    font-family: 'Montserrat';
+    font-family: 'Arial';
 }
 
 #notebook textarea{
@@ -736,7 +736,7 @@ hr{
     border: solid 1px #dad8d6 !important;
     border-radius: 6px !important;
     background-color: white;
-    font-family: 'Montserrat';
+    font-family: 'Arial';
 }
 
 .entry{
