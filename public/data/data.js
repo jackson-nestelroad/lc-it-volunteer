@@ -1343,6 +1343,7 @@ exports.returnLogs = function(search, query){
             else{
                 // query is an array
                 // this is different from searchByDate (used a single string), so now we always have to use an array
+                query = JSON.parse(query);
                 if(query.length == 1){
                     sql = `
                         WITH 
