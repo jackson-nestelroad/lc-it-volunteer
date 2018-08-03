@@ -197,43 +197,41 @@ window.onload = function(){
     submit.click();
     // get campuses and put them into the options
 
-    // !! will not work on Heroku !!
-
-    // $.ajax({
-    //     method: 'POST',
-    //     context: document.body,
-    //     data: {
-    //         category: -1
-    //     }
-    // })
-    // .done(function(rows){
-    //     console.log(rows.length);
-    //     if(rows == 'error'){
-    //         document.getElementById('httpsqlerror').style['display'] = 'block';
-    //     }
-    //     else if(rows.length == 0){
-    //         document.getElementById('httpsqlerror').style['display'] = 'block';
-    //     }
-    //     else{
-    //         rows.forEach(element => {
-    //             if(element.Name == 'Unknown'){
-    //                 // skip
-    //             }
-    //             else{
-    //                 // create the option in the dropdown
-    //                 var value = element.CampusCode;
-    //                 var campusName = element.Name + ', ' + element.State;
-    //                 var option = document.createElement('option');
-    //                 option.setAttribute('value', value);
-    //                 option.innerHTML = campusName;
-    //                 document.getElementById('campus-search').appendChild(option); 
-    //             }
-    //         })
-    //     }
-    // })
-    // .fail(function(code){
-    //     document.getElementById('httpsqlerror').style['display'] = 'block';
-    // })
+    $.ajax({
+        method: 'POST',
+        context: document.body,
+        data: {
+            category: -1
+        }
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            rows.forEach(element => {
+                if(element.Name == 'Unknown'){
+                    // skip
+                }
+                else{
+                    // create the option in the dropdown
+                    var value = element.CampusCode;
+                    var campusName = element.Name + ', ' + element.State;
+                    var option = document.createElement('option');
+                    option.setAttribute('value', value);
+                    option.innerHTML = campusName;
+                    document.getElementById('campus-search').appendChild(option); 
+                }
+            })
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
 }
 // update search tool when category changes
 select.addEventListener('change', function(event){

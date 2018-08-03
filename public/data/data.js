@@ -108,7 +108,7 @@ exports.build = function(){
                              (2, 'Software'),
                              (3, 'Database'),
                              (4, 'Project'),
-                             (5, 'Admin')
+                             (5, 'Admin'),
                              (6, 'Develop'),
                              (7, 'Social');
                  `)
