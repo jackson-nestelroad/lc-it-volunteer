@@ -81,7 +81,7 @@ function validate(type, string){
             }
         }
         if(type == 'team'){
-            if([1,2,3,4,5].includes(parseInt(string))){
+            if([1,2,3,4,5,6,7].includes(parseInt(string))){
                 return string;
             }
             else{
@@ -92,47 +92,50 @@ function validate(type, string){
 }
 
 // we need to call a POST request to get the campus data to create the options for the campus dropdown
-window.onload = function(){
-    $.ajax({
-        method: 'POST',
-        context: document.body,
-        data: {
-            load: true
-        }
-    })
-    .done(function(rows){
-        console.log(rows.length);
-        if(rows == 'error'){
-            document.getElementById('httpsqlerror').style['display'] = 'block';
-            error = ['ERROR fetching campus data from MSSQL LCDW.Dimension.Campus.']; 
-            displayError();
-        }
-        else if(rows.length == 0){
-            document.getElementById('httpsqlerror').style['display'] = 'block';
-            error = ['ERROR fetching campus data from MSSQL LCDW.Dimension.Campus.'];
-            displayError();
-        }
-        else{
-            rows.forEach(element => {
-                if(element.Name == 'Unknown'){
-                    // skip
-                }
-                else{
-                    // create the option in the dropdown
-                    var value = element.CampusCode;
-                    var campusName = element.Name + ', ' + element.State;
-                    var option = document.createElement('option');
-                    option.setAttribute('value', value);
-                    option.innerHTML = campusName;
-                    document.getElementById('campus-input').appendChild(option); 
-                }
-            })
-        }
-    })
-    .fail(function(code){
-        document.getElementById('httpsqlerror').style['display'] = 'block';
-    })
-}
+
+// !! will not work on Heroku !!
+
+// window.onload = function(){
+//     $.ajax({
+//         method: 'POST',
+//         context: document.body,
+//         data: {
+//             load: true
+//         }
+//     })
+//     .done(function(rows){
+//         console.log(rows.length);
+//         if(rows == 'error'){
+//             document.getElementById('httpsqlerror').style['display'] = 'block';
+//             error = ['ERROR fetching campus data from MSSQL LCDW.Dimension.Campus.']; 
+//             displayError();
+//         }
+//         else if(rows.length == 0){
+//             document.getElementById('httpsqlerror').style['display'] = 'block';
+//             error = ['ERROR fetching campus data from MSSQL LCDW.Dimension.Campus.'];
+//             displayError();
+//         }
+//         else{
+//             rows.forEach(element => {
+//                 if(element.Name == 'Unknown'){
+//                     // skip
+//                 }
+//                 else{
+//                     // create the option in the dropdown
+//                     var value = element.CampusCode;
+//                     var campusName = element.Name + ', ' + element.State;
+//                     var option = document.createElement('option');
+//                     option.setAttribute('value', value);
+//                     option.innerHTML = campusName;
+//                     document.getElementById('campus-input').appendChild(option); 
+//                 }
+//             })
+//         }
+//     })
+//     .fail(function(code){
+//         document.getElementById('httpsqlerror').style['display'] = 'block';
+//     })
+// }
 
 // form tries to submit
 submit.addEventListener('click', function(event){

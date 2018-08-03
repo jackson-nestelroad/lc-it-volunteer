@@ -126,8 +126,35 @@ app.route('/search')
     })
     // this is where we will handle what was searched for
     .post(function(req, res){
+        database.delete()
+        .then(rows => {
+            database.build()
+            .then(rows => {
+                console.log('success');
+            })
+            .catch(err => {
+                console.log('err');
+                res.send('error');
+            })
+        })
+        .catch(err => {
+            console.log('err');
+            res.send('error');
+        })
         var category = req.body.category;
         var query = req.body.query;
+        var order = req.body.order;
+        // update activity
+        if(req.body.category == -2){
+            database.switchActivity(req.body.id, req.body.active)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
         // return initial campus data
         if(req.body.category == -1){
             campusDatabase.get()
@@ -140,10 +167,11 @@ app.route('/search')
             });
         }
         // popup with email and phone number
+        // WILL return an object with TWO sets of rows!!
         if(category == 0){
             database.getByID(query)
-            .then(rows => {
-                res.send(rows);
+            .then(object => {
+                res.send(object);
             })
             .catch(err => {
                 console.log(err);
@@ -163,7 +191,7 @@ app.route('/search')
         }
         // search by first name
         if(category == 2){
-            database.searchByFirstName(query.toLowerCase())
+            database.searchByFirstName(query.toLowerCase(), order)
             .then(rows => {
                 res.send(rows);
             })
@@ -174,7 +202,7 @@ app.route('/search')
         }
         // search by last name
         if(category == 3){
-            database.searchByLastName(query.toLowerCase())
+            database.searchByLastName(query.toLowerCase(), order)
             .then(rows => {
                 res.send(rows);
             })
@@ -183,9 +211,9 @@ app.route('/search')
                 res.send('error');
             })
         }
-        // search by favorite team
+        // search by favorite/preferred team
         if(category == 4){
-            database.searchByTeam(query.toLowerCase())
+            database.searchByTeam(query.toLowerCase(), order)
             .then(rows => {
                 res.send(rows);
             })
@@ -196,18 +224,37 @@ app.route('/search')
         }
         // search by date
         if(category == 5){
-            database.searchByDate(query)
-            .then(rows => {
-                res.send(rows);
-            })
-            .catch(err => {
-                console.log(err);
+            query = JSON.parse(query);
+            // one date
+            if(query.length == 1){
+                database.searchByDate(query[0], order)
+                .then(rows => {
+                    res.send(rows);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.send('error');
+                })
+            }
+            // range of dates
+            else if(query.length == 2){
+                database.searchByDates(query, order)
+                .then(rows => {
+                    res.send(rows);
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.send('error');
+                })
+            }
+            // invalid
+            else{
                 res.send('error');
-            })
+            }
         }
         // inactivity list, no query
         if(category == 6){
-            database.getInactive()
+            database.getInactive(order)
             .then(rows => {
                 res.send(rows);
             })
@@ -218,7 +265,17 @@ app.route('/search')
         }
         // search by campus
         if(category == 7){
-            database.searchByCampus(query)
+            database.searchByCampus(query, order)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(category == 8){
+            database.getAll(order)
             .then(rows => {
                 res.send(rows);
             })
@@ -249,6 +306,82 @@ app.route('/display')
         // get pie chart data
         if(req.body.pie){
             database.getPieData()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+    })
+// notebook page where staff can add notes to their volunteer entries
+app.route('/notebook')
+    .get(function(req, res){
+        res.sendFile(__dirname + '/public/src/notebook/password.html');
+    })
+    .post(function(req, res){
+        var reason = req.body.reason;
+        // check password input
+        // change password to environment variable
+        if(reason == 'load'){
+            var password = req.body.password;
+            if(password == process.env.NOTEBOOK_PASS){
+                res.sendFile(__dirname + '/public/src/notebook/index.html');
+            }
+            else{
+                res.send('incorrect');
+            }
+        }
+        if(reason == 'update'){
+            var id = req.body.id;
+            var staff = req.body.staff;
+            var notes = req.body.notes;
+            database.assignLog(id, staff, notes)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(reason == 'delete'){
+            var id = req.body.id;
+            database.deleteLog(id)
+            .then(rows => {
+                res.send('success');
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(reason == 'fetch'){
+            var search = req.body.category;
+            var query = req.body.query;
+            database.returnLogs(search, query)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(reason == 'modal'){
+            var id = req.body.id;
+            database.getNotes(id)
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
+        if(reason == 'staff'){
+            database.getStaff()
             .then(rows => {
                 res.send(rows);
             })

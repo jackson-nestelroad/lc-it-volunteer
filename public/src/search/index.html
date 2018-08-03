@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="air-datepicker/dist/css/datepicker.min.css">
         <script src="air-datepicker/dist/js/datepicker.min.js"></script>
         <script src="air-datepicker/dist/js/i18n/datepicker.en.js"></script>
+        <script src="chart.js/dist/Chart.min.js"></script>
     </head>
     <body>
         <div id="httpsqlerror" class="modal dataErr">
@@ -24,13 +25,34 @@
                 <span id="closeBtn4" class="linkBtn">Close</span>
             </div>
         </div>
+        <div id="success" class="modal">
+            <div id="container" class="warn">
+                <p class="title">Success!</p>
+                <hr />
+                <span id="closeBtn6" class="linkBtn">Close</span>
+            </div>
+        </div>
         <div id="volunteerInfo" class="modal">
             <div id="container" class="warn">
+                <p id="id" style="display: none"></p>
+                <div class="checkbox">
+                    <p>Inactive?</p>
+                    <input id="inactive-check" type="checkbox">
+                    <span class="checkmark"></span>
+                </div> 
                 <p id="campus" class="info campus"></p>
                 <p id="name" class="title"></p>
                 <p id="team" class="info"></p>
                 <p id="email" class="info"></p>
                 <p id="phone" class="info"></p>
+                <hr />
+                <div class="graph">
+                    <canvas id="bar"></canvas>
+                </div>
+                <hr />
+                <div id="logs">
+
+                </div>
                 <hr />
                 <span id="closeBtn5" class="linkBtn">Close</span>
             </div>
@@ -41,7 +63,7 @@
             <p class="logo-row2">IT Volunteer Database</p>
         </div>
         <div id="container" class="search">
-            <div class="tool  grid-container-tool">
+            <div class="tool grid-container-tool">
                 <img src="../assets/images/search_icon.svg" class="icon" />
                 <p>Search:</p>
                 <select name="Category" id="category-select" class="closed mobile-category">
@@ -52,16 +74,84 @@
                     <option value=4>Team</option>
                     <option value=5>Date</option>
                     <option value=6>Inactive</option>
+                    <option value=8>All</option>
                 </select>
                 <div class="mobile-query invisible">
-                    <select name="Campus" id="campus-search" class="campus">
-                        
+                    <select name="Campus" id="campus-search" class="closed">
+                        <option value='CEN'>Central, OK</option>
+                        <option value='INT'>Church Online, OK</option>
+                        <optoin value='EDM'>Edmond, OK</optoin>
+                        <option value='FTW'>Fort Worth, TX</option>
+                        <option value='HNV'>Hendersonville, TN</option>
+                        <option value='JNK'>Jenks, OK</option>
+                        <option value='MUS'>Mustang, OK</option>
+                        <option value='OKC'>Oklahoma City, OK</option>
+                        <option value='TUL'>Tulsa, OK</option>
+                        <option value='WCH'>Wichita, KS</option>
+                    </select>
+                </div>
+                <div class="mobile-query invisible">
+                    <select name="Team" id="team-search" class="closed">
+                        <option value=1>Hardware and Infrastructure Support</option>
+                        <option value=2>Software and User Support</option>
+                        <option value=6>Development Operations</option>
+                        <option value=3>Database Operations</option>
+                        <option value=4>Project Management</option>
+                        <option value=5>Administration</option>
+                        <option value=7>Social Media</option>
                     </select>
                 </div>
                 <div class="mobile-query">
-                    <input type="text" id="search-query" class="input-box datepicker-here" data-datepicker data-position="top left" data-language='en' placeholder="Query" style="background-color: rgba(0,0,0,0.075)" readonly>
+                    <input type="text" id="search-query" class="input-box datepicker-here" data-datepicker data-position="top left" data-language='en'  data-range="true" data-multiple-dates-separator=" - " placeholder="Query" style="background-color: rgba(0,0,0,0.075)" readonly>
                 </div>
                 <button id="searchBtn">Search</button>
+                <div class="grid-container-radio">
+                    <div class="title">
+                        <p>Order By:</p>
+                    </div>
+                    <div class="name radio">
+                        <p>Name</p>
+                        <div class="radio">
+                            <input id="name-radio" class="radio" name="order" type="radio" checked>
+                            <span class="custom"></span>
+                        </div>
+                    </div>
+                    <div class="campus radio">
+                        <p>Campus</p>
+                        <div class="radio">
+                            <input id="campus-radio" class="radio" name="order" type="radio">
+                            <span class="custom"></span>
+                        </div>
+                    </div>
+                    <div class="week radio">
+                        <p>Week</p>
+                        <div class="radio">
+                            <input id="week-radio" class="radio" name="order" type="radio">
+                            <span class="custom"></span>
+                        </div>
+                    </div>
+                    <div class="total radio">
+                        <p>Total</p>
+                        <div class="radio">
+                            <input id="total-radio" class="radio" name="order" type="radio">
+                            <span class="custom"></span>
+                        </div>
+                    </div>
+                    <div class="team radio">
+                        <p>Team</p>
+                        <div class="radio">
+                            <input id="team-radio" class="radio" name="order" type="radio">
+                            <span class="custom"></span>
+                        </div>
+                    </div> 
+                    <div class="last radio">
+                        <p>Last</p>
+                        <div class="radio">
+                            <input id="last-radio" class="radio" name="order" type="radio">
+                            <span class="custom"></span>
+                        </div>
+                    </div>      
+                </div>
             </div>
         </div>
         <div id="container" class="search-header"></div>
@@ -73,7 +163,17 @@
                             <td class="small">#1</td>
                             <td class="clickForInfo">Jackson Nestelroad</td>
                             <td class="center">
-                                <i>Hours</i>
+                                <i>Campus</i>
+                                <br />
+                                <span>CEN</span>
+                            </td>
+                            <td class="center">
+                                <i>Week</i>
+                                <br />
+                                <span>12</span>
+                            </td>
+                            <td class="center no-mobile">
+                                <i>Total</i>
                                 <br />
                                 <span>24</span>
                             </td>
@@ -83,7 +183,7 @@
                                 <span>Hardware</span>
                             </td>
                             <td class="center">
-                                <i>Last Active</i>
+                                <i>Last</i>
                                 <br />
                                 <span>6/28/2018</span>
                             </td>
