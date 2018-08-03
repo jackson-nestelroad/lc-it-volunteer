@@ -385,14 +385,40 @@ submit.addEventListener('click', function(event){
                 team = team == null ? element.preferred : team;
 
                 var add = document.createElement('div');
-                add.className = 'result';
 
-                if(active == '1/1/1970'){
-                    active = 'Never!';
-                    add.className = 'result red';
-                }
+                // different colors are used for 30, 60, and 90 days of activity
+
                 if(inactive){
                     add.className = 'result inactive';
+                    add.title = 'Marked as Inactive';
+                }
+                else if(active == '1/1/1970'){
+                    add.className = 'result green';
+                    add.title = 'Never volunteered!'
+                }
+                else{
+                    var then = new Date(active);
+                    var now = new Date();
+                    var diff = now.getTime() - then.getTime();
+                    diff /= 86400000;
+                    diff = Math.round(diff);
+    
+                    if(diff < 30){
+                        add.className = 'result';
+                        add.title = diff != 1 ? `Last Active: ${diff} days ago` : `Last Active: ${diff} day ago`;
+                    }
+                    else if(diff >= 30 && diff < 60){
+                        add.className = 'result yellow';
+                        add.title = `Last Active: ${diff} days ago`;
+                    }
+                    else if(diff >= 60 && diff < 90){
+                        add.className = 'result orange';
+                        add.title = `Last Active: ${diff} days ago`;
+                    }
+                    else if(diff >= 90){
+                        add.className = 'result red';
+                        add.title = `Last Active: ${diff} days ago`;
+                    }
                 }
 
                 add.innerHTML = `
