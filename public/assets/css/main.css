@@ -781,9 +781,18 @@ hr{
     cursor: pointer; 
 }
 
+.entry .icon.staff{
+    width: 1%;
+    cursor: inherit;
+}
+
 .entry .icon .image{
     width: 30px;
     height: 20px;
+    -webkit-user-drag: none;
+    -webkit-user-modify: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .entry td.center{

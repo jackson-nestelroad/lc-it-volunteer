@@ -90,7 +90,7 @@ function updateHeader(category, search){
     }
     if(category == 'staff'){
         var date = new Date();
-        date = date.getMonth() + 1;
+        date = date.getMonth();
         string = `${months[date]} Staff Engagement`;
     }
     document.getElementsByClassName('search-header')[0].innerHTML = string;
