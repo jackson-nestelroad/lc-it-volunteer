@@ -1247,7 +1247,7 @@ exports.assignLog = function(id, staff, notes){
             staff = staff ? JSON.stringify(staff) : 'null';
             notes = notes ? JSON.stringify(notes) : 'null';
             staff = staff != 'null' ? "'"+staff.substr(1,staff.length-2)+"'" : staff;
-            notes = note != 'null' ? "'"+notes.substr(1,notes.length-2)+"'" : notes;
+            notes = notes != 'null' ? "'"+notes.substr(1,notes.length-2)+"'" : notes;
             client.query(`
                 UPDATE logs
                 SET staff = ${staff},
