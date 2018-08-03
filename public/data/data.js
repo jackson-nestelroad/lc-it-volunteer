@@ -1466,7 +1466,7 @@ exports.getStaff = function(){
                     staff
                     FROM logs
                     WHERE staff IS NOT NULL
-                    AND date >= '${month}/1/${year}'
+                    AND date >= '${month-1}/1/${year}'
                     GROUP BY staff)
                 SELECT staff,
                 volunteers,

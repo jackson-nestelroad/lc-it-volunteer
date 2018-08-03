@@ -189,13 +189,18 @@ document.onkeydown = function(evt){
         submit.click();
     }
 }
+// destroy datepicker
+function destroyDate(){
+    $('#search-query').datepicker().data('datepicker').destroy();
+}
 // retain old search information in URL paramters
 function updateQuery(id){
     if(id == 'date'){
+        $('#search-query').datepicker().data('datepicker');
         dateSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
-        dateSearch.readonly = false;
-        dateSearch.style['background-color'] = 'white';
+        query.removeAttribute('readonly');
+        query.style['background-color'] = 'white';
     }
     if(id == 'team'){
         dateSearch.className = 'mobile-query invisible';
@@ -204,8 +209,9 @@ function updateQuery(id){
     if(id == 'staff'){
         dateSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
-        dateSearch.readonly = true;
-        dateSearch.style['background-color'] = 'rgba(0,0,0,0.075)';
+        query.setAttribute('readonly', true);
+        query.style['background-color'] = 'rgba(0,0,0,0.075)';
+        setTimeout(destroyDate, 10);
     }
 }
 // update search tool when category changes
