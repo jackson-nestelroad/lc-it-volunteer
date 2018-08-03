@@ -322,9 +322,6 @@ app.route('/notebook')
             var id = req.body.id;
             var staff = req.body.staff;
             var notes = req.body.notes;
-            console.log(id);
-            console.log(staff);
-            console.log(notes);
             database.assignLog(id, staff, notes)
             .then(rows => {
                 res.send(rows);

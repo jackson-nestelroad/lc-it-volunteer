@@ -374,6 +374,8 @@ submit.addEventListener('click', function(event){
                 var total = element.total;
                 var team = element.favorite;
 
+                var inactive = !element.active;
+
                 var date = new Date(element.last_active);
                 date = new Date(date.setTime(date.getTime() + 1 * 86400000));
                 var active = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
@@ -388,6 +390,9 @@ submit.addEventListener('click', function(event){
                 if(active == '1/1/1970'){
                     active = 'Never!';
                     add.className = 'result red';
+                }
+                if(inactive){
+                    add.className = 'result inactive';
                 }
 
                 add.innerHTML = `
