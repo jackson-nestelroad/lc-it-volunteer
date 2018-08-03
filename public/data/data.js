@@ -1448,3 +1448,48 @@ exports.returnLogs = function(search, query){
         })
     })
 }
+
+// get volunteers per month by assigned staff member
+exports.getStaff = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            var date = new Date();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+            client.query(`
+                WITH sub AS
+                    (SELECT mode() within group (order by team_id) team,
+                    MAX(date) date,
+                    SUM(hours) hours,
+                    COUNT(vol_id) volunteers, 
+                    staff
+                    FROM logs
+                    WHERE staff IS NOT NULL
+                    AND date >= '${month}/1/${year}'
+                    GROUP BY staff)
+                SELECT staff,
+                volunteers,
+                hours,
+                date,
+                name team
+                FROM sub
+                JOIN teams ON teams.team_id = sub.team
+                ORDER BY volunteers DESC
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}

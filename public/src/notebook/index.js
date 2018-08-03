@@ -88,6 +88,11 @@ function updateHeader(category, search){
     if(category == 'team'){
         string = `Team: ${teams[search-1]}`;
     }
+    if(category == 'staff'){
+        var date = new Date();
+        date = date.getMonth() + 1;
+        string = `${months[date]} Staff Engagement`;
+    }
     document.getElementsByClassName('search-header')[0].innerHTML = string;
 }
 
@@ -189,10 +194,18 @@ function updateQuery(id){
     if(id == 'date'){
         dateSearch.className = 'mobile-query';
         teamSearch.className = 'mobile-query invisible';
+        dateSearch.readonly = false;
+        dateSearch.style['background-color'] = 'white';
     }
     if(id == 'team'){
         dateSearch.className = 'mobile-query invisible';
         teamSearch.className = 'mobile-query';
+    }
+    if(id == 'staff'){
+        dateSearch.className = 'mobile-query';
+        teamSearch.className = 'mobile-query invisible';
+        dateSearch.readonly = true;
+        dateSearch.style['background-color'] = 'rgba(0,0,0,0.075)';
     }
 }
 // update search tool when category changes
@@ -222,125 +235,211 @@ notes.addEventListener('change', function(event){
 // POST requests will allow us to update the search page AFTER the request is completed
 // so we will get data in our POST request, send it back here, and display them
 submit.addEventListener('click', function(event){
+    enter = false;
     var category = select.value;
     var search = category == 'date' ? query.value : teamSelect.value;
-    enter = false;
-    if(category != 'date' && category != 'team'){
-        document.getElementById('httpsqlerror').style['display'] = 'block';
-        enter = true;
-        return;
-    }
-    if(search == ''){
-        if(category == 'date'){
-            defaultDates();
-            search = query.value;
-        }
-        if(category == 'team'){
-            if(![1,2,3,4,5,6,7].includes(parseInt(search))){
-                teamSelect.value = 1;
-                search = teamSelect.value;
+    // get volunteer engagement this month per staff
+    if(category == 'staff'){
+        // clear results and send request
+        document.getElementById('notebook-logs').innerHTML = '';
+        $.ajax({
+            method: 'POST',
+            context: document.body,
+            data: {
+                reason: 'staff'
             }
-        }
-    }
-    if(category == 'date'){
-        search = search.split(' - ');
-        search = JSON.stringify(search);
-    }
-    // clear results and send request
-    document.getElementById('notebook-logs').innerHTML = '';
-    $.ajax({
-        method: 'POST',
-        context: document.body,
-        data: {
-            reason: 'fetch',
-            category: category,
-            query: search
-        }
-    })
-    .done(function(rows){
-        if(rows == 'error'){
+        })
+        .done(function(rows){
+            if(rows == 'error'){
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            }
+            else{
+                // handle results and display them
+                updateHeader(category, search);
+                // no results found
+                if(rows.length == 0){
+                    var add = document.createElement('div');
+                    add.className = 'entry none';
+    
+                    add.innerHTML = `
+                    No engagement this month! Time to fire someone.
+                    `
+                    document.getElementById('notebook-logs').appendChild(add);
+                    enter = true;
+                    return;
+                }
+                // results were found -> display each element in rows array
+                rows.forEach(element => {
+                    var staff = element.staff;
+                    var volunteers = element.volunteers;
+                    var hours = element.hours;
+                    var team = element.team;
+
+                    var date = new Date(element.date);
+                    date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                    date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+    
+                    var add = document.createElement('div');
+                    add.className = 'entry';
+    
+                    add.innerHTML = `
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="display: none">${id}</td>
+                                <td class="icon staff"><img class="image" src="/assets/images/user.svg" /></td>
+                                <td class="name">${staff}</td>
+                                <td class="center">
+                                    <i>Volunteers</i>
+                                    <br />
+                                    <span>${volunteers}</span>
+                                </td>
+                                <td class="center">
+                                    <i>Hours</i>
+                                    <br />
+                                    <span>${hours}</span>
+                                </td>
+                                <td class="center">
+                                    <i>Team</i>
+                                    <br />
+                                    <span>${team}</span>
+                                </td>
+                                <td class="center">
+                                    <i>Last Entry</i>
+                                    <br />
+                                    <span>${date}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    `;
+                    document.getElementById('notebook-logs').appendChild(add);
+                });
+                enter = true;   
+            }
+        })
+        .fail(function(code){
             document.getElementById('httpsqlerror').style['display'] = 'block';
+        })
+    }
+    else{
+        if(category != 'date' && category != 'team'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+            enter = true;
+            return;
         }
-        else{
-            // handle results and display them
-            updateHeader(category, search);
-            // no results found
-            if(rows.length == 0){
-                var add = document.createElement('div');
-                add.className = 'entry none';
-
-                add.innerHTML = `
-                No results found!
-                `
-                document.getElementById('notebook-logs').appendChild(add);
-                enter = true;
-                return;
+        if(search == ''){
+            if(category == 'date'){
+                defaultDates();
+                search = query.value;
             }
-            // results were found -> display each element in rows array
-            rows.forEach(element => {
-                var id = element.log_id;
-                var name = element.first_name + ' ' + element.last_name;
-                var campus = element.campus;
-                var hours = element.hours;
-                var team = element.team;
-
-                var date = new Date(element.date);
-                date = new Date(date.setTime(date.getTime() + 1 * 86400000));
-                date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
-
-                var staff = element.staff;
-                var notes = element.notes;
-
-                var add = document.createElement('div');
-                add.className = 'entry';
-
-                if(staff == null){
-                    add.className = 'entry red';
-                    add.title = 'Not assigned!';
+            if(category == 'team'){
+                if(![1,2,3,4,5,6,7].includes(parseInt(search))){
+                    teamSelect.value = 1;
+                    search = teamSelect.value;
                 }
-                else{
-                    add.title = notes ? `${staff}: ${notes}` : `${staff}`;
-                }
-
-                add.innerHTML = `
-                <table>
-                    <tbody>
-                        <tr>
-                            <td style="display: none">${id}</td>
-                            <td class="icon"><img class="image" src="/assets/images/pencil.svg" /></td>
-                            <td class="name">${name}</td>
-                            <td class="center">
-                                <i>Campus</i>
-                                <br />
-                                <span>${campus}</span>
-                            </td>
-                            <td class="center">
-                                <i>Hours</i>
-                                <br />
-                                <span>${hours}</span>
-                            </td>
-                            <td class="center">
-                                <i>Team</i>
-                                <br />
-                                <span>${team}</span>
-                            </td>
-                            <td class="center">
-                                <i>Date</i>
-                                <br />
-                                <span>${date}</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                `;
-                document.getElementById('notebook-logs').appendChild(add);
-            });
-            enter = true;   
+            }
         }
-    })
-    .fail(function(code){
-        document.getElementById('httpsqlerror').style['display'] = 'block';
-    })
+        if(category == 'date'){
+            search = search.split(' - ');
+            search = JSON.stringify(search);
+        }
+        // clear results and send request
+        document.getElementById('notebook-logs').innerHTML = '';
+        $.ajax({
+            method: 'POST',
+            context: document.body,
+            data: {
+                reason: 'fetch',
+                category: category,
+                query: search
+            }
+        })
+        .done(function(rows){
+            if(rows == 'error'){
+                document.getElementById('httpsqlerror').style['display'] = 'block';
+            }
+            else{
+                // handle results and display them
+                updateHeader(category, search);
+                // no results found
+                if(rows.length == 0){
+                    var add = document.createElement('div');
+                    add.className = 'entry none';
+    
+                    add.innerHTML = `
+                    No results found!
+                    `
+                    document.getElementById('notebook-logs').appendChild(add);
+                    enter = true;
+                    return;
+                }
+                // results were found -> display each element in rows array
+                rows.forEach(element => {
+                    var id = element.log_id;
+                    var name = element.first_name + ' ' + element.last_name;
+                    var campus = element.campus;
+                    var hours = element.hours;
+                    var team = element.team;
+    
+                    var date = new Date(element.date);
+                    date = new Date(date.setTime(date.getTime() + 1 * 86400000));
+                    date = `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`;
+    
+                    var staff = element.staff;
+                    var notes = element.notes;
+    
+                    var add = document.createElement('div');
+                    add.className = 'entry';
+    
+                    if(staff == null){
+                        add.className = 'entry red';
+                        add.title = 'Not assigned!';
+                    }
+                    else{
+                        add.title = notes ? `${staff}: ${notes}` : `${staff}`;
+                    }
+    
+                    add.innerHTML = `
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td style="display: none">${id}</td>
+                                <td class="icon"><img class="image" src="/assets/images/pencil.svg" /></td>
+                                <td class="name">${name}</td>
+                                <td class="center">
+                                    <i>Campus</i>
+                                    <br />
+                                    <span>${campus}</span>
+                                </td>
+                                <td class="center">
+                                    <i>Hours</i>
+                                    <br />
+                                    <span>${hours}</span>
+                                </td>
+                                <td class="center">
+                                    <i>Team</i>
+                                    <br />
+                                    <span>${team}</span>
+                                </td>
+                                <td class="center">
+                                    <i>Date</i>
+                                    <br />
+                                    <span>${date}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    `;
+                    document.getElementById('notebook-logs').appendChild(add);
+                });
+                enter = true;   
+            }
+        })
+        .fail(function(code){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        })
+    }
 })
 
 // pops up assignment modal

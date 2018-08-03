@@ -365,6 +365,16 @@ app.route('/notebook')
                 res.send('error');
             })
         }
+        if(reason == 'staff'){
+            database.getStaff()
+            .then(rows => {
+                res.send(rows);
+            })
+            .catch(err => {
+                console.log(err);
+                res.send('error');
+            })
+        }
     })
 // port
 app.listen(port, () => console.log('Listening on port '+ port + '!'));
