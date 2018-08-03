@@ -160,7 +160,7 @@ Updated Roadmap
         Added option to delete log entries.
     8/3/18
         Stabilized log assignment process.
-        Added volunteer hours per staff to Notebook page.
+        Added volunteer engagement per staff per month to Notebook page.
         
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
