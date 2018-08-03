@@ -389,6 +389,7 @@ submit.addEventListener('click', function(event){
                 // different colors are used for 30, 60, and 90 days of activity
 
                 if(inactive){
+                    active = active == '1/1/1970' ? 'Never!' : active;
                     add.className = 'result inactive';
                     add.title = 'Marked as Inactive';
                 }
