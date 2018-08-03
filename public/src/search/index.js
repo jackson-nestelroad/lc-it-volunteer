@@ -393,6 +393,7 @@ submit.addEventListener('click', function(event){
                     add.title = 'Marked as Inactive';
                 }
                 else if(active == '1/1/1970'){
+                    active = 'Never!';
                     add.className = 'result green';
                     add.title = 'Never volunteered!'
                 }
