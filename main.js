@@ -126,21 +126,21 @@ app.route('/search')
     })
     // this is where we will handle what was searched for
     .post(function(req, res){
-        database.delete()
-        .then(rows => {
-            database.build()
-            .then(rows => {
-                console.log('success');
-            })
-            .catch(err => {
-                console.log('err');
-                res.send('error');
-            })
-        })
-        .catch(err => {
-            console.log('err');
-            res.send('error');
-        })
+        // database.delete()
+        // .then(rows => {
+        //     database.build()
+        //     .then(rows => {
+        //         console.log('success');
+        //     })
+        //     .catch(err => {
+        //         console.log('err');
+        //         res.send('error');
+        //     })
+        // })
+        // .catch(err => {
+        //     console.log('err');
+        //     res.send('error');
+        // })
         var category = req.body.category;
         var query = req.body.query;
         var order = req.body.order;
