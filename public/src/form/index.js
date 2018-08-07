@@ -55,10 +55,6 @@ const hoursInput = document.getElementsByClassName('input hours')[1];
 const start = document.getElementsByClassName('input start time')[0];
 const end = document.getElementsByClassName('input end time')[0];
 
-// function destroyDate(){
-//     $('.only-time-start').datepicker().data('datepicker').destroy();
-//     $('.only-time-end').datepicker().data('datepicker').destroy();
-// }
 // detect checkbox changes and add or remove fields
 check.addEventListener('change', function(event){
     if(check.checked){

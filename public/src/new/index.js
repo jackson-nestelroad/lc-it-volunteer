@@ -92,7 +92,6 @@ function validate(type, string){
 }
 
 // we need to call a POST request to get the campus data to create the options for the campus dropdown
-
 window.onload = function(){
     $.ajax({
         method: 'POST',

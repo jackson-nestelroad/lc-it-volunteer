@@ -1,10 +1,11 @@
+// can we submit password with enter key?
 var enter = true;
-
+// HTML elements
 const close = document.getElementById('closeBtn4');
 const close6 = document.getElementById('closeBtn6');
 const password = document.getElementById('password-input');
 const title = document.getElementsByClassName('title')[0];
-
+// submitting with enter
 document.onkeydown = function(evt){
     var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
     // search with enter

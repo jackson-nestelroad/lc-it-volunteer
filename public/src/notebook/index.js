@@ -4,8 +4,7 @@ var datePicker = $('.datepicker-here').datepicker({
     language: 'en',
     maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
 })
-
-
+// select default dates onload
 function defaultDates(){
     var now = new Date();
     var then = new Date();
@@ -58,6 +57,7 @@ const dateSearch = document.getElementsByClassName('mobile-query')[1];
 
 const staff = document.getElementById('staff-input');
 const notes = document.getElementById('notes-input');
+// these variables are stored and checked when the modal is updated
 var oldStaff;
 var oldNotes;
 

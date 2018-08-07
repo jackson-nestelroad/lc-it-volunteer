@@ -255,6 +255,7 @@ exports.log = function(date, id, team, hours){
     })
 }
 
+// gets the last Sunday and upcoming Saturday
 function getWeek(){
     var now = new Date();
     var start = new Date(now.setTime(now.getTime() - now.getDay() * 86400000));
@@ -265,12 +266,14 @@ function getWeek(){
     return week;
 }
 
+// goes back in time to return a date string (mm/dd/yyyy)
 function subtractDays(number){
     var now = new Date();
     var then =  new Date((now.getTime() - number * 86400000));
     return `${then.getMonth()+1}/${then.getDate()}/${then.getFullYear()}`;
 }
 
+// order options for search page
 const orders = [
     'first_name, last_name',
     'campus',
@@ -1492,7 +1495,7 @@ exports.getStaff = function(){
                     staff
                     FROM logs
                     WHERE staff IS NOT NULL
-                    AND date >= '${month-1}/1/${year}'
+                    AND date >= '${month}/1/${year}'
                     GROUP BY staff)
                 SELECT staff,
                 volunteers,
