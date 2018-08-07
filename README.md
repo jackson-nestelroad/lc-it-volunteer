@@ -26,7 +26,7 @@ User → http GET request → main.js (routing) → index.html, index.js (displa
 
 The volunteering form is used to log when and why someone was volunteering for IT. 
 
-Active volunteers only use their name along with the date, team, and number of hours worked to log hours. If a name is found twice in the database, the user will be asked for email validation.
+Active volunteers only need to use their name along with the date, team, and number of hours worked to log hours. If a name is found more than once in the database, the user will be asked for email validation.
 
 ### New Volunteer Form
 
@@ -34,33 +34,44 @@ Active volunteers only use their name along with the date, team, and number of h
 
 The new volunteer form is used to register a volunteer in the database. A volunteer must exist in the database before having hours logged by the volunteering form.
 
-New volunteers must accurately give their first name, last name, phone number, and email. They must also give a designated team, but this team does not bind them to where they must volunteer at. They also have the option to give the their campus for easier tracking.
+New volunteers must accurately give their first name, last name, phone number, and email. They must also give a designated team, but this team does not bind them to where they must volunteer at. They also must give the their campus for easier tracking.
 
 ### Search Database
 
 *link here*
 
-The database display page features a search tool to search through the database of volunteers. Click on a volunteer's name to receive their campus, designated team (chosen on registration), email, and phone number.
+The database display page features a search tool to search through the database of volunteers. Click on any volunteer's name to receive their campus, designated team (chosen on registration), email, and phone number.
 
-The "leaderboard" option displays the current month's leaderboard ranked by the number of hours volunteered in the respective month.
+There are several ways to search the database. You may search specifically by a certain attribute attached to the volunteer, or you may see who has been active during a certain range of time.
 
-The "first name" option searches the database by first name.
+By clicking on a volunteer's name, a volunteer can also be marked as inactive. Marking a volunteer as inactive will remove them from all search results except for the inactivity list.
 
-The "last name" option searches the database by last name.
+Volunteer results will come up in several different colors.
 
-The "campus" option searches the database by campus.
-
-The "team" option searches the database by team. Volunteers will be displayed by their chosen team on registration AND the team they volunteer most often with. If these two happen to conflict, they will show up in both lists.
-
-The "date" option returns who volunteered on a specific day, for how long, and for what team.
-
-The "inactive" option displays the inactivity list. Any volunteer who has not been active for 60 days or has never been active at all will appear on this list.
+White -- actively volunteering.
+Green -- never volunteered, but ready to go.
+Yellow -- no activity for 30 days.
+Orange -- no activity for 60 days.
+Red -- no activity for 90 days.
+Gray -- marked as inactive.
 
 ### TV Display
 
 *link here*
 
 The TV display page is used for the TVs in the IT room at the Life.Church Central Offices. This page showcases a graph with the number of volunteers month to month and a doughnut chart that distributes the current month's volunteer hours per team.
+
+### Notebook
+
+*link here*
+
+The IT Volunteer Notebook is used to further track volunteer engagement across the team. All log entries can be accessed here.
+
+Staff members access this page with a password in order to delete or manage volunteer entries. Red entries have not been assigned, while white entries have been and their assignment can be viewed by simply hovering over the entry or clicking the edit button.
+
+By clicking on the edit button for a specific entry, staff members may connect a logged entry to their full name along with any notes they may have for the day. 
+
+Staff members must connect their volunteer entries to their name so their engagement appears in the "Staff" section of this page's search tool. Staff members will be connected with the number of volunteers, total hours, team, and last date for the current month.
 
 ## PostgreSQL Documentation
 
@@ -69,7 +80,7 @@ This application's PostgreSQL database is found within Google Cloud SQL.
 ### Tables
 #### volunteers
 
-vol_id, first_name, last_name, email, phone, team
+vol_id, first_name, last_name, email, phone, team, campus, active
 
 #### teams
 
@@ -77,7 +88,7 @@ team_id, name
 
 #### logs
 
-date, vol_id, team_id, hours
+date, vol_id, team_id, hours, staff, notes
 
 ### Extra Queries
 
