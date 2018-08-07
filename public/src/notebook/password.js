@@ -40,12 +40,12 @@ close6.addEventListener('click', function(event){
         document.getElementById('httpqlerror').style['display'] = 'block';
     })
 })
-
+// close error modal
 close.addEventListener('click', function(event){
     document.getElementById('httpqlerror').style['display'] = 'none';
     enter = true;
 })
-
+// display password modal on load
 window.onload = function(){
     document.getElementById('password').style['display'] = 'block';
 }
