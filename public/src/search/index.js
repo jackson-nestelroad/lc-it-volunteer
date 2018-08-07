@@ -22,7 +22,7 @@ const searchCategories = [
     'Date',
     'Inactivity List',
     'Campus',
-    'All Volunteers'
+    'Active Volunteers'
 ]
 // teams to search for
 const teams = [

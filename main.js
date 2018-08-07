@@ -126,6 +126,7 @@ app.route('/search')
     })
     // this is where we will handle what was searched for
     .post(function(req, res){
+        // only uncomment to reset database
         // database.delete()
         // .then(rows => {
         //     database.build()
@@ -274,6 +275,7 @@ app.route('/search')
                 res.send('error');
             })
         }
+        // get all active volunteers
         if(category == 8){
             database.getAll(order)
             .then(rows => {
@@ -318,21 +320,24 @@ app.route('/display')
 // notebook page where staff can add notes to their volunteer entries
 app.route('/notebook')
     .get(function(req, res){
+        // we send a blank HTML page that asks for a password
         res.sendFile(__dirname + '/public/src/notebook/password.html');
     })
     .post(function(req, res){
         var reason = req.body.reason;
-        // check password input
-        // change password to environment variable
+        // password submitted
         if(reason == 'load'){
             var password = req.body.password;
+            // correct password -- send loaded HTML page
             if(password == process.env.NOTEBOOK_PASS){
                 res.sendFile(__dirname + '/public/src/notebook/index.html');
             }
+            // incorrect password
             else{
                 res.send('incorrect');
             }
         }
+        // log entry staff and/or notes updated
         if(reason == 'update'){
             var id = req.body.id;
             var staff = req.body.staff;
@@ -346,6 +351,7 @@ app.route('/notebook')
                 res.send('error');
             })
         }
+        // log entry deleted
         if(reason == 'delete'){
             var id = req.body.id;
             database.deleteLog(id)
@@ -357,6 +363,7 @@ app.route('/notebook')
                 res.send('error');
             })
         }
+        // get specified log entries
         if(reason == 'fetch'){
             var search = req.body.category;
             var query = req.body.query;
@@ -369,6 +376,7 @@ app.route('/notebook')
                 res.send('error');
             })
         }
+        // get staff and notes for log entries
         if(reason == 'modal'){
             var id = req.body.id;
             database.getNotes(id)
@@ -380,6 +388,7 @@ app.route('/notebook')
                 res.send('error');
             })
         }
+        // get info for staff members
         if(reason == 'staff'){
             database.getStaff()
             .then(rows => {

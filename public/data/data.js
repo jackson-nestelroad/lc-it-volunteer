@@ -879,7 +879,7 @@ exports.getInactive = function(order){
     return new Promise((resolve, reject) => {
         pool.connect()
         .then(client => {
-            var inactiveDate = subtractDays(60);
+            var inactiveDate = subtractDays(30);
             var week = getWeek();
             client.query(`
                 WITH query AS
