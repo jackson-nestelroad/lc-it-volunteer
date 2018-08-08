@@ -15,7 +15,7 @@ const months = [
 ]
 // possible categories to search for
 const searchCategories = [
-    'Leaderboard',
+    'Leaderboard!',
     'First Name',
     'Last Name',
     'Team',
