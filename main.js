@@ -4,6 +4,7 @@ const database = require(__dirname + '/public/data/data.js');
 const campusDatabase = require(__dirname + '/public/data/campus.js');
 
 const app = new express();
+app.enable('trust proxy');
 
 // let Heroku define the port
 var port = process.env.PORT || 3000;
