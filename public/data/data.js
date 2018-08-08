@@ -1,21 +1,13 @@
 // communicates with the volunteer database
 
-// this part is used only for App Engine connection to Cloud SQL
-var host;
-if(process.env.INSTANCE_CONNECTION_NAME) {
-    host = `/cloudsql/${process.env.INSTANCE_CONNECTION_NAME}`;
-}
-
 const { Pool } = require('pg');
 
-// uncomment port and host if deploying to Kubernetes
 const pool = new Pool({
     database: process.env.PGDATABASE,
     user: process.env.PGUSER,
     password: process.env.PGPASSWORD,
-    // port: process.env.PGPORT,
-    // host: process.env.PGHOST
-    host: host,
+    port: process.env.PGPORT,
+    host: process.env.PGHOST,
     max: 20
 })
 
