@@ -4,7 +4,7 @@ steps:
 # - name: 'gcr.io/cloud-builders/npm'
 #   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/lc-it-volunteer/it-volunteer-tracking', './Dockerfile']
+  args: ['build', '-t', 'gcr.io/lc-it-volunteer/it-volunteer-tracking', '-f', 'Dockerfile']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/lc-it-volunteer/it-volunteer-tracking']
 - name: gcr.io/cloud-builders/gcloud
