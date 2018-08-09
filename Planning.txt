@@ -161,6 +161,13 @@ Updated Roadmap
     8/3/18
         Stabilized log assignment process.
         Added volunteer engagement per staff per month to Notebook page.
+    8/7/18
+        Researched and learned about HTTP --> HTTPS.
+        Played around with Ingress, Let's Encrypt, Cert-Manager, and Kubernetes.
+    8/8/18
+        Deployed to Google App Engine.
+        Connected Kubernetes and App Engine deployments to same Cloud SQL database.
+        Created documentation in GitHub Wiki.
         
         Moved new features to Kubernetes image.
         Moved deployment to Life.Church Kubernetes.
@@ -172,3 +179,20 @@ As of 7/11/2018, the project has been completed and hosted on Heroku.
 The next step is to deploy it in a docker container off of Google Kuberentes Engine for long-term use.
 We will also need to move the database and reconnect to it.
 This database relocation will not affect any of the queries or database functions.
+
+
+
+Deployment Help 
+    Kubernetes 
+        Switch to Cluster in Terminal
+        Create Cloud SQL instance
+        Connect to Cloud SQL
+            https://cloud.google.com/sql/docs/postgres/connect-kubernetes-engine
+        Create deployment.yaml
+    App Engine
+        Get Dockerfile and app.yaml
+        Assure Cloud SQL instance and user are created
+        Create tables
+        Recreate image and re-deploy app
+        Help with connecting to Cloud SQL
+            https://cloud.google.com/appengine/docs/flexible/nodejs/using-cloud-sql-postgres

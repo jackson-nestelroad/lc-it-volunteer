@@ -1,10 +1,12 @@
 node_modules
 Dockerfile
 pgdata
-*.yaml
 deployment-disk
 disks
 cloudsql
 todo.txt
 ingress
 *.exe
+ingress-testing
+deployment
+*.yaml
