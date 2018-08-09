@@ -1,0 +1,20 @@
+steps: 
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/jackson-nestelroad/lc-it-volunteer']
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['install']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/lc-it-volunteer/it-volunteer-tracking', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/lc-it-volunteer/it-volunteer-tracking']
+- name: gcr.io/cloud-builders/gcloud
+  args:
+  - kms
+  - decrypt
+  - --ciphertext-file=app.yaml.enc
+  - --plaintext-file=app.yaml
+  - --location=global
+  - --keyring=it-volunteer
+  - --key=it-volunteer
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', '--image-url=gcr.io/lc-it-volunteer/it-volunteer-tracking']
