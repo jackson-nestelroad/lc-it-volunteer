@@ -1,6 +1,6 @@
 steps: 
 - name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/jackson-nestelroad/lc-it-volunteer']
+  args: ['clone', '-b', 'app', 'https://github.com/jackson-nestelroad/lc-it-volunteer.git']
 - name: 'gcr.io/cloud-builders/npm'
   args: ['install']
 - name: 'gcr.io/cloud-builders/docker'

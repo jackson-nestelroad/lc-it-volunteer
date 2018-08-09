@@ -13,4 +13,3 @@ deployment
 docker-compose.yaml
 deployment.yaml
 real-app.yaml
-Dockerfile
