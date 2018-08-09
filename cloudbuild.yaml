@@ -1,6 +1,6 @@
 steps: 
-- name: 'gcr.io/cloud-builders/git'
-  args: ['clone', 'https://github.com/jackson-nestelroad/lc-it-volunteer', '-b', 'app', '--single-branch']
+# - name: 'gcr.io/cloud-builders/git'
+#   args: ['clone', 'https://github.com/jackson-nestelroad/lc-it-volunteer', '-b', 'app', '--single-branch']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/it-volunteer-tracking', '.']
   dir: 'lc-it-volunteer'
