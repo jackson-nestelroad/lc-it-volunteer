@@ -205,7 +205,7 @@ window.onload = function(){
             for(var k = 0; k < rows.length; k++)
             {
                 teamIds.push(k + 1);
-                teams.push(rows.name);
+                teams.push(rows[k].name);
                 var option = document.createElement('option');
                 option.setAttribute('value', k + 1);
                 option.innerHTML = rows[k].full_name;
