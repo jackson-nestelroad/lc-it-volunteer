@@ -129,6 +129,15 @@ app.route('/search')
         var category = req.body.category;
         var query = req.body.query;
         var order = req.body.order;
+
+        database.dropTeams()
+        .then(rows => {
+            database.build()
+            .then(rows => {
+                res.send(rows);
+            })
+        })
+
         // update activity
         if(req.body.category == -2){
             database.switchActivity(req.body.id, req.body.active)
