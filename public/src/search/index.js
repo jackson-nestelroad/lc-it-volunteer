@@ -25,6 +25,7 @@ const searchCategories = [
     'Active Volunteers'
 ]
 // teams to search for -- fetched from database onload
+var teamIds = [];
 var teams = [];
 // order options
 const orders = [
@@ -203,7 +204,8 @@ window.onload = function(){
         else{
             for(var k = 0; k < rows.length; k++)
             {
-                teams.push(k + 1);
+                teamIds.push(k + 1);
+                teams.push(rows.name);
                 var option = document.createElement('option');
                 option.setAttribute('value', k + 1);
                 option.innerHTML = rows[k].full_name;
@@ -327,7 +329,7 @@ submit.addEventListener('click', function(event){
     // handle team searches
     if(select.value == 4){
         var search = teamSelect.value;
-        if(!teams.includes(parseInt(search))){
+        if(!teamIds.includes(parseInt(search))){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
             return;  

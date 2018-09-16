@@ -30,6 +30,7 @@ const months = [
     'December'
 ]
 // teams to search for -- fetched from database onload
+var teamIds = [];
 var teams = [];
 // can we press enter to submit search?
 var enter = true;
@@ -247,7 +248,8 @@ window.onload = function(){
         else{
             for(var k = 0; k < rows.length; k++)
             {
-                teams.push(k + 1);
+                teamIds.push(k + 1);
+                teams.push(rows.name);
                 var option = document.createElement('option');
                 option.setAttribute('value', k + 1);
                 option.innerHTML = rows[k].full_name;
@@ -364,7 +366,7 @@ submit.addEventListener('click', function(event){
                 search = query.value;
             }
             if(category == 'team'){
-                if(!teams.includes(parseInt(search))){
+                if(!teamIds.includes(parseInt(search))){
                     teamSelect.value = 1;
                     search = teamSelect.value;
                 }
