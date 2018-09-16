@@ -19,32 +19,6 @@ const pool = new Pool({
 
 var exports = module.exports = {};
 
-// drop the teams table
-exports.dropTeams = function(){
-    return new Promise((resolve, reject) => {
-        pool.connect()
-        .then(client => {
-            client.query(`
-                DROP TABLE teams;
-            `)
-            .then(res => {
-                client.release();
-                resolve([]);
-            })
-            .catch(err => {
-                console.log(err);
-                client.release();
-                reject('error');
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            client.release();
-            reject('error');
-        })
-    })
-}
-
 // builds the database tables
 exports.build = function(){
    return new Promise((resolve, reject) => {
