@@ -202,7 +202,7 @@ function getHours(){
     }
 }
 
-// get team data onload
+// get team data for dropdown
 window.onload = function(){
     $.ajax({
         method: 'GET',
@@ -224,11 +224,11 @@ window.onload = function(){
         else{
             for(var k = 0; k < rows.length; k++)
             {
-                teams.push(k);
+                teams.push(k + 1);
                 var option = document.createElement('option');
-                option.setAttribute('value', k);
+                option.setAttribute('value', k + 1);
                 option.innerHTML = rows[k].full_name;
-                document.getElementById('team-input').appendChild(option);
+                select.appendChild(option);
             }
         }
     })
