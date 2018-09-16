@@ -377,5 +377,17 @@ app.route('/notebook')
             })
         }
     })
+// url to get teams data from (works like an API, send a GET request here to get all teams data)
+app.route('/teams')
+    .get(function(req, res){
+        database.getTeams()
+        .then(rows => {
+            res.send(rows);
+        })
+        .catch(err => {
+            console.log(err);
+            res.send('error');
+        })
+    })
 // port
 app.listen(port, () => console.log('Listening on port '+ port + '!'));

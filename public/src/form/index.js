@@ -31,6 +31,8 @@ var endPicker = $('.only-time-end').datepicker({
 startPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
 endPicker.data('datepicker').selectDate(new Date('1/1/2000 08:00'));
 
+// teams -- fetched from database onload
+var teams = [];
 // variable for if we are checking an email address
 var emailOn = false;
 // variable for allowing enter to be used to submit form
@@ -200,6 +202,41 @@ function getHours(){
     }
 }
 
+// get team data onload
+window.onload = function(){
+    $.ajax({
+        method: 'GET',
+        url: '/teams',
+        context: document.body
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+            error = ['ERROR fetching team data from Google Cloud "Teams" Table.']; 
+            displayError();
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+            error = ['ERROR fetching team data from Google Cloud "Teams" Table.']; 
+            displayError();
+        }
+        else{
+            for(var k = 0; k < rows.length; k++)
+            {
+                teams.push(k);
+                var option = document.createElement('option');
+                option.setAttribute('value', k);
+                option.innerHTML = rows[k].full_name;
+                document.getElementById('team-input').appendChild(option);
+            }
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
+}
+
 // form tries to submit
 submit.addEventListener('click', function(event){
     // get the values
@@ -211,7 +248,7 @@ submit.addEventListener('click', function(event){
     var hours = getHours();
     // make sure the number of hours is positive and less than 24
     // make sure they didn't enter a fake team
-    team = ([1,2,3,4,5,6,7].includes(parseInt(team))) ? team : false;
+    team = (teams.includes(parseInt(team))) ? team : false;
     var values = {
         'name': name,
         'team': team,
@@ -289,17 +326,46 @@ emailSubmit.addEventListener('click', function(event){
         document.getElementById(`email-input`).style['background-color'] = 'rgba(255,0,0,0.1)';   
         document.getElementById('validate-text').style['color'] = '#ff4949';
         enter = true;
+        return;
     }
     // email is legit -- need to check database if it exists there
+    // double check inputs -- they can be changed in Google Chrome console!
+    var name = document.getElementById('name-input').value.trim();
+    var team = document.getElementById('team-input').value;
+    var date = document.getElementById('date-input').value;
+    var datePossible = checkDate(date);
+    var hours = getHours();
+    team = (teams.includes(parseInt(team))) ? team : false;
+    var values = {
+        'name': name,
+        'team': team,
+        'date': datePossible,
+        'hours': hours,
+        'start': hours,
+        'end': hours
+    }
+    // info not given correctly, tell them why
+    if(name == '' || !datePossible || team == '' || !team || !hours){
+        displayError();
+        for(var i = 0; i < Object.keys(values).length; i++){
+            var element = values[Object.keys(values)[i]];
+            if(element == '' || !element){
+                document.getElementById(`${Object.keys(values)[i]}-input`).style['background-color'] = 'rgba(255,0,0,0.1)';
+            }
+            else{
+                document.getElementById(`${Object.keys(values)[i]}-input`).style['background-color'] = '';
+            }
+        }
+    }
     else{
         $.ajax({
             method: 'POST',
             context: document.body,
             data: {
-                'name': document.getElementById('name-input').value.trim(),
-                'team': document.getElementById('team-input').value,
-                'date': document.getElementById('date-input').value,
-                'hours': parseInt(document.getElementById('hours-input').value),
+                'name': name,
+                'team': team,
+                'date': date,
+                'hours': hours,
                 'email': email
             }
         })

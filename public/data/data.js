@@ -1493,3 +1493,27 @@ exports.getStaff = function(){
         })
     })
 }
+
+exports.getTeams = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                SELECT * FROM teams;
+            `)
+            .then(res => {
+                resolve(res.rows);
+                client.release();
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            reject('error');
+        })
+    })
+}
