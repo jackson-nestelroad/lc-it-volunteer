@@ -24,16 +24,8 @@ const searchCategories = [
     'Campus',
     'Active Volunteers'
 ]
-// teams to search for
-const teams = [
-    'Hardware',
-    'Software',
-    'Database',
-    'Project',
-    'Admin',
-    'Develop',
-    'Social'
-]
+// teams to search for -- fetched from database onload
+var teams = [];
 // order options
 const orders = [
     'name',
@@ -193,6 +185,36 @@ function updateQuery(id){
 }
 
 window.onload = function(){
+    // get team data for dropdown
+
+    $.ajax({
+        method: 'GET',
+        url: '/teams',
+        context: document.body
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            for(var k = 0; k < rows.length; k++)
+            {
+                teams.push(k + 1);
+                var option = document.createElement('option');
+                option.setAttribute('value', k + 1);
+                option.innerHTML = rows[k].full_name;
+                teamSelect.appendChild(option);
+            }
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
+
     updateQuery(1);
     submit.click();
     // get campuses and put them into the options
@@ -305,7 +327,7 @@ submit.addEventListener('click', function(event){
     // handle team searches
     if(select.value == 4){
         var search = teamSelect.value;
-        if(![1,2,3,4,5,6,7].includes(parseInt(search))){
+        if(!teams.includes(parseInt(search))){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
             return;  

@@ -29,16 +29,8 @@ const months = [
     'November',
     'December'
 ]
-// teams to search for
-const teams = [
-    'Hardware',
-    'Software',
-    'Database',
-    'Project',
-    'Admin',
-    'Develop',
-    'Social'
-]
+// teams to search for -- fetched from database onload
+var teams = [];
 // can we press enter to submit search?
 var enter = true;
 // button constants for events
@@ -236,6 +228,38 @@ notes.addEventListener('change', function(event){
         close5.innerHTML = 'Close';
     }
 })
+
+// get team data for dropdown
+window.onload = function(){
+    $.ajax({
+        method: 'GET',
+        url: '/teams',
+        context: document.body
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            for(var k = 0; k < rows.length; k++)
+            {
+                teams.push(k + 1);
+                var option = document.createElement('option');
+                option.setAttribute('value', k + 1);
+                option.innerHTML = rows[k].full_name;
+                teamSelect.appendChild(option);
+            }
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
+}
+
 // search submitted -- POST request
 // this sounds backwards, but we are not an API, we are an interactive search page
 // POST requests will allow us to update the search page AFTER the request is completed
@@ -340,7 +364,7 @@ submit.addEventListener('click', function(event){
                 search = query.value;
             }
             if(category == 'team'){
-                if(![1,2,3,4,5,6,7].includes(parseInt(search))){
+                if(!teams.includes(parseInt(search))){
                     teamSelect.value = 1;
                     search = teamSelect.value;
                 }
