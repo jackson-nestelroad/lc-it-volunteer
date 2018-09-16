@@ -4,7 +4,8 @@ var datePicker = $('.datepicker-here').datepicker({
     language: 'en',
     maxDate: new Date(`${(new Date()).getMonth()+2}/1/${(new Date()).getFullYear()}`)
 })
-// select default dates onload
+
+
 function defaultDates(){
     var now = new Date();
     var then = new Date();
@@ -28,16 +29,9 @@ const months = [
     'November',
     'December'
 ]
-// teams to search for
-const teams = [
-    'Hardware',
-    'Software',
-    'Database',
-    'Project',
-    'Admin',
-    'Develop',
-    'Social'
-]
+// teams to search for -- fetched from database onload
+var teamIds = [];
+var teams = [];
 // can we press enter to submit search?
 var enter = true;
 // button constants for events
@@ -57,7 +51,6 @@ const dateSearch = document.getElementsByClassName('mobile-query')[1];
 
 const staff = document.getElementById('staff-input');
 const notes = document.getElementById('notes-input');
-// these variables are stored and checked when the modal is updated
 var oldStaff;
 var oldNotes;
 
@@ -236,6 +229,7 @@ notes.addEventListener('change', function(event){
         close5.innerHTML = 'Close';
     }
 })
+
 // search submitted -- POST request
 // this sounds backwards, but we are not an API, we are an interactive search page
 // POST requests will allow us to update the search page AFTER the request is completed
@@ -340,7 +334,7 @@ submit.addEventListener('click', function(event){
                 search = query.value;
             }
             if(category == 'team'){
-                if(![1,2,3,4,5,6,7].includes(parseInt(search))){
+                if(!teamIds.includes(parseInt(search))){
                     teamSelect.value = 1;
                     search = teamSelect.value;
                 }
@@ -505,3 +499,33 @@ document.getElementById('notebook-logs').onclick = function(element){
 // submit on load basically
 defaultDates();
 submit.click();
+
+// get team data for dropdown
+$.ajax({
+    method: 'GET',
+    url: '/teams',
+    context: document.body
+})
+.done(function(rows){
+    console.log(rows.length);
+    if(rows == 'error'){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    }
+    else if(rows.length == 0){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    }
+    else{
+        for(var k = 0; k < rows.length; k++)
+        {
+            teamIds.push(k + 1);
+            teams.push(rows[k].name);
+            var option = document.createElement('option');
+            option.setAttribute('value', k + 1);
+            option.innerHTML = rows[k].full_name;
+            teamSelect.appendChild(option);
+        }
+    }
+})
+.fail(function(code){
+    document.getElementById('httpsqlerror').style['display'] = 'block';
+})

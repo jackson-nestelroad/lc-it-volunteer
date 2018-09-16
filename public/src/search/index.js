@@ -24,16 +24,9 @@ const searchCategories = [
     'Campus',
     'Active Volunteers'
 ]
-// teams to search for
-const teams = [
-    'Hardware',
-    'Software',
-    'Database',
-    'Project',
-    'Admin',
-    'Develop',
-    'Social'
-]
+// teams to search for -- fetched from database onload
+var teamIds = [];
+var teams = [];
 // order options
 const orders = [
     'name',
@@ -193,9 +186,43 @@ function updateQuery(id){
 }
 
 window.onload = function(){
+    // get team data for dropdown
+
+    $.ajax({
+        method: 'GET',
+        url: '/teams',
+        context: document.body
+    })
+    .done(function(rows){
+        console.log(rows.length);
+        if(rows == 'error'){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else if(rows.length == 0){
+            document.getElementById('httpsqlerror').style['display'] = 'block';
+        }
+        else{
+            for(var k = 0; k < rows.length; k++)
+            {
+                teamIds.push(k + 1);
+                teams.push(rows[k].name);
+                var option = document.createElement('option');
+                option.setAttribute('value', k + 1);
+                option.innerHTML = rows[k].full_name;
+                teamSelect.appendChild(option);
+            }
+        }
+    })
+    .fail(function(code){
+        document.getElementById('httpsqlerror').style['display'] = 'block';
+    })
+
     updateQuery(1);
     submit.click();
     // get campuses and put them into the options
+
+    // !! will not work on Heroku !!
+
     // $.ajax({
     //     method: 'POST',
     //     context: document.body,
@@ -302,7 +329,7 @@ submit.addEventListener('click', function(event){
     // handle team searches
     if(select.value == 4){
         var search = teamSelect.value;
-        if(![1,2,3,4,5,6,7].includes(parseInt(search))){
+        if(!teamIds.includes(parseInt(search))){
             query.style['background-color'] = 'rgba(255,0,0,0.1)';
             enter = true;
             return;  
@@ -558,7 +585,7 @@ document.getElementById('search-results').onclick = function(element){
                         datasets: [
                             {
                                 label: 'Hours',
-                                backgroundColor: ['rgba(255,147,147,0.8)', 'rgba(252,183,126,0.8)', 'rgba(242,226,123,0.8)', 'rgba(129,219,125,0.8)', 'rgba(136,208,232,0.8)', 'rgba(136,160,247,0.8)', 'rgba(224,150,247,0.8)'],
+                                backgroundColor: ['rgba(255,147,147,0.8)', 'rgba(252,183,126,0.8)', 'rgba(242,226,123,0.8)', 'rgba(129,219,125,0.8)', 'rgba(136,208,232,0.8)', 'rgba(136,160,247,0.8)', 'rgba(224,150,247,0.8)', 'rgba(255,163,202,0.8)', 'rgba(191,191,191,0.8)', 'rgba(255,163,120,0.8)', 'rgba(189,229,126,0.8)', 'rgba(136,182,232,0.8)', 'rgba(255,119,178,0.8)', 'rgba(168,168,168,0.8)'],
                                 data: data
                             }
                         ]
