@@ -19,6 +19,32 @@ const pool = new Pool({
 
 var exports = module.exports = {};
 
+// drop the teams table
+exports.dropTeams = function(){
+    return new Promise((resolve, reject) => {
+        pool.connect()
+        .then(client => {
+            client.query(`
+                DROP TABLE teams;
+            `)
+            .then(res => {
+                client.release();
+                resolve([]);
+            })
+            .catch(err => {
+                console.log(err);
+                client.release();
+                reject('error');
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            client.release();
+            reject('error');
+        })
+    })
+}
+
 // builds the database tables
 exports.build = function(){
    return new Promise((resolve, reject) => {
@@ -68,21 +94,23 @@ exports.build = function(){
        pool.connect()
        .then(client => {
            client.query(`
-                CREATE TABLE teams(
+                CREATE TABLE IF NOT EXISTS teams(
                     team_id integer UNIQUE NOT NULL,
-                    name VARCHAR(255) NOT NULL
+                    name VARCHAR(255) NOT NULL,
+                    full_name VARCHAR(255) NOT NULL
                 );
            `)
             .then(res => {
                 client.query(`
-                    INSERT INTO teams(team_id, name)
-                    VALUES(1, 'Hardware'),
-                            (2, 'Software'),
-                            (3, 'Database'),
-                            (4, 'Project'),
-                            (5, 'Admin')
-                            (6, 'Develop'),
-                            (7, 'Social');
+                    INSERT INTO teams(team_id, name, full_name)
+                    VALUES(1, 'Hardware', 'Hardware and Infrastructure Support'),
+                            (2, 'Software', 'Software and User Support'),
+                            (3, 'Database', 'Database Operations'),
+                            (4, 'Project', 'Project Manager'),
+                            (5, 'Admin', 'Administration')
+                            (6, 'Develop', 'Develop Operations'),
+                            (7, 'Social', 'Social Media'),
+                            (8, 'Launch', 'Campus Launch');
                 `)
                 .then(res => {
                     client.release();
